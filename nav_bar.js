@@ -49,8 +49,8 @@ fetch("nav_bar.html")
       // Add admin-specific links
       if (isAdmin) {
         userContainer.innerHTML += `
-          <li class="nav-item"><a class="nav-link" href="all_sellers.html">All Sellers</a></li>
-          <li class="nav-item"><a class="nav-link" href="all_users.html">All Users</a></li>
+          <li class="nav-item"><a class="nav-link" href="all_seller.html">All Sellers</a></li>
+          <li class="nav-item"><a class="nav-link" href="all_customer.html">All Customer</a></li>
         `;
       }
     } else {

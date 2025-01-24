@@ -93,54 +93,75 @@ const getValue = (id) => {
 
 
 
-const customerLogin =async (event) => {
-        event.preventDefault();
-        const username = getValue("login-username");
-        const password = getValue("login-password");
-    
-        if (username && password) {
-            try {
-    
-                const customerListResponse = await fetch("http://127.0.0.1:8000/customer/customer-list/");
-                if (!customerListResponse.ok) {
-                    throw new Error("Failed to fetch customer list.");
+const customerLogin = async (event) => {
+    event.preventDefault();
+
+    const username = getValue("login-username");
+    const password = getValue("login-password");
+
+    if (username && password) {
+        try {
+            // Step 1: Attempt admin login first
+            const adminLoginResponse = await fetch("http://127.0.0.1:8000/customer/login/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ username, password }),
+            });
+
+            if (adminLoginResponse.ok) {
+                const adminData = await adminLoginResponse.json();
+                if (adminData.token && adminData.is_admin) {
+                    alert("Admin Login Successful");
+                    localStorage.setItem("token", adminData.token);
+                    localStorage.setItem("user_id", adminData.user_id);
+                    localStorage.setItem("is_admin", true);
+                    window.location.href = "index.html"; 
+                    return; 
                 }
-    
-                const customerList = await customerListResponse.json();
-    
-                const customer = customerList.find((s) => s.user === username);
-                if (!customer) {
-                    throw new Error("This username does not belong to a customer.");
-                }
-    
-                // Proceed with login if the username exists in the customer list
-                const loginResponse = await fetch("http://127.0.0.1:8000/customer/login/", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ username, password }),
-                });
-    
-                if (!loginResponse.ok) {
-                    const errorData = await loginResponse.json();
-                    throw new Error(errorData.detail || "Login failed.");
-                }
-    
-                const data = await loginResponse.json();
-    
-                if (data.token && data.user_id) {
-                    alert("Login Successful");
-                    localStorage.setItem("token", data.token);
-                    localStorage.setItem("user_id", data.user_id);
-                    localStorage.setItem("is_admin", data.is_admin);
-                    window.location.href = "index.html";
-                }
-            } catch (error) {
-                console.error("Login error:", error.message);
-                alert(error.message || "An error occurred. Please try again.");
             }
-        } else {
-            alert("Please enter both username and password.");
+
+            // Step 2: If not an admin, proceed to check if the user is a customer
+            const customerListResponse = await fetch("http://127.0.0.1:8000/customer/customer-list/");
+            if (!customerListResponse.ok) {
+                throw new Error("Failed to fetch customer list.");
+            }
+
+            const customerList = await customerListResponse.json();
+            const customer = customerList.find((s) => s.user === username);
+
+            if (!customer) {
+                throw new Error("This username does not belong to a customer.");
+            }
+
+            // Step 3: Login as a customer
+            const customerLoginResponse = await fetch("http://127.0.0.1:8000/customer/login/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ username, password }),
+            });
+
+            if (!customerLoginResponse.ok) {
+                const errorData = await customerLoginResponse.json();
+                throw new Error(errorData.detail || "Customer login failed.");
+            }
+
+            const customerData = await customerLoginResponse.json();
+            if (customerData.token && customerData.user_id) {
+                alert("Customer Login Successful");
+                localStorage.setItem("token", customerData.token);
+                localStorage.setItem("user_id", customerData.user_id);
+                localStorage.setItem("is_admin", false);
+                window.location.href = "index.html";
+            }
+        } catch (error) {
+            console.error("Login error:", error.message);
+            alert(error.message || "An error occurred. Please try again.");
         }
-    };
+    } else {
+        alert("Please enter both username and password.");
+    }
+};

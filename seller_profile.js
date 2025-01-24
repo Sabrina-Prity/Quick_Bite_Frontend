@@ -37,7 +37,6 @@ document.addEventListener("DOMContentLoaded", () => {
     fetchDistrict();
 });
 
-
 const fetchSellerDetail = async () => {
     const seller_id = localStorage.getItem('seller_id');
     const token = localStorage.getItem('token');
@@ -77,20 +76,25 @@ const fetchSellerDetail = async () => {
             document.getElementById('postal_code').value = seller.postal_code;
             document.getElementById('district').value = seller.district;
 
-            // Attach event listener to the edit profile button after it has been rendered
+            // Attach the event listener after the element is rendered
             const editButton = document.getElementById('edit-profile-btn');
-            editButton.addEventListener('click', () => {
-                document.getElementById('edit-profile-form').style.display = 'block';
-            });
+            if (editButton) {
+                editButton.addEventListener('click', () => {
+                    document.getElementById('edit-profile-form').style.display = 'block';
+                });
+            } else {
+                console.error("Edit profile button not found!");
+            }
         } else {
             const errorData = await response.json();
             alert(`Error: ${errorData.detail || 'Seller not found'}`);
         }
     } catch (error) {
         console.error('Error fetching seller details:', error);
-        alert('Error fetching seller details. Please try again later.');
+        // alert('Error fetching seller details. Please try again later.');
     }
 };
+
 
 const updateSellerDetail = async (event) => {
     event.preventDefault();
@@ -163,8 +167,12 @@ const updateSellerDetail = async (event) => {
     }
 };
 
-// Attach the form submission event listener on DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('update-profile-form').addEventListener('submit', updateSellerDetail);
+    const updateForm = document.getElementById('update-profile-form');
+    if (updateForm) {
+        updateForm.addEventListener('submit', updateSellerDetail);
+    } else {
+        console.error("Update profile form not found!");
+    }
     fetchSellerDetail();
 });

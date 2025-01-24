@@ -3,6 +3,7 @@ const loadResturents = (search) => {
     fetch(`http://127.0.0.1:8000/seller/seller-list/?search=${search ? search : ""}`)
         .then((res) => res.json())
         .then((data) => {
+            console.log("resturent Data",data)
             if (data.length > 0) {
                 document.getElementById("nodata").style.display = "none";
                 displayResturents(data);
