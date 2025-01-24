@@ -18,9 +18,9 @@ fetch("nav_bar.html")
       `;
 
       // Add Profile section for non-admins
-      if (!isAdmin) {
+      if (isSeller) {
         userContainer.innerHTML += `
-          <li class="nav-item" id="profile-item"><a class="nav-link" href="profile.html">Profile</a></li>
+          <li class="nav-item" id="profile-item"><a class="nav-link" href="seller_profile.html">Profile</a></li>
         `;
       }
 
@@ -28,6 +28,7 @@ fetch("nav_bar.html")
       if (!isSeller && !isAdmin) {
         userContainer.innerHTML += `
           <li class="nav-item btn-cart"><a class="nav-link" href="cart.html">Cart <i class="fa-solid fa-cart-shopping"></i></a></li>
+          <li class="nav-item" id="profile-item"><a class="nav-link" href="customer_profile.html">Profile</a></li>
         `;
       }
 

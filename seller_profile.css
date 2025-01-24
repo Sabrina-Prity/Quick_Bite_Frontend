@@ -1,0 +1,116 @@
+#edit-profile-form {
+    width: 80%;
+    margin: 50px auto; /* Centers the form with some space from top */
+    padding: 20px;
+    background-color: #444;
+    border: 1px solid #666;
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.889); /* Text color */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional: adds some shadow */
+}
+
+#edit-profile-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#edit-profile-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+#edit-profile-form input, #edit-profile-form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+}
+
+#edit-profile-form input[type="file"] {
+    padding: 3px;
+}
+
+#edit-profile-form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #28a745; /* Success button */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+#edit-profile-form button:hover {
+    background-color: #218838;
+    cursor: pointer;
+}
+
+#error {
+    text-align: center;
+    margin-top: 10px;
+}
+
+
+
+
+  
+  #seller-details {
+    background-color: #222;
+    color: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 80%;
+    margin: auto;
+    margin-bottom: 30px;
+  }
+  
+
+ 
+  #seller-details {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .seller-card {
+    display: flex;
+    flex-direction: row; 
+    align-items: center;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .seller-info {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    
+  }
+  
+  .seller-image {
+    width: 400px; 
+    height: 350px;
+    
+    margin-right: 50px; 
+  }
+  
+  .seller-details {
+    flex: 1;
+  }
+  
+  .seller-details h2 {
+    margin-bottom: 15px;
+  }
+  
+  .seller-details p {
+    margin: 10px 0;
+  }
+  
+  button#edit-profile-btn {
+    margin-top: 20px;
+  }
+  

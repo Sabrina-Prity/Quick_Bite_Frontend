@@ -1,6 +1,6 @@
 const fetchCategory = () => {
-    console.log("Data")
-    fetch('http://127.0.0.1:8000/category/list/', {
+    const sellerId = localStorage.getItem("seller_id");
+    fetch(`http://127.0.0.1:8000/category/seller_category_list/${sellerId}`, {
         method: 'GET',
         headers: {
             // Authorization: `Token ${token}`, 
@@ -75,8 +75,9 @@ const handleAddFoodItem = (event) => {
             };
 
             // console.log("Product Data:", productData);
+            const sellerId = localStorage.getItem("seller_id");
             const token = localStorage.getItem("token");
-            fetch("http://127.0.0.1:8000/food/food-item/", {
+            fetch(`http://127.0.0.1:8000/food/food-item/${sellerId}/`, {
                 method: "POST",
                 headers: {
                     Authorization: `Token ${token}`,
@@ -120,7 +121,8 @@ const handleAddFoodItem = (event) => {
 
 const fetchFoodItem = () => {
     const token = localStorage.getItem("token");
-    fetch('http://127.0.0.1:8000/food/food-item/', {
+    const sellerId = localStorage.getItem("seller_id");
+    fetch(`http://127.0.0.1:8000/food/food-items-for-seller/${sellerId}/`, {
         method: 'GET',
         headers: {
             Authorization: `Token ${token}`,
@@ -152,16 +154,17 @@ const fetchFoodItem = () => {
         })
         .catch((error) => {
             console.error('Error:', error);
-            document.getElementById("error").innerText = "Error fetching mango items.";
+            document.getElementById("error").innerText = "Error fetching food items.";
         });
 };
 
 
 const deleteFood = (id) => {
     const token = localStorage.getItem("token");
+    const sellerId = localStorage.getItem("seller_id");
     // if (!confirm("Are you sure you want to delete this mango?")) return;
 
-    fetch(`http://127.0.0.1:8000/food/food-item/${id}/`, {
+    fetch(`http://127.0.0.1:8000/food/food-item/delete/${id}/${sellerId}/`, {
         method: 'DELETE',
         headers: {
             Authorization: `Token ${token}`,
@@ -170,7 +173,7 @@ const deleteFood = (id) => {
     })
         .then((response) => {
             if (response.status === 204) {
-                // alert("Mango deleted successfully!");
+                alert("Deleted successfully!");
                 fetchFoodItem();
             } else {
                 alert("Failed to delete item!");

@@ -1,0 +1,108 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+  }
+  
+  /* Customer Card Styles */
+  .customer-card {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 400px;
+    text-align: center;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+  }
+  
+  .customer-card img.customer-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 2px solid #007BFF;
+    margin-bottom: 15px;
+    object-fit: cover;
+  }
+  
+  .customer-card h2 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 18px;
+  }
+  
+  .customer-card p {
+    margin: 10px 0;
+    font-size: 14px;
+    color: #555;
+  }
+  
+  /* Form Styles */
+  #edit-profile-form {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 400px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+  }
+  
+  #edit-profile-form h2 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  #edit-profile-form label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 5px;
+  }
+  
+  #edit-profile-form input[type="text"],
+  #edit-profile-form input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: #555;
+    background-color: #f9f9f9;
+  }
+  
+  #edit-profile-form input[type="file"] {
+    padding: 5px;
+  }
+  
+  #edit-profile-form button {
+    width: 100%;
+    padding: 10px 0;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  #edit-profile-form button:hover {
+    background-color: #0056b3;
+  }
+  
+  #edit-profile-form #error {
+    color: red;
+    font-size: 13px;
+    margin-top: -10px;
+    margin-bottom: 15px;
+    text-align: left;
+  }
+  

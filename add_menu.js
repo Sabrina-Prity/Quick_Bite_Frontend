@@ -15,7 +15,7 @@ const handleAddMenu = (event) => {
             Authorization: `Token ${token}`,
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name }), // Only include 'name'
+        body: JSON.stringify({ name }), 
     })
         .then((response) => response.json())
         .then((data) => {
@@ -34,12 +34,7 @@ const handleAddMenu = (event) => {
 
 
 const fetchMenu = () => {
-    // fetch('http://127.0.0.1:8000/category/list/', {
-    //     method: 'GET',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-    // })
+   
     const sellerId = localStorage.getItem("seller_id");
     const token = localStorage.getItem("token");
     fetch(`http://127.0.0.1:8000/category/seller_category_list/${sellerId}/`, {
@@ -74,8 +69,8 @@ const fetchMenu = () => {
 
 const deleteCategory = (id) => {
     if (!confirm("Are you sure you want to delete this category?")) return;
-
-    fetch(`http://127.0.0.1:8000/category/list/${id}/`, {
+    const sellerId = localStorage.getItem("seller_id");
+    fetch(`http://127.0.0.1:8000/category/delete_seller_category/${sellerId}/${id}/`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',

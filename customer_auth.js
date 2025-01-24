@@ -93,23 +93,42 @@ const getValue = (id) => {
 
 
 
-const customerLogin = (event) => {
-    event.preventDefault();
-    const username = getValue("login-username");
-    const password = getValue("login-password");
-
-    if (username && password) {
-        fetch("http://127.0.0.1:8000/customer/login/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ username, password }),
-        })
-        .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
-
+const customerLogin =async (event) => {
+        event.preventDefault();
+        const username = getValue("login-username");
+        const password = getValue("login-password");
+    
+        if (username && password) {
+            try {
+    
+                const customerListResponse = await fetch("http://127.0.0.1:8000/customer/customer-list/");
+                if (!customerListResponse.ok) {
+                    throw new Error("Failed to fetch customer list.");
+                }
+    
+                const customerList = await customerListResponse.json();
+    
+                const customer = customerList.find((s) => s.user === username);
+                if (!customer) {
+                    throw new Error("This username does not belong to a customer.");
+                }
+    
+                // Proceed with login if the username exists in the customer list
+                const loginResponse = await fetch("http://127.0.0.1:8000/customer/login/", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ username, password }),
+                });
+    
+                if (!loginResponse.ok) {
+                    const errorData = await loginResponse.json();
+                    throw new Error(errorData.detail || "Login failed.");
+                }
+    
+                const data = await loginResponse.json();
+    
                 if (data.token && data.user_id) {
                     alert("Login Successful");
                     localStorage.setItem("token", data.token);
@@ -117,12 +136,11 @@ const customerLogin = (event) => {
                     localStorage.setItem("is_admin", data.is_admin);
                     window.location.href = "index.html";
                 }
-            })
-            .catch((error) => {
+            } catch (error) {
                 console.error("Login error:", error.message);
                 alert(error.message || "An error occurred. Please try again.");
-            });
-    } else {
-        alert("Please enter both username and password.");
-    }
-};
+            }
+        } else {
+            alert("Please enter both username and password.");
+        }
+    };

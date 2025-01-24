@@ -1,5 +1,10 @@
 const fetchDistricts = () => {
-    // console.log("Fetching districts...");
+    const districtSelect = document.getElementById("district");
+    if (!districtSelect) {
+        console.error("Element with ID 'district' not found!");
+        return;
+    }
+
     fetch("http://127.0.0.1:8000/seller/districts/", {
         method: "GET",
         headers: {
@@ -13,25 +18,24 @@ const fetchDistricts = () => {
         return response.json();
     })
     .then((data) => {
-        // console.log("Data",data)
-        const districtSelect = document.getElementById("district");
-        
         districtSelect.innerHTML = '<option value="" selected disabled>Select District</option>';
 
-        const districts = data.districts; 
+        const districts = data.districts;
         districts.forEach(([value, label]) => {
             const option = document.createElement("option");
-            option.value = value; 
-            option.textContent = label; 
+            option.value = value;
+            option.textContent = label;
             districtSelect.appendChild(option);
         });
     })
     .catch((error) => {
-        console.error("Error fetching districts:", error);
-        // document.getElementById("error").textContent = "Failed to load districts.";
+        console.error("Error fetching districts:", error.message);
     });
 };
 
+document.addEventListener("DOMContentLoaded", () => {
+    fetchDistricts();
+});
 
 
 
@@ -141,40 +145,60 @@ const getValue = (id) => {
 };
 
 
-const sellerLogin = (event) => {
+const sellerLogin = async (event) => {
     event.preventDefault();
     const username = getValue("login-username");
     const password = getValue("login-password");
 
     if (username && password) {
-        fetch("http://127.0.0.1:8000/seller/login/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ username, password }),
-        })
-        .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
+        try {
+            // Fetch the list of sellers
+            const sellerListResponse = await fetch("http://127.0.0.1:8000/seller/seller-list/");
+            if (!sellerListResponse.ok) {
+                throw new Error("Failed to fetch seller list.");
+            }
 
-                if (data.token && data.user_id) {
-                    alert("Login Successful");
-                    localStorage.setItem("token", data.token);
-                    localStorage.setItem("user_id", data.user_id);
-                    localStorage.setItem("seller_id", data.seller_id);
-                    localStorage.setItem("is_admin", data.is_admin);
-                    window.location.href = "index.html";
-                }
-            })
-            .catch((error) => {
-                console.error("Login error:", error.message);
-                alert(error.message || "An error occurred. Please try again.");
+            const sellerList = await sellerListResponse.json();
+
+            // Check if the username exists in the seller list
+            const seller = sellerList.find((s) => s.user === username);
+            if (!seller) {
+                throw new Error("This username does not belong to a seller.");
+            }
+
+            // Proceed with login if the username exists in the seller list
+            const loginResponse = await fetch("http://127.0.0.1:8000/seller/login/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ username, password }),
             });
+
+            if (!loginResponse.ok) {
+                const errorData = await loginResponse.json();
+                throw new Error(errorData.detail || "Login failed.");
+            }
+
+            const data = await loginResponse.json();
+
+            if (data.token && data.user_id) {
+                alert("Login Successful");
+                localStorage.setItem("token", data.token);
+                localStorage.setItem("user_id", data.user_id);
+                localStorage.setItem("seller_id", data.seller_id);
+                localStorage.setItem("is_admin", data.is_admin);
+                window.location.href = "index.html";
+            }
+        } catch (error) {
+            console.error("Login error:", error.message);
+            alert(error.message || "An error occurred. Please try again.");
+        }
     } else {
         alert("Please enter both username and password.");
     }
 };
+
 
 
 
@@ -205,4 +229,3 @@ const handlelogOut = (event) => {
         });
 };
 
-fetchDistricts();

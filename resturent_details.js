@@ -1,65 +1,95 @@
-const fetchSellerCategories = () => {
-    const sellerId = localStorage.getItem("seller_id");
+const loadcartId = () => {
     const token = localStorage.getItem("token");
-    fetch(`http://127.0.0.1:8000/seller_category_list/${sellerId}/`, {
-        method: 'GET',
+    if (!token) {
+        alert("Please login");
+        return;
+    }
+    fetch(`http://127.0.0.1:8000/cart/cart-details/${localStorage.getItem("user_id")}/`,{
         headers: {
-            Authorization: `Token ${token}`,
+            'Authorization': `Token ${token}`,
             'Content-Type': 'application/json',
         },
     })
-        .then((response) => response.json())
+        .then((res) => res.json())
         .then((data) => {
-            if (data.detail) {
-                console.error(data.detail);
-            } else {
-                console.log("Categories:", data);
-                // Render categories in the frontend
-            }
-        })
-        .catch((error) => console.error("Error fetching categories:", error));
+            // console.log("Cart Data", data)
+            const cartId = data.id;
+            localStorage.setItem("cartId", cartId); 
+        });
 };
+loadcartId();
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const deleteSellerCategory = (categoryId) => {
-    const sellerId = localStorage.getItem("seller_id");
-
-    fetch(`http://127.0.0.1:8000/seller/${sellerId}/categories/${categoryId}/`, {
-        method: "DELETE",
+const getparams = () => {
+    const token = localStorage.getItem("token");
+    const param = new URLSearchParams(window.location.search).get("resturentId");
+    // console.log("Resturent Id", param);
+    fetch(`http://127.0.0.1:8000/seller/seller-detail/${param}`,{
+        method : "GET",
+        headers : {
+            Authorization: `Token ${token}`,
+            'Content-Type': 'application/json',
+        }
     })
-        .then((response) => {
-            if (response.status === 204) {
-                console.log("Category deleted successfully!");
-                fetchCategories(); // Refresh the list
-            } else {
-                console.error("Failed to delete category.");
-            }
-        })
-        .catch((error) => console.error("Error deleting category:", error));
+        .then((res) => res.json())
+        .then((data) => {
+            // console.log("Resturent Details", data);
+            displayResturentDetails(data);
+        });
 };
 
-fetchCategories();
+getparams();
+
+
+const displayResturentDetails = (data) => {
+    // console.log("Resturent Details", data)
+    const resturentContainer = document.getElementById("resturent-container");
+
+    if (!resturentContainer) {
+        console.error("Restaurant container not found!");
+        return;
+    }
+
+    resturentContainer.innerHTML = "";
+    const formattedDistrict = data?.district
+            ? data.district.charAt(0).toUpperCase() + data.district.slice(1).toLowerCase()
+            : ""; 
+ 
+    resturentContainer.innerHTML = `
+    
+        <div class="d-flex align-items-start gap-3">
+            <!-- Image Section -->
+            <div class="col-md-7">
+                <img src="${data.image}" alt="${data.company_name}" class="img-fluid rounded w-100">
+            </div>
+            <!-- Details Section -->
+            <div class="res-Details col-md-5">
+                <h2>${data.company_name}</h2>
+                <p><strong>Street Name:</strong> ${data.street_name}</p>
+                <p><strong>District:</strong> ${formattedDistrict}</p>
+                <p><strong>Postal Code:</strong> ${data.postal_code}</p>
+                <p><strong>Mobile Number:</strong> ${data.mobile_no}</p>
+
+                <button class="details-btn" onclick="window.location.href='resturent-review.html?sellerId=${data.id}'">
+                Resturent Reviews
+                </button>
+            </div>
+        </div>
+    `;
+};
+
+
+
 
 
 
 const loadCategorys = () => {
-    fetch("http://127.0.0.1:8000/seller/seller-list/")
+    const param = new URLSearchParams(window.location.search).get("resturentId");
+    console.log("Resturent Id", param);
+    const token = localStorage.getItem("token");
+    fetch(`http://127.0.0.1:8000/category/seller_category_list/${param}/`)
         .then((res) => res.json())
-        // .then((data) => console.log(data))
+        // .then((data) => console.log("Category" ,data))
         .then((data) => displayCategorys(data))
         .catch((err) => console.log(err));
 };
@@ -67,7 +97,7 @@ const loadCategorys = () => {
 const displayCategorys = ((data)=>{
     // console.log("Data",data)
     data?.forEach((item)=>{
-        // console.log("Item Name", item)
+        console.log("Item Name", item)
         const parent = document.getElementById("category");
             const li = document.createElement("li");
             li.classList.add("dropdown-item");
@@ -79,15 +109,15 @@ const displayCategorys = ((data)=>{
     });
  });
 
- const loadFoods = (search) => 
-    {
-        console.log(search)
+ const loadFoods = (search) => {
+    console.log(search)
+    const param = new URLSearchParams(window.location.search).get("resturentId");
     document.getElementById("card").innerHTML = "";
-    fetch(`http://127.0.0.1:8000/food/food-item/?search=${search ? search : ""}`) 
+    fetch(`http://127.0.0.1:8000/food/food-items-for-seller/${param}/?search=${search ? search : ""}`) 
         .then((res) => res.json())
         // .then((data) => console.log(data))
         .then((data) =>{
-            // console.log(data)
+            console.log(data)
             if (data.length > 0)
             {
                 document.getElementById("nodata").style.display = "none";
@@ -106,7 +136,7 @@ const displayFoods = (items) => {
     parent.innerHTML = ""; 
 
     items?.forEach((item) => {
-        console.log("Food", item)
+        // console.log("Food", item)
         const div = document.createElement("div");
         div.classList.add("item-card");
         div.innerHTML = `
@@ -138,28 +168,3 @@ loadCategorys();
 
 loadFoods();
 
-
-
-const createCart=()=>{
-    const token = localStorage.getItem("token");
-    console.log("Create Cart",token)
-    if(!token){
-        alert("Please Login!")
-        return
-    }
-    object = {
-        user : localStorage.getItem("user_id"),
-    }
-    console.log(object)
-    fetch("http://127.0.0.1:8000/add_to_cart/cart_create/",{
-        method : "POST",
-        headers : {
-            Authorization: `Token ${token}`,
-            'Content-Type': 'application/json',
-        },
-        body : JSON.stringify(object)
-    })
-
-}
-
-createCart();

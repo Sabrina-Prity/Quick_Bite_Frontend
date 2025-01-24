@@ -31,13 +31,28 @@ const displayResturents = (data) => {
             <p>Postal Code: ${item?.postal_code}</p>
             <p>District: ${formattedDistrict}</p>
             <p>Mobile: ${item?.mobile_no}</p>
-            <button class="details-btn">
-                <a href="resturent_details.html?mangoId=${item.id}">Details</a>
+            <button class="details-btn" data-id="${item.id}">
+                Details
             </button>
         `;
         parent.appendChild(div);
     });
+
+    // Add click event listeners to the buttons
+    const buttons = parent.querySelectorAll(".details-btn");
+    buttons.forEach((button) => {
+        button.addEventListener("click", (event) => {
+            const token = localStorage.getItem("token"); // Check for token in localStorage
+            if (token) {
+                const resturentId = button.dataset.id;
+                window.location.href = `resturent_details.html?resturentId=${resturentId}`;
+            } else {
+                alert("Please login first.");
+            }
+        });
+    });
 };
+
 
 const handleSearch = (event) => {
     event.preventDefault();
@@ -60,13 +75,16 @@ const createCart=()=>{
         user : localStorage.getItem("user_id"),
     }
     console.log(object)
-    fetch("http://127.0.0.1:8000/add_to_cart/cart_create/",{
+    fetch("http://127.0.0.1:8000/cart/create-cart/",{
         method : "POST",
         headers : {
             Authorization: `Token ${token}`,
             'Content-Type': 'application/json',
         },
         body : JSON.stringify(object)
+    })
+    .then((data)=> {
+        console.log("Cart Create Successful", data)
     })
 
 }
