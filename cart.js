@@ -66,53 +66,83 @@ const loadCartProduct = () => {
 };
 
 const displayCart = (items) => {
-    // console.log("Cart Items", items);
+    // console.log("Cart Items:", items);
+
     const parent = document.getElementById("cart-section");
     parent.innerHTML = `<h2>Your Cart</h2>`;
 
     if (!items || items.length === 0) {
         parent.innerHTML += `
         <img src="Images/cart_empty.jpg" alt="Empty Cart" class="empty-cart">
-        <p>Your cart is empty!</p>
-        `;
-
-    }
-    else {
-        parent.innerHTML += `<p>Total Item : ${items.length}</p>`
+        <p>Your cart is empty!</p>`;
+        return;
     }
 
-    items.forEach((item) => {
-        console.log("Item", item)
-        const div = document.createElement("div");
-        div.classList.add("cart-item");
-        div.id = item.id;
+    // Group items by seller
+    const groupedItems = items.reduce((groups, item) => {
+        const sellerId = item.food_item.seller.id; // Use seller ID for grouping
+        if (!groups[sellerId]) {
+            groups[sellerId] = {
+                company_name: item.food_item.seller.company_name,
+                items: [],
+            };
+        }
+        groups[sellerId].items.push(item);
+        return groups;
+    }, {});
 
+    // Display total items
+    parent.innerHTML += `<p>Total Items: ${items.length}</p>`;
 
-        div.innerHTML = `
-       <div class="cart-item-container">
-    <div class="cart-item-image">
-        <img src="${item.food_item.image}" alt="Food Image" style="width:100px; height:auto;">
-    </div>
-    <div class="cart-item-details">
-        <h4>Name: ${item.food_item.name}</h4>
-        <label for="quantity-${item.id}">Quantity:</label>
-        <input type="number" class="quantity" id="quantity-${item.id}" name="quantity" min="1"
-            max="${item.food_item?.quantity}" value="1"
-            onchange="updatePrice('${item.id}', ${item.food_item.price})">
-        <p>Price: $<span id="price-${item.id}">${item.food_item.price}</span></p>
-        
-        <button class="detail-btn">
-            <a href="mangoDetails.html?mangoId=${item.food_item.id}" class="detail-link">Details</a>
-        </button>
-        
-        <button class="delete-btn" onclick="deleteCartItem('${item.id}')">Delete</button>
-    </div>
-</div>
-        `;
+    // Loop through each seller group and display items
+    Object.values(groupedItems).forEach((group) => {
+        // Add a heading for the seller's company name
+        const sellerHeading = document.createElement("h3");
+        sellerHeading.textContent = `Seller: ${group.company_name}`;
+        parent.appendChild(sellerHeading);
 
-        parent.appendChild(div);
+        // Create a container for the seller's items
+        const sellerContainer = document.createElement("div");
+        sellerContainer.classList.add("seller-container");
+
+        group.items.forEach((item) => {
+            // console.log("Item:", item);
+
+            const div = document.createElement("div");
+            div.classList.add("cart-item");
+            div.id = item.id;
+
+            div.innerHTML = `
+                <div class="cart-item-container">
+                    <div class="cart-item-image">
+                        <img src="${item.food_item.image}" alt="Food Image" style="width:100px; height:auto;">
+                    </div>
+                    <div class="cart-item-details">
+                        <h4>Name: ${item.food_item.name}</h4>
+                        <label for="quantity-${item.id}">Quantity:</label>
+                        <input type="number" class="quantity" id="quantity-${item.id}" name="quantity" min="1"
+                            max="${item.food_item?.quantity}" value="${item.quantity}"
+                            onchange="updatePrice('${item.id}', ${item.food_item.price})">
+                        <p>Price: $<span id="price-${item.id}">${item.food_item.price}</span></p>
+                        <button class="detail-btn">
+                            <a href="foodDetails.html?foodId=${item.food_item.id}" class="detail-link">Details</a>
+                        </button>
+                        <button class="delete-btn" onclick="deleteCartItem('${item.id}')">Delete</button>
+                    </div>
+                </div>
+                <button class="detail-btn">
+                            <a href="" class="detail-link">Checkout</a>
+                    </button>
+            `;
+
+            sellerContainer.appendChild(div);
+        });
+
+        parent.appendChild(sellerContainer);
     });
 };
+
+
 
 
 function updatePrice(cartItemId, unitPrice) {

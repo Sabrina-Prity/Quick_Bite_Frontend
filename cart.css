@@ -6,7 +6,25 @@ body {
     color: #333;
     margin: 0;                /* Remove default margin */
   }
-  
+  /* Seller container */
+.seller-container {
+  margin: 20px 0;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+/* Seller heading */
+#cart-section h3 {
+  margin-top: 30px;
+  color: #444;
+  font-size: 18px;
+  font-weight: bold;
+  /* text-transform: uppercase; */
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 5px;
+}
   /* Cart section container */
   #cart-section {
     width: 50%;    

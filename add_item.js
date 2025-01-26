@@ -87,7 +87,7 @@ const handleAddFoodItem = (event) => {
             })
             .then((res) => res.json())
             .then((data) => {
-                console.log("Food Data", data)
+                console.log("Posted Food Data", data)
                 
                 document.getElementById("error").innerText = "Product added successfully!";
 
@@ -154,7 +154,7 @@ const fetchFoodItem = () => {
         })
         .catch((error) => {
             console.error('Error:', error);
-            document.getElementById("error").innerText = "Error fetching food items.";
+            // document.getElementById("error").innerText = "Error fetching food items.";
         });
 };
 

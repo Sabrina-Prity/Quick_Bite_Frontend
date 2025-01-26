@@ -1,7 +1,7 @@
 const loadReviews = () => {
     const token = localStorage.getItem("token");
     const param = new URLSearchParams(window.location.search).get("sellerId");
-    
+    console.log("SellerId", param)
     fetch(`http://127.0.0.1:8000/seller/reviews/${param}`,{
         method : "GET",
         headers : {
@@ -12,7 +12,7 @@ const loadReviews = () => {
         .then((res) => res.json())
         .then((data) => {
             console.log("Reviews", data);
-            displayReviews(data);(data);
+            displayReviews(data);
         });
 };
 

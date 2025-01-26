@@ -21,7 +21,7 @@ const handleAddMenu = (event) => {
         .then((data) => {
             console.log("Category Data:", data);
             if (data.id) {
-                alert("Category added successfully!");
+                alert("Menu added successfully!");
                 document.getElementById("name").value = ""; // Clear input field
                 fetchMenu(); // Refresh the category list
             } else {
@@ -68,7 +68,7 @@ const fetchMenu = () => {
 
 
 const deleteCategory = (id) => {
-    if (!confirm("Are you sure you want to delete this category?")) return;
+    // if (!confirm("Are you sure you want to delete this category?")) return;
     const sellerId = localStorage.getItem("seller_id");
     fetch(`http://127.0.0.1:8000/category/delete_seller_category/${sellerId}/${id}/`, {
         method: 'DELETE',

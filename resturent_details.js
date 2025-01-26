@@ -136,7 +136,7 @@ const displayFoods = (items) => {
     parent.innerHTML = ""; 
 
     items?.forEach((item) => {
-        // console.log("Food", item)
+        console.log("Food", item)
         const div = document.createElement("div");
         div.classList.add("items-card");
         div.innerHTML = `
@@ -146,7 +146,7 @@ const displayFoods = (items) => {
             <h6>Category: ${item?.category}</h6>
             
             <button class="detail-btn">
-                <a href="foodDetails.html?foodId=${item.id}">Details</a>
+                <a href="foodDetails.html?foodId=${item.id}&sellerId=${item.seller}">Details</a>
             </button>
             <button class="detail-btn">
                 <a  onclick="addToCart('${item.id}', '${item.price}')">Add To Cart</a>

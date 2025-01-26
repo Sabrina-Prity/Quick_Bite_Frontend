@@ -202,6 +202,7 @@ const sellerLogin = async (event) => {
 
 
 
+
 const handlelogOut = (event) => {
     event.preventDefault();
     const token = localStorage.getItem("token");

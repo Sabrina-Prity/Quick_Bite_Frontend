@@ -35,6 +35,7 @@
 /* Food Image */
 .food-image img {
     width: 350px;
+    max-height: 350px;
     margin-right: 50px;
     border-radius: 10px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
@@ -114,4 +115,182 @@
 
 .buy-now-btn:hover {
     background-color: #d32f2f;
+}
+
+
+
+
+/* Comment Section Styling */
+#comments-section {
+    margin: 30px 0;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  #comments-section h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Comment Form */
+  #comment-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  #comment-form h4 {
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+  }
+  
+  #comment-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    min-height: 100px;
+    resize: vertical;
+  }
+  
+  #comment-form textarea:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  #comment-form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-top: 10px;
+  }
+  
+  #comment-form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    margin-top: 15px;
+    cursor: pointer;
+  }
+  
+  #comment-form button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Login message when not logged in */
+  #comment-login-msg {
+    color: #ff0000;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-top: 20px;
+  }
+  
+  /* Comment List Styling */
+  #comments-list {
+    margin-top: 20px;
+  }
+  
+  .comment {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+  }
+  
+  .comment .username {
+    font-weight: bold;
+    color: #333;
+    font-size: 1.1rem;
+  }
+  
+  .comment .date {
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 10px;
+  }
+  
+  .comment .text {
+    font-size: 1rem;
+    color: #444;
+  }
+  
+  .comment .rating {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    color: #ff9800;
+  }
+  
+  .comment .rating i {
+    margin-right: 5px;
+  }
+  
+/* Style for the comment buttons container */
+.comment div {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+/* Common style for both buttons */
+.comment button {
+    padding: 8px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+/* Edit button style */
+.comment .edit-btn {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+.comment .edit-btn:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+.comment .edit-btn:active {
+    background-color: #388e3c;
+}
+
+/* Delete button style */
+.comment .delete-btn {
+    background-color: #f44336; /* Red */
+    color: white;
+}
+
+.comment .delete-btn:hover {
+    background-color: #e53935;
+    transform: scale(1.05);
+}
+
+.comment .delete-btn:active {
+    background-color: #d32f2f;
+}
+
+/* Optional: add margin to the top of the comment */
+.comment {
+    margin-bottom: 20px;
+}
+
+/* Optional: Style for the comment div */
+.comment p {
+    margin-top: 10px;
+    font-size: 16px;
 }
