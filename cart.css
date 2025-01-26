@@ -1,0 +1,141 @@
+/* General body styling */
+body {
+    height: 100vh;            /* Full viewport height */
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;                /* Remove default margin */
+  }
+  
+  /* Cart section container */
+  #cart-section {
+    width: 50%;    
+    margin: auto;
+    background: #fff;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+    margin-bottom: 50px;
+    overflow-y: auto;         /* Scroll if the cart has a lot of items */
+  }
+  
+  /* Container for each cart item */
+  .cart-item-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Style for the image section */
+  .cart-item-image img {
+    padding: 10px;
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  
+  /* Details section for name, quantity, price */
+  .cart-item-details {
+    flex-grow: 1;
+    padding-left: 15px;
+    text-align: left;
+  }
+  
+  /* Heading and text styling */
+  .cart-item-details h4 {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+    color: #333;
+  }
+  
+  .cart-item-details p {
+    font-size: 14px;
+    color: #555;
+    margin: 5px 0;
+  }
+  
+  .empty-cart {
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+  }
+  .quantity{
+    width: 80px;
+    height: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  /* Buy Now button styling */
+  .buy-now-btn {
+    background-color: #41aa1e;
+    color: white;
+    padding: 10px 15px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .buy-now-btn:hover {
+    background-color: #448f1e;
+  }
+  
+  
+  /* detail-btn button styling */
+  .detail-btn {
+    background-color: #5a9d1bda;
+    color: white;
+    padding: 10px 15px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 10px; 
+  }
+  
+  .detail-btn:hover {
+    background-color: #4a9206da;
+  }
+
+  .detail-btn .detail-link {
+    text-decoration: none; /* Ensure no underline */
+    color: white; /* Match the button text color */
+    display: inline-block; /* Ensure it behaves well with button padding */
+}
+  /* Delete button styling */
+  .delete-btn {
+    background-color: #f44336;
+    color: white;
+    padding: 10px 15px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 10px; /* Space between buttons */
+  }
+  
+  .delete-btn:hover {
+    background-color: #d32f2f;
+  }
+
+
+@media (max-width: 768px) {
+    .empty-cart{
+        height: 200px;
+    }
+}

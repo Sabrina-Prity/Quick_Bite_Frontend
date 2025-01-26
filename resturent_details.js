@@ -12,7 +12,7 @@ const loadcartId = () => {
     })
         .then((res) => res.json())
         .then((data) => {
-            // console.log("Cart Data", data)
+            console.log("Cart Data", data)
             const cartId = data.id;
             localStorage.setItem("cartId", cartId); 
         });
@@ -97,7 +97,7 @@ const loadCategorys = () => {
 const displayCategorys = ((data)=>{
     // console.log("Data",data)
     data?.forEach((item)=>{
-        console.log("Item Name", item)
+        // console.log("Item Name", item)
         const parent = document.getElementById("category");
             const li = document.createElement("li");
             li.classList.add("dropdown-item");
@@ -110,14 +110,14 @@ const displayCategorys = ((data)=>{
  });
 
  const loadFoods = (search) => {
-    console.log(search)
+    // console.log(search)
     const param = new URLSearchParams(window.location.search).get("resturentId");
     document.getElementById("card").innerHTML = "";
     fetch(`http://127.0.0.1:8000/food/food-items-for-seller/${param}/?search=${search ? search : ""}`) 
         .then((res) => res.json())
         // .then((data) => console.log(data))
         .then((data) =>{
-            console.log(data)
+            // console.log(data)
             if (data.length > 0)
             {
                 document.getElementById("nodata").style.display = "none";
@@ -138,15 +138,18 @@ const displayFoods = (items) => {
     items?.forEach((item) => {
         // console.log("Food", item)
         const div = document.createElement("div");
-        div.classList.add("item-card");
+        div.classList.add("items-card");
         div.innerHTML = `
-            <img class="item-img" src="${item?.image}" />
+            <img class="items-img" src="${item?.image}" />
             <h4>${item?.name}</h4>
             <h6>Price: $${item?.price}</h6>
             <h6>Category: ${item?.category}</h6>
-            <p>${item?.description.slice(0, 70)}</p>
-            <button class="details-btn">
-                <a href="mangoDetails.html?mangoId=${item.id}">Details</a>
+            
+            <button class="detail-btn">
+                <a href="foodDetails.html?foodId=${item.id}">Details</a>
+            </button>
+            <button class="detail-btn">
+                <a  onclick="addToCart('${item.id}', '${item.price}')">Add To Cart</a>
             </button>
         `;
         parent.appendChild(div);

@@ -285,14 +285,14 @@ body {
     height: 70px;
     margin: 20px 0; /* Add space around the container */
     padding: 10px;
-    background-color: #e2a787; /* Light background */
+    background-color: #e7dfdf; /* Light background */
     border-radius: 10px; /* Rounded corners */
     box-shadow: 1px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 /* Dropdown Button Styling */
 .btn-secondary {
-    background-color: #e17a39; /* Mango yellow */
+    background-color: #cd6c4f; /* Mango yellow */
     color: #fff;
     border: none;
     border-radius: 20px; /* Rounded corners */

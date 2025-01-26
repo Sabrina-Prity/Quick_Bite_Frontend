@@ -15,7 +15,7 @@
       crossorigin="anonymous">
 
     <!-- <link rel="stylesheet" href="style.css"> -->
-    <link rel="stylesheet" href="resturent_details.css">
+    <link rel="stylesheet" href="foodDetails.css">
     <link rel="icon"
       href="../project_app/templates/project_app/images/logo.jpeg">
 
@@ -39,66 +39,49 @@
 
     <main>
 
-     <!-- Resturent Details Container -->
-      <div id="resturent-container" class="resturent-container row">
-        
-      </div>
-     
-
-
-      <!-- Search bar -->
-      <div class="search-bar-container">
-        <input id="search" class="form-control search-bar" type="search"
-          placeholder="Search Food Item"
-          aria-label="Search">
-        <button onclick="handleSearch(event)" class="btn btn-search"
-          type="submit">Search</button>
-      </div>
-
-      <div class="main-container container">
-        <!-- All Category -->
-        <div class="category-container col-md-2">
-          <div class="dropdown">
-            <button
-              class="btn btn-secondary dropdown-toggle"
-              type="button"
-     
-              id="dropdownMenuButton2"
-              data-bs-toggle="dropdown"
-              aria-expanded="false">
-              All Category
-            </button>
-            <ul
-              id="category"
-              class="dropdown-menu dropdown-menu-dark"
-              aria-labelledby="dropdownMenuButton2"></ul>
+            <div id="food-details"></div>
+         
+      
+          <!-- Comment Section -->
+          <div id="comments-section">
+            <h3>Comments</h3>
+      
+            
+      
+            <!-- Comment form (only visible if user is logged in) -->
+            <div id="comment-form" style="display:none;">
+              <h4>Add a Comment</h4>
+              <textarea id="comment-text" placeholder="Write your comment here"
+                class="form-control"></textarea>
+              <br>
+              <label for="rating">Rating:</label>
+              <select id="rating" class="form-control">
+                <option value="⭐">⭐</option>
+                <option value="⭐⭐">⭐⭐</option>
+                <option value="⭐⭐⭐">⭐⭐⭐</option>
+                <option value="⭐⭐⭐⭐">⭐⭐⭐⭐</option>
+                <option value="⭐⭐⭐⭐⭐">⭐⭐⭐⭐⭐</option>
+              </select>
+              <br>
+              <button class="btn btn-primary" onclick="postComment()">Post
+                Comment</button>
+            </div>
+      
+            <!-- Display existing comments here -->
+            <div id="comments-list">
+              <!-- Comments will be populated here via JavaScript -->
+            </div>
+            
+            <!-- Login message if not logged in -->
+            <div id="comment-login-msg" style="display:none;">Please log in to post a
+              comment.</div>
           </div>
-
-        </div>
-
-        <!-- All Mango Card -->
-        <div class="card-container col-md-9">
-          <div id="card" class="row row-cols-md-3 gap-1">
-            <!-- Mango -->
-          </div>
-          <div id="nodata" class="nodata">
-            <img src="Images/no_data.png" alt>
-          </div>
-        </div>
-      </div>
-
     </main>
-    <!-- <main>
-      
-
-
-      <div id="display-all-seller-category" class="display-all-seller-category">
-
-      </div>
+     
+     
 
 
       
-    </main> -->
     
     
 
@@ -168,7 +151,6 @@
     <script src="nav_bar.js"></script>
     <script src="seller_auth.js"></script>
     <script src="resturent-review.js"></script>
-    <script src="cart.js"></script>
     <script src="foodDetails.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

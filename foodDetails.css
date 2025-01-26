@@ -1,0 +1,117 @@
+/* General Container */
+#food-details {
+    width: 1000px;
+    height: auto;
+    margin: 20px auto;
+    padding: 50px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+/* Close Button */
+.close-btn {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: #f44336;
+}
+
+/* Food Detail */
+.food-detail {
+    display: flex;
+    gap: 20px;
+}
+
+/* Food Image */
+.food-image img {
+    width: 350px;
+    margin-right: 50px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Food Information */
+.food-info {
+    flex: 1;
+}
+
+.food-info h4 {
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.food-info h6 {
+    font-size: 16px;
+    color: #6b6969;
+    margin-bottom: 5px;
+}
+
+.food-info p {
+    font-size: 14px;
+    color: #555;
+    margin: 10px 0;
+}
+
+/* Quantity Input */
+.food-info label {
+    display: block;
+    font-size: 14px;
+    color: #333;
+    margin-top: 15px;
+}
+
+.food-info input[type="number"] {
+    width: 60px;
+    padding: 5px;
+    font-size: 14px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.action-buttons button {
+    padding: 10px 15px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Add to Cart Button */
+.add-to-cart-btn {
+    background-color: #7fb74a;
+    color: white;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #598331;
+}
+
+/* Buy Now Button */
+.buy-now-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.buy-now-btn:hover {
+    background-color: #d32f2f;
+}
