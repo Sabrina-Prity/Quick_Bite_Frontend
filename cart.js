@@ -66,10 +66,8 @@ const loadCartProduct = () => {
 };
 
 const displayCart = (items) => {
-    // console.log("Cart Items:", items);
-
     const parent = document.getElementById("cart-section");
-    parent.innerHTML = `<h2>Your Cart</h2>`;
+    parent.innerHTML = ""; // Clear previous cart content
 
     if (!items || items.length === 0) {
         parent.innerHTML += `
@@ -80,7 +78,7 @@ const displayCart = (items) => {
 
     // Group items by seller
     const groupedItems = items.reduce((groups, item) => {
-        const sellerId = item.food_item.seller.id; // Use seller ID for grouping
+        const sellerId = item.food_item.seller.id;
         if (!groups[sellerId]) {
             groups[sellerId] = {
                 company_name: item.food_item.seller.company_name,
@@ -91,12 +89,8 @@ const displayCart = (items) => {
         return groups;
     }, {});
 
-    // Display total items
-    parent.innerHTML += `<p>Total Items: ${items.length}</p>`;
-
-    // Loop through each seller group and display items
+    // Display grouped items in the cart
     Object.values(groupedItems).forEach((group) => {
-        // Add a heading for the seller's company name
         const sellerHeading = document.createElement("h3");
         sellerHeading.textContent = `Seller: ${group.company_name}`;
         parent.appendChild(sellerHeading);
@@ -106,8 +100,6 @@ const displayCart = (items) => {
         sellerContainer.classList.add("seller-container");
 
         group.items.forEach((item) => {
-            // console.log("Item:", item);
-
             const div = document.createElement("div");
             div.classList.add("cart-item");
             div.id = item.id;
@@ -123,23 +115,35 @@ const displayCart = (items) => {
                         <input type="number" class="quantity" id="quantity-${item.id}" name="quantity" min="1"
                             max="${item.food_item?.quantity}" value="${item.quantity}"
                             onchange="updatePrice('${item.id}', ${item.food_item.price})">
-                        <p>Price: $<span id="price-${item.id}">${item.food_item.price}</span></p>
+                        <p>Price: $<span id="price-${item.id}">${(item.food_item.price * item.quantity).toFixed(2)}</span></p>
+                    </div>
+                    <div class="cart-item-actions">
                         <button class="detail-btn">
                             <a href="foodDetails.html?foodId=${item.food_item.id}" class="detail-link">Details</a>
                         </button>
                         <button class="delete-btn" onclick="deleteCartItem('${item.id}')">Delete</button>
                     </div>
                 </div>
-                <button class="detail-btn">
-                            <a href="" class="detail-link">Checkout</a>
-                    </button>
             `;
 
             sellerContainer.appendChild(div);
         });
 
+        
+
         parent.appendChild(sellerContainer);
+        
     });
+    const checkoutButton = document.createElement("button");
+    checkoutButton.classList.add("checkout-btn");
+    checkoutButton.textContent = "Place Order";
+
+    checkoutButton.addEventListener("click", () => {
+        window.location.href = "checkout.html"; 
+    });
+
+    // Append the checkout button at the end of the cart
+    parent.appendChild(checkoutButton);
 };
 
 
@@ -152,6 +156,33 @@ function updatePrice(cartItemId, unitPrice) {
     const quantity = parseInt(quantityInput.value);
     const totalPrice = unitPrice * quantity;
     priceElement.textContent = totalPrice.toFixed(2);
+}
+
+
+function deleteCartItem(cartItemId) {
+    const url = `http://127.0.0.1:8000/cart/cart-item/update/${cartItemId}/`;
+    const token = localStorage.getItem("token");
+    fetch(url, {
+        method: 'DELETE',
+        headers: {
+            Authorization: `Token ${token}`,
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        const cartItemElement = document.getElementById(cartItemId);
+        if (cartItemElement) {
+            cartItemElement.remove(); 
+        }
+        setTimeout(() => {
+            window.location.reload();
+        }, 100); 
+
+    })
+    .catch(error => {
+        console.error('Error deleting cart item:', error);
+    });
 }
 
 
@@ -207,32 +238,6 @@ function updatePrice(cartItemId, unitPrice) {
 //         });
 // }
 
-
-function deleteCartItem(cartItemId) {
-    const url = `http://127.0.0.1:8000/cart/cart-item/update/${cartItemId}/`;
-    const token = localStorage.getItem("token");
-    fetch(url, {
-        method: 'DELETE',
-        headers: {
-            Authorization: `Token ${token}`,
-            'Content-Type': 'application/json',
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        const cartItemElement = document.getElementById(cartItemId);
-        if (cartItemElement) {
-            cartItemElement.remove(); 
-        }
-        setTimeout(() => {
-            window.location.reload();
-        }, 100); 
-
-    })
-    .catch(error => {
-        console.error('Error deleting cart item:', error);
-    });
-}
 
 
 

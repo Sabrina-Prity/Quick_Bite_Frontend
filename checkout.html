@@ -16,7 +16,7 @@
 
         <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" href="cart.css">
-        <link rel="stylesheet" href="foodDetails.css">
+        <link rel="stylesheet" href="checkout.css">
         <link rel="icon"
             href="../project_app/templates/project_app/images/logo.jpeg">
 
@@ -36,16 +36,46 @@
         </div>
 
         <main>
+            <div class="checkout-containser">
+                <div class="customer-details">
+                    <div class="form-column">
+                        <h1 class="form-title">Add Your Details to Deliver the Food</h1>
+                        <form action="#">
+                            <p id="error" class="form-error"></p>
+                            <div class="form-row">
+                                <input id="first_name" type="text" class="form-input" placeholder="First Name" required />
+                                <input id="last_name" type="text" class="form-input" placeholder="Last Name" required />
+                            </div>
+                            <div class="form-row">
+                                <input id="mobile_no" type="text" class="form-input" placeholder="Mobile Number" required />
+                                <input id="email" type="email" class="form-input" placeholder="Email" required />
+                            </div>
+                            <div class="form-row">
+                                <input id="zila" type="text" class="form-input" placeholder="Zila Name" required />
+                                <input id="upozila" type="text" class="form-input" placeholder="Upozila Name" required />
+                            </div>
+                            <div class="form-row">
+                                <textarea name="address" required class="form-input" placeholder="Your Full Address"
+                                id="address" style="height: 100px"></textarea>
+                            </div>
+                            
+                            <button onclick="sellerRegistration(event)" class="form-button">Submit</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="payment-and-order">
+                    <div class="order-details">
+                        <h2>Order Details</h2>
+                        <!-- Order details content here -->
+                    </div>
+                    <div class="payment-details">
+                        <button onclick="SSLpayment(event)">Payment</button>
 
-            <div id="cart-section" class="cart">
-  
+                    </div>
+                </div>
             </div>
-
-           
-            
-              
-
         </main>
+        
 
         <footer class="footer p-5">
             <div class="container row">
@@ -109,10 +139,9 @@
         <script src="nav_bar.js"></script>
         <script src="customer_auth.js"></script>
         <script src="cart.js"></script>
-        <script src="resturent_details.js"></script>
+        <script src="checkout.js"></script>
         <script src="seller_auth.js"></script>
         <script src="foodDetails.js"></script>
-        <script src="checkout.js"></script>
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

@@ -1,0 +1,122 @@
+/* Main Container Styling */
+.checkout-containser {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    margin: 2rem auto;
+    padding: 1rem;
+    width: 100%;;
+}
+
+/* Form Column */
+.customer-details {
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    flex: 1 1 50%;
+    min-width: 300px;
+}
+
+.customer-details h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.customer-details .form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.customer-details .form-input {
+    flex: 1;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.customer-details .form-input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+
+.customer-details .form-button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 1rem;
+}
+
+.customer-details .form-button:hover {
+    background-color: #0056b3;
+}
+
+/* Payment and Order Column */
+.payment-and-order {
+    flex: 1 1 30%;
+    min-width: 300px;
+}
+
+.order-details,
+.payment-details {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.order-details h2,
+.payment-details h2 {
+    font-size: 1.25rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: left;
+}
+
+.order-table th,
+.order-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.order-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.order-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .checkout-containser {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .customer-details,
+    .payment-and-order {
+        min-width: 100%;
+    }
+}

@@ -23,8 +23,14 @@ const displayReviews = (reviews) => {
     // Clear existing content
     reviewsList.innerHTML = "";
 
+    reviewsList.innerHTML = "";
+    if (reviews.detail) {
+        reviewsList.innerHTML = `<p style="color:white; text-align:center;">${reviews.detail}</p>`;
+        return;
+    }
+
     if (reviews.length === 0) {
-        reviewsList.innerHTML = "<p>No reviews available yet. Be the first to review!</p>";
+        reviewsList.innerHTML = "<p style='color:white; text-align:center;'>No reviews available yet!</p>";
         return;
     }
 
