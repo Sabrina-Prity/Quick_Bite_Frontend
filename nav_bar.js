@@ -41,7 +41,7 @@ fetch("nav_bar.html")
       if (isSeller) {
         userContainer.innerHTML += `
           <li class="nav-item"><a class="nav-link" href="all_reviews.html">Reviews</a></li>
-          <li class="nav-item"><a class="nav-link" href="orders.html">Orders</a></li>
+          <li class="nav-item"><a class="nav-link" href="all_orders.html">Orders</a></li>
           <li class="nav-item"><a class="nav-link" href="add_menu.html">Add Menu</a></li>
           <li class="nav-item"><a class="nav-link" href="add_item.html">Add Item</a></li>
         `;

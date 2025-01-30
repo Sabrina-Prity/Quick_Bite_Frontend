@@ -25,11 +25,11 @@
     color: #333;
 }
 
-.customer-details .form-row {
+/* .customer-details .form-row {
     display: flex;
     gap: 1rem;
     margin-bottom: 1rem;
-}
+} */
 
 .customer-details .form-input {
     flex: 1;

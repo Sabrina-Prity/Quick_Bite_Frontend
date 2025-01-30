@@ -1,4 +1,11 @@
 const loadOrderDetails = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const sellerId = urlParams.get("seller_id");
+
+if (sellerId) {
+    // Fetch seller details or display them accordingly
+    console.log("Seller ID: ", sellerId);
+}
     const cartId = localStorage.getItem("cartId");
     if (!cartId) {
         console.log("No cart found. Please create a cart first.");
@@ -7,7 +14,7 @@ const loadOrderDetails = () => {
 
     const token = localStorage.getItem("token");
 
-    fetch(`http://127.0.0.1:8000/cart/see-cart-item/${cartId}/`, {
+    fetch(`http://127.0.0.1:8000/cart/see-cart-items-for-seller/${cartId}/${sellerId}/`, {
         method: "GET",
         headers: {
             Authorization: `Token ${token}`,
@@ -16,7 +23,7 @@ const loadOrderDetails = () => {
         .then((res) => res.json())
         .then((data) => {
             console.log("Received Cart Data:", data);
-
+            localStorage.setItem("cart_data", JSON.stringify(data));
             // Group data by seller
             const groupedItems = data.reduce((acc, item) => {
                 const sellerName = item.food_item.seller.company_name;
@@ -32,7 +39,7 @@ const loadOrderDetails = () => {
                 return acc;
             }, {});
 
-            // Display grouped data
+            
             displayOrderDetails(groupedItems);
         })
         .catch((error) => {
@@ -96,38 +103,136 @@ const displayOrderDetails = (groupedItems) => {
     orderDetailsDiv.innerHTML = orderHTML;
 };
 
-
-
-const SSLpayment = (event) => {
+const handleOrder = (event) => {
     event.preventDefault();
-    const cartId = localStorage.getItem("cartId");
-    const token = localStorage.getItem('token');
 
-    fetch(`http://127.0.0.1:8000/payment/payment/sslcomarce/?cart_id=${cartId}`, {
+    // Collect form data
+    const mobile = document.getElementById("mobile_no").value;
+    const email = document.getElementById("email").value;
+    const district = document.getElementById("district").value;
+    const full_address = document.getElementById("address").value;
+
+    // Get sellerId from URL query params
+    const urlParams = new URLSearchParams(window.location.search);
+    const sellerId = urlParams.get("seller_id");
+
+    // Get cart data from localStorage
+    let cartData = JSON.parse(localStorage.getItem("cart_data"));
+
+    if (!cartData || cartData.length === 0) {
+        alert("Your cart is empty!");
+        return;
+    }
+
+    const cartId = cartData[0].cart; 
+    console.log("CartId", cartId)
+    const orderData = {
+        mobile,
+        email,
+        district,
+        full_address,
+        cart_items: cartData.map(item => ({
+            food_item: item.food_item.id,  // sending food_item ID
+            quantity: item.quantity,        // sending quantity
+            price: item.price,              // sending price
+        })),
+    };
+    console.log("OrderData", orderData)
+
+    const token = localStorage.getItem("token");
+
+    fetch(`http://127.0.0.1:8000/order/place-order/${cartId}/${sellerId}/`, {
         method: "POST",
-        // headers: {
-        //     'Authorization': `Token ${token}`,  
-        //     'Content-Type': 'application/json',
-        // },
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Token ${token}`,
+        },
+        body: JSON.stringify(orderData), // Send orderData containing cart_items
     })
-    .then((res) => {
-        if (!res.ok) {
-            throw new Error("Failed to initiate payment session");
-        }
-        return res.json(); 
-    })
-    .then((data) => {
-        if (data.GatewayPageURL) {
-            
-            window.location.href = data.GatewayPageURL;
+    .then(response => response.json())
+    .then(data => {
+        if (data.message === "Order placed successfully") {
+            alert("Your order has been placed successfully!");
+
+            // Delete cart items for the specific seller
+            deleteCartItems(cartId, sellerId);
         } else {
-            console.error("Payment gateway URL not received.");
+            document.getElementById("error").innerText = data.message || "An unknown error occurred.";
         }
     })
-    .catch((error) => {
-        console.error("Error:", error);
+    .catch(error => {
+        console.error("Error placing the order:", error);
+        document.getElementById("error").innerText = "There was an issue placing the order.";
     });
 };
+
+// Function to delete cart items for a specific seller
+const deleteCartItems = (cartId, sellerId) => {
+    const token = localStorage.getItem("token");
+
+    fetch(`http://127.0.0.1:8000/cart/clear-seller-cart/${cartId}/${sellerId}/`, {
+        method: "DELETE",
+        headers: {
+            "Authorization": `Token ${token}`,
+        },
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log("Cart items for this seller deleted successfully.");
+
+            // Remove cart items from localStorage that belong to this seller
+            let cartData = JSON.parse(localStorage.getItem("cart_data")) || [];
+            cartData = cartData.filter(item => item.food_item.seller.id !== parseInt(sellerId));
+            localStorage.setItem("cart_data", JSON.stringify(cartData));
+
+            // Reload cart display
+            loadCartProduct();
+        } else {
+            console.error("Failed to delete cart items for this seller.");
+        }
+    })
+    .catch(error => console.error("Error deleting cart items:", error));
+};
+
+
+
+// const SSLpayment = (event) => {
+//     event.preventDefault();
+//     const cartId = localStorage.getItem("cartId");
+//     const token = localStorage.getItem("token");
+
+//     fetch("http://127.0.0.1:8000/payment/sslcomarce/", {
+//         method: "POST",
+//         headers: {
+//             "Authorization": `Token ${token}`,
+//             "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({ cart_id: cartId })
+//     })
+//     .then((res) => {
+//         if (res.status === 401) {
+//             // window.location.href = data.GatewayPageURL;
+//             alert("You must be logged in to proceed with payment.");
+//             window.location.href = "http://127.0.0.1:5500/customer_login.html";  // Redirect user to login
+//             return;
+//         }
+//         if (!res.ok) {
+//             throw new Error("Failed to initiate payment session");
+//         }
+//         return res.json();
+//     })
+//     .then((data) => {
+//         if (data.GatewayPageURL) {
+//             window.location.href = data.GatewayPageURL;
+//         } else {
+//             console.error("Payment gateway URL not received.");
+//         }
+//     })
+//     .catch((error) => {
+//         console.error("Error:", error);
+//     });
+// };
+
 
 
 loadOrderDetails();

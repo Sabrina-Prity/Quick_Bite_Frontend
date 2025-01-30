@@ -57,14 +57,13 @@ const loadCartProduct = () => {
     )
         .then((res) => res.json())
         .then((data) => {
-            console.log("Received Cart Data:", data);
+            // console.log("Received Cart Data:", data);
             displayCart(data);
         })
         .catch((error) => {
             console.error("Error adding to cart:", error);
         });
 };
-
 const displayCart = (items) => {
     const parent = document.getElementById("cart-section");
     parent.innerHTML = ""; // Clear previous cart content
@@ -82,6 +81,7 @@ const displayCart = (items) => {
         if (!groups[sellerId]) {
             groups[sellerId] = {
                 company_name: item.food_item.seller.company_name,
+                seller_id: sellerId,  // Store seller ID for later use
                 items: [],
             };
         }
@@ -129,22 +129,104 @@ const displayCart = (items) => {
             sellerContainer.appendChild(div);
         });
 
-        
-
         parent.appendChild(sellerContainer);
-        
-    });
-    const checkoutButton = document.createElement("button");
-    checkoutButton.classList.add("checkout-btn");
-    checkoutButton.textContent = "Place Order";
 
-    checkoutButton.addEventListener("click", () => {
-        window.location.href = "checkout.html"; 
-    });
+        // Create a checkout button specific for this seller
+        const checkoutButton = document.createElement("button");
+        checkoutButton.classList.add("checkout-btn");
+        checkoutButton.textContent = "Place Order";
 
-    // Append the checkout button at the end of the cart
-    parent.appendChild(checkoutButton);
+        checkoutButton.addEventListener("click", () => {
+            // Redirect to the checkout page with the seller_id in the URL
+            window.location.href = `checkout.html?seller_id=${group.seller_id}`;
+        });
+
+        // Append the checkout button at the end of the seller's section
+        sellerContainer.appendChild(checkoutButton);
+    });
 };
+
+
+// const displayCart = (items) => {
+//     const parent = document.getElementById("cart-section");
+//     parent.innerHTML = ""; // Clear previous cart content
+
+//     if (!items || items.length === 0) {
+//         parent.innerHTML += `
+//         <img src="Images/cart_empty.jpg" alt="Empty Cart" class="empty-cart">
+//         <p>Your cart is empty!</p>`;
+//         return;
+//     }
+
+//     // Group items by seller
+//     const groupedItems = items.reduce((groups, item) => {
+//         const sellerId = item.food_item.seller.id;
+//         if (!groups[sellerId]) {
+//             groups[sellerId] = {
+//                 company_name: item.food_item.seller.company_name,
+//                 items: [],
+//             };
+//         }
+//         groups[sellerId].items.push(item);
+//         return groups;
+//     }, {});
+
+//     // Display grouped items in the cart
+//     Object.values(groupedItems).forEach((group) => {
+//         const sellerHeading = document.createElement("h3");
+//         sellerHeading.textContent = `Seller: ${group.company_name}`;
+//         parent.appendChild(sellerHeading);
+
+//         // Create a container for the seller's items
+//         const sellerContainer = document.createElement("div");
+//         sellerContainer.classList.add("seller-container");
+
+//         group.items.forEach((item) => {
+//             const div = document.createElement("div");
+//             div.classList.add("cart-item");
+//             div.id = item.id;
+
+//             div.innerHTML = `
+//                 <div class="cart-item-container">
+//                     <div class="cart-item-image">
+//                         <img src="${item.food_item.image}" alt="Food Image" style="width:100px; height:auto;">
+//                     </div>
+//                     <div class="cart-item-details">
+//                         <h4>Name: ${item.food_item.name}</h4>
+//                         <label for="quantity-${item.id}">Quantity:</label>
+//                         <input type="number" class="quantity" id="quantity-${item.id}" name="quantity" min="1"
+//                             max="${item.food_item?.quantity}" value="${item.quantity}"
+//                             onchange="updatePrice('${item.id}', ${item.food_item.price})">
+//                         <p>Price: $<span id="price-${item.id}">${(item.food_item.price * item.quantity).toFixed(2)}</span></p>
+//                     </div>
+//                     <div class="cart-item-actions">
+//                         <button class="detail-btn">
+//                             <a href="foodDetails.html?foodId=${item.food_item.id}" class="detail-link">Details</a>
+//                         </button>
+//                         <button class="delete-btn" onclick="deleteCartItem('${item.id}')">Delete</button>
+//                     </div>
+//                 </div>
+//             `;
+
+//             sellerContainer.appendChild(div);
+//         });
+
+        
+
+//         parent.appendChild(sellerContainer);
+        
+//     });
+//     const checkoutButton = document.createElement("button");
+//     checkoutButton.classList.add("checkout-btn");
+//     checkoutButton.textContent = "Place Order";
+
+//     checkoutButton.addEventListener("click", () => {
+//         window.location.href = "checkout.html"; 
+//     });
+
+//     // Append the checkout button at the end of the cart
+//     parent.appendChild(checkoutButton);
+// };
 
 
 
