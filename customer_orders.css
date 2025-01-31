@@ -1,0 +1,70 @@
+.order-history-table {
+    width: 100%;
+    max-width: 900px;
+    border-collapse: collapse;
+    margin: 20px auto;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.order-history-table th, .order-history-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.order-history-table th {
+    background: #f8f8f8;
+    font-weight: bold;
+}
+
+.status-cell {
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.status-pending {
+    color: orange;
+    font-weight: bold;
+}
+
+.status-complete {
+    color: green;
+    font-weight: bold;
+}
+
+.delete-button {
+    background: red;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+.delete-button:hover {
+    background: darkred;
+}
+
+.delete-button:disabled {
+    background: #d3d3d3; /* Light grey */
+    cursor: not-allowed;
+}
+
+.status-pending {
+    color: orange;
+    font-weight: bold;
+}
+
+.status-complete {
+    color: green;
+    font-weight: bold;
+}
+
+.status-canceled {
+    color: red;
+    font-weight: bold;
+}

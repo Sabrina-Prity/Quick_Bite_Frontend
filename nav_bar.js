@@ -29,6 +29,7 @@ fetch("nav_bar.html")
         userContainer.innerHTML += `
           <li class="nav-item btn-cart"><a class="nav-link" href="cart.html">Cart <i class="fa-solid fa-cart-shopping"></i></a></li>
           <li class="nav-item" id="profile-item"><a class="nav-link" href="customer_profile.html">Profile</a></li>
+          <li class="nav-item" id="profile-item"><a class="nav-link" href="customer_orders.html">Order History</a></li>
         `;
       }
 

@@ -16,7 +16,7 @@
 
         <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" href="cart.css">
-        <link rel="stylesheet" href="checkout.css">
+        <link rel="stylesheet" href="customer_orders.css">
         <link rel="icon"
             href="../project_app/templates/project_app/images/logo.jpeg">
 
@@ -36,36 +36,8 @@
         </div>
 
         <main>
-            <div class="checkout-containser">
-                <div class="customer-details">
-                    <div class="form-column">
-                        <h1 class="form-title">Add Your Details to Deliver the Food</h1>
-                        <form action="#">
-                            <p id="error" class="form-error"></p>
-                            
-                                <input id="mobile_no" type="text" class="form-input" placeholder="Mobile Number" required />
-                                <!-- <input id="email" type="email" class="form-input" placeholder="Email" required /> -->
-                           
-                            
-                                <input id="district" type="text" class="form-input" placeholder="District Name" required />
-                                <textarea name="address" required class="form-input" placeholder="Your Full Address"
-                                id="address" style="height: 100px"></textarea>
-                          
-                            
-                            <button onclick="handleOrder(event)" class="form-button">Submit</button>
-                        </form>
-                    </div>
-                </div>
-                <div class="payment-and-order">
-                    <div class="order-details">
-                        <h2>Order Details</h2>
-                        <!-- Order details content here -->
-                    </div>
-                    <div class="payment-details">
-                        <button onclick="SSLpayment(event)">Payment</button>
+            <div id="order-history" class="order-history">
 
-                    </div>
-                </div>
             </div>
         </main>
         
@@ -135,6 +107,7 @@
         <script src="checkout.js"></script>
         <script src="seller_auth.js"></script>
         <script src="foodDetails.js"></script>
+        <script src="customer_orders.js"></script>
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

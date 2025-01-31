@@ -108,7 +108,6 @@ const handleOrder = (event) => {
 
     // Collect form data
     const mobile = document.getElementById("mobile_no").value;
-    const email = document.getElementById("email").value;
     const district = document.getElementById("district").value;
     const full_address = document.getElementById("address").value;
 
@@ -128,7 +127,6 @@ const handleOrder = (event) => {
     console.log("CartId", cartId)
     const orderData = {
         mobile,
-        email,
         district,
         full_address,
         cart_items: cartData.map(item => ({
