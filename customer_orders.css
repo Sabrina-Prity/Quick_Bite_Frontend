@@ -35,8 +35,8 @@
     font-weight: bold;
 }
 
-.delete-button {
-    background: red;
+.pay-button {
+    background: rgb(70, 150, 179);
     color: white;
     padding: 8px 12px;
     border: none;

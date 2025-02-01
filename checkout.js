@@ -24,6 +24,7 @@ if (sellerId) {
         .then((data) => {
             console.log("Received Cart Data:", data);
             localStorage.setItem("cart_data", JSON.stringify(data));
+            localStorage.setItem("order_id", JSON.stringify(data.id));
             // Group data by seller
             const groupedItems = data.reduce((acc, item) => {
                 const sellerName = item.food_item.seller.company_name;
@@ -193,43 +194,71 @@ const deleteCartItems = (cartId, sellerId) => {
 };
 
 
+function SSLpayment(event) {
+    event.preventDefault();  
 
-// const SSLpayment = (event) => {
-//     event.preventDefault();
-//     const cartId = localStorage.getItem("cartId");
+    const token = localStorage.getItem("token");
+    if (!token) {
+        alert("You are not logged in! Please log in first.");
+        return;
+    }
+
+    fetch("http://127.0.0.1:8000/payment/post_payment/", {
+        method: "POST",
+        headers: {
+            "Authorization": `Token ${token}`,  
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            order_id: 1,  // Ensure this is a valid order ID
+        }),
+    })
+    .then(response => {
+        if (response.status === 403) {
+            alert("Access forbidden. Please check your authentication token.");
+        }
+        return response.json();
+    })
+    .then(result => {
+        if (result.status === "success") {
+            window.location.href = result.payment_url;  
+        } else {
+            alert("Payment initiation failed: " + result.message);
+        }
+    })
+    .catch(error => {
+        console.error("Error initiating payment:", error);
+        alert("Something went wrong. Please check your connection.");
+    });
+}
+
+
+// function SSLpayment(event) {
+//     event.preventDefault();  
+
 //     const token = localStorage.getItem("token");
 
-//     fetch("http://127.0.0.1:8000/payment/sslcomarce/", {
-//         method: "POST",
-//         headers: {
-//             "Authorization": `Token ${token}`,
-//             "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify({ cart_id: cartId })
-//     })
-//     .then((res) => {
-//         if (res.status === 401) {
-//             // window.location.href = data.GatewayPageURL;
-//             alert("You must be logged in to proceed with payment.");
-//             window.location.href = "http://127.0.0.1:5500/customer_login.html";  // Redirect user to login
-//             return;
-//         }
-//         if (!res.ok) {
-//             throw new Error("Failed to initiate payment session");
-//         }
-//         return res.json();
-//     })
-//     .then((data) => {
-//         if (data.GatewayPageURL) {
-//             window.location.href = data.GatewayPageURL;
+//     try {
+//         const response = fetch("http://127.0.0.1:8000/payment/post_payment/", {
+//             method: "POST",
+//             headers: {
+//                 "Authorization": `Token ${token}`,  
+//                 "Content-Type": "application/json",
+//             },
+//         });
+
+//         const result = response.json();
+
+//         if (result.status === "success") {
+//             window.location.href = result.payment_url;  
 //         } else {
-//             console.error("Payment gateway URL not received.");
+//             alert("Payment initiation failed: " + result.message);
 //         }
-//     })
-//     .catch((error) => {
-//         console.error("Error:", error);
-//     });
-// };
+//     } catch (error) {
+//         console.error("Error initiating payment:", error);
+//         alert("Something went wrong. Please check your connection.");
+//     }
+// }
 
 
 

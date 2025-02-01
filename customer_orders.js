@@ -29,6 +29,7 @@ const displayOrderHistory = () => {
                     <th>Food Items</th>
                     <th>Total Price</th>
                     <th>Status</th>
+                    <th>Complete Your Payment</th>
                     
                 </tr>
             `;
@@ -45,9 +46,14 @@ const displayOrderHistory = () => {
                     const price = parseFloat(item.food_item.price);
                     const quantity = item.quantity;
                     totalPrice += price * quantity;
+                    
+
 
                     productListHTML += `<li>${productName} (x${quantity}) - $${(price * quantity).toFixed(2)}</li>`;
                 });
+
+               
+                
 
                 productListHTML += "</ul>";
 
@@ -57,6 +63,13 @@ const displayOrderHistory = () => {
                     <td>${productListHTML}</td>
                     <td>$${totalPrice.toFixed(2)}</td>
                     <td class="status-cell">${order.buying_status}</td>
+                    <td>
+                        <button class="pay-button" 
+                            onclick="SSLpayment(${order.id}, ${totalPrice}, ${order.order_items.length})"
+                            >
+                            Payment
+                        </button>
+                    </td> 
                     
                 `;
 
@@ -82,39 +95,69 @@ const displayOrderHistory = () => {
     });
 };
 
-{/* <td>
-                        <button class="delete-button" 
-                            onclick="deleteOrder(${order.id})"
-                            ${order.buying_status === 'Pending' ? 'disabled' : ''}>
-                            Delete
-                        </button>
-                    </td> */}
-// Delete order function
-const deleteOrder = (orderId) => {
-    console.log("OrderId", orderId);
-    const token = localStorage.getItem("token");
 
-    fetch(`http://127.0.0.1:8000/order/orders-delete/${orderId}/`, {
-        method: "DELETE",
+// ${order.buying_status === 'Pending' ? 'disabled' : ''}
+function SSLpayment(orderId, totalPrice, length) {  
+    console.log("OrderId:", orderId, "Total Price:", totalPrice);
+   console.log("Length", length)
+    const token = localStorage.getItem("token");
+    if (!token) {
+        alert("You are not logged in! Please log in first.");
+        return;
+    }
+
+    fetch("http://127.0.0.1:8000/payment/pay/", {
+        method: "POST",
         headers: {
-            Authorization: `Token ${token}`,
-            'Content-Type': 'application/json',
+            "Authorization": `Token ${token}`,  
+            "Content-Type": "application/json",
         },
+        body: JSON.stringify({
+            order_id: orderId,
+            total_amount: totalPrice,  // Pass total price here
+            total_item: length,  // Pass total price here
+        }),
     })
-    .then((response) => {
-        if (response.status === 404) {
-            alert("Order not found!");
-        } else if (response.ok) {
-            alert("Order deleted successfully!");
-            displayOrderHistory(); // Refresh the order history after deletion
+    .then(response => response.json())
+    .then(result => {
+        if (result.status === "success") {
+            window.location.href = result.payment_url;  
         } else {
-            alert("Failed to delete the order.");
+            alert("Payment initiation failed: " + result.message);
         }
     })
-    .catch((error) => {
-        console.error("Error deleting order:", error);
+    .catch(error => {
+        console.error("Error initiating payment:", error);
+        alert("Something went wrong. Please check your connection.");
     });
-};
+}
+
+// // Delete order function
+// const deleteOrder = (orderId) => {
+//     console.log("OrderId", orderId);
+//     const token = localStorage.getItem("token");
+
+//     fetch(`http://127.0.0.1:8000/order/orders-delete/${orderId}/`, {
+//         method: "DELETE",
+//         headers: {
+//             Authorization: `Token ${token}`,
+//             'Content-Type': 'application/json',
+//         },
+//     })
+//     .then((response) => {
+//         if (response.status === 404) {
+//             alert("Order not found!");
+//         } else if (response.ok) {
+//             alert("Order deleted successfully!");
+//             displayOrderHistory(); // Refresh the order history after deletion
+//         } else {
+//             alert("Failed to delete the order.");
+//         }
+//     })
+//     .catch((error) => {
+//         console.error("Error deleting order:", error);
+//     });
+// };
 
 // Initial call to display order history
 displayOrderHistory();
