@@ -151,23 +151,9 @@ const displayCart = (items) => {
         checkoutButton.textContent = "Place Order";
 
         checkoutButton.addEventListener("click", () => {
-            let cartItems = [];
-        
-            // Collect selected cart item data
-            group.items.forEach((item) => {
-                let quantityInput = document.getElementById(`quantity-${item.id}`);
-                if (quantityInput) {
-                    cartItems.push({
-                        food_id: item.food_item.id,
-                        quantity: quantityInput.value,
-                    });
-                }
-            });
-        
-            const cartData = encodeURIComponent(JSON.stringify(cartItems));
-            window.location.href = `checkout.html?seller_id=${group.seller_id}&cart=${cartData}`;
+            // Redirect to the checkout page with the seller_id in the URL
+            window.location.href = `checkout.html?seller_id=${group.seller_id}`;
         });
-        
 
         // Append the checkout button at the end of the seller's section
         sellerContainer.appendChild(checkoutButton);
