@@ -5,7 +5,7 @@ const fetchDistrict = () => {
         return;
     }
 
-    fetch("http://127.0.0.1:8000/seller/districts/", {
+    fetch("https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/seller/districts/", {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -42,7 +42,7 @@ const fetchSellerDetail = async () => {
     const token = localStorage.getItem('token');
 
     try {
-        const response = await fetch(`http://127.0.0.1:8000/seller/seller-details-update/${seller_id}/`, {
+        const response = await fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/seller/seller-details-update/${seller_id}/`, {
             headers: {
                 Authorization: `Token ${token}`,
                 'Content-Type': 'application/json',
@@ -51,11 +51,23 @@ const fetchSellerDetail = async () => {
 
         if (response.ok) {
             const seller = await response.json();
+            // Fix the image URL
+        let imageUrl = seller?.image;
+        
+        // Remove incorrect "image/upload/" prefix if it exists
+        if (imageUrl.includes("image/upload/https://")) {
+            imageUrl = imageUrl.replace("image/upload/", "");  
+        }
+
+        // Ensure the image URL is properly formatted
+        if (!imageUrl.startsWith("https://")) {
+            imageUrl = `https://res.cloudinary.com/dtyxxpqdl/image/upload/${imageUrl}`;
+        }
             const sellerDetailsDiv = document.getElementById('seller-details');
             sellerDetailsDiv.innerHTML = `
                 <div class="seller-card">
                     <div class="seller-info">
-                        <img src="${seller.image}" alt="Seller Image" class="seller-image">
+                        <img src="${imageUrl}" alt="Seller Image" class="seller-image">
                         <div class="seller-details">
                             <h2>Seller Details</h2>
                             <p><strong>Company Name:</strong> ${seller.company_name}</p>
@@ -116,19 +128,24 @@ const updateSellerDetail = async (event) => {
 
     document.getElementById('error').innerText = '';
 
-    // Upload image to ImgBB
+    // Upload image to Cloudinary
     const formData = new FormData();
-    formData.append('image', imageInput);
+    formData.append("file", imageInput);  // Use 'file' for key
+    formData.append("upload_preset", "ecommerce_upload");  // Your upload preset
 
     try {
-        const uploadResponse = await fetch('https://api.imgbb.com/1/upload?key=13f268ce593eb3a2e14811c1e1de5660', {
+        const uploadResponse = await fetch('https://api.cloudinary.com/v1_1/dtyxxpqdl/image/upload', {
             method: 'POST',
-            body: formData,
+            body: formData,  // Automatically sets the right Content-Type
         });
 
         const uploadData = await uploadResponse.json();
-        if (uploadData.success) {
-            const imageUrl = uploadData.data.url;
+
+        // Log the response to inspect errors
+        console.log(uploadData);
+
+        if (uploadData && uploadData.secure_url) {  // Check if URL exists
+            const imageUrl = uploadData.secure_url;
 
             // Prepare seller update data
             const info = {
@@ -141,7 +158,7 @@ const updateSellerDetail = async (event) => {
             };
 
             // Update seller profile
-            const response = await fetch(`http://127.0.0.1:8000/seller/seller-details-update/${seller_id}/`, {
+            const response = await fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/seller/seller-details-update/${seller_id}/`, {
                 method: 'PUT',
                 headers: {
                     Authorization: `Token ${token}`,
@@ -166,6 +183,7 @@ const updateSellerDetail = async (event) => {
         alert('Error updating seller details. Please try again later.');
     }
 };
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const updateForm = document.getElementById('update-profile-form');

@@ -2,7 +2,7 @@ const fetchSellerOrders = () => {
     const token = localStorage.getItem("token");
     const sellerId = localStorage.getItem("seller_id");
 
-    fetch(`http://127.0.0.1:8000/order/seller-orders/${sellerId}/`, {
+    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/order/seller-orders/${sellerId}/`, {
         method: 'GET',
         headers: {
             "Authorization": `Token ${token}`,
@@ -21,16 +21,42 @@ const fetchSellerOrders = () => {
                     const orderElement = document.createElement('div');
                     orderElement.classList.add('order');
 
+                    // Fix the image URL
+                    let custimageUrl = order.customer?.image;
+
+                    // Remove incorrect "image/upload/" prefix if it exists
+                    if (custimageUrl.includes("image/upload/https://")) {
+                        custimageUrl = custimageUrl.replace("image/upload/", "");
+                    }
+
+                    // Ensure the image URL is properly formatted
+                    if (!custimageUrl.startsWith("https://")) {
+                        custimageUrl = `https://res.cloudinary.com/dtyxxpqdl/image/upload/${imageUrl}`;
+                    }
+
                     let totalPrice = 0;
 
                     const orderItemsHTML = order.order_items.map(item => {
                         const itemTotal = item.food_item.price * item.quantity;
                         totalPrice += itemTotal;
+
+                        // Fix the image URL
+                        let imageUrl = item.food_item?.image;
+
+                        // Remove incorrect "image/upload/" prefix if it exists
+                        if (imageUrl.includes("image/upload/https://")) {
+                            imageUrl = imageUrl.replace("image/upload/", "");
+                        }
+
+                        // Ensure the image URL is properly formatted
+                        if (!imageUrl.startsWith("https://")) {
+                            imageUrl = `https://res.cloudinary.com/dtyxxpqdl/image/upload/${imageUrl}`;
+                        }
                         return `
                         <li>
                             <div class="order-item">
                                 <div class="food-image">
-                                    <img src="${item.food_item.image}" alt="${item.food_item.name}" />
+                                    <img src="${imageUrl}" alt="${item.food_item.name}" />
                                 </div>
                                 <div class="food-details">
                                     <p><strong>Name:</strong> ${item.food_item.name}</p>
@@ -52,7 +78,8 @@ const fetchSellerOrders = () => {
                     orderElement.innerHTML = `
                     <div class="order-header">
                         <h3>Order #${order.id}</h3>
-                        <span>Status: <strong id="status-${order.id}">${order.buying_status}</strong></span>
+                        <span>Order: <strong class="status-${order.buying_status.toLowerCase()}" id="status-${order.id}">${order.buying_status}</strong></span>
+    <span>Payment: <strong class="status-${order.payment_status.toLowerCase()}" id="payment-status-${order.id}">${order.payment_status}</strong></span>
                     </div>
                     <div class="order-content">
                         <div class="order-details">
@@ -61,7 +88,7 @@ const fetchSellerOrders = () => {
                         </div>
                         <div class="order-side">
                             <div class="customer-img">
-                              <img src="${order.customer.image}" alt="${order.customer.first_name}" />
+                              <img src="${custimageUrl}" alt="${order.customer.first_name}" />
                             </div>
                             <div class="customer-info">
                                 <p><strong>Customer:</strong> ${order.customer.first_name} ${order.customer.last_name}</p>
@@ -102,7 +129,7 @@ const updateStatus = (orderId, status) => {
     completedButton.classList.add('disabled');
     cancelButton.classList.add('disabled');
 
-    fetch(`http://127.0.0.1:8000/order/admin-order-updated/${orderId}/`, {
+    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/order/admin-order-updated/${orderId}/`, {
         method: "PUT",
         headers: {
             Authorization: `Token ${token}`,
@@ -110,17 +137,17 @@ const updateStatus = (orderId, status) => {
         },
         body: JSON.stringify({ buying_status: status })
     })
-    .then((response) => response.json())
-    .then((data) => {
-        if (data.message) {
-            alert(data.message);
-        }
-        // Refresh the order history after the status update
-        fetchSellerOrders(); // Re-fetch orders to display the updated status
-    })
-    .catch((error) => {
-        console.error("Error updating order status:", error);
-    });
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.message) {
+                alert(data.message);
+            }
+            // Refresh the order history after the status update
+            fetchSellerOrders(); // Re-fetch orders to display the updated status
+        })
+        .catch((error) => {
+            console.error("Error updating order status:", error);
+        });
 };
 
 fetchSellerOrders();

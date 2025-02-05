@@ -1,8 +1,9 @@
+
 const displayOrderHistory = () => {
     const token = localStorage.getItem("token");
     const id = localStorage.getItem("user_id");
 
-    fetch(`http://127.0.0.1:8000/order/orders-view/${id}/`, {
+    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/order/orders-view/${id}/`, {
         method: "GET",
         headers: {
             Authorization: `Token ${token}`,
@@ -28,9 +29,9 @@ const displayOrderHistory = () => {
                     <th>Order ID</th>
                     <th>Food Items</th>
                     <th>Total Price</th>
-                    <th>Status</th>
+                    <th>Order Status</th>
+                    <th>Payment Status</th>
                     <th>Complete Your Payment</th>
-                    
                 </tr>
             `;
             table.appendChild(header);
@@ -46,14 +47,9 @@ const displayOrderHistory = () => {
                     const price = parseFloat(item.food_item.price);
                     const quantity = item.quantity;
                     totalPrice += price * quantity;
-                    
-
 
                     productListHTML += `<li>${productName} (x${quantity}) - $${(price * quantity).toFixed(2)}</li>`;
                 });
-
-               
-                
 
                 productListHTML += "</ul>";
 
@@ -63,14 +59,15 @@ const displayOrderHistory = () => {
                     <td>${productListHTML}</td>
                     <td>$${totalPrice.toFixed(2)}</td>
                     <td class="status-cell">${order.buying_status}</td>
-                    <td>
-                        <button class="pay-button" 
+                    <td class="payment-status status-complete">${order.payment_status}</td>
+                    <td> 
+                        <button class="pay-button " 
                             onclick="SSLpayment(${order.id}, ${totalPrice}, ${order.order_items.length})"
+                            ${order.payment_status === "Completed" ? "disabled style='background:gray; cursor:not-allowed;'" : ""}
                             >
-                            Payment
+                            ${order.payment_status === "Completed" ? "Paid" : "Pay Now"}
                         </button>
                     </td> 
-                    
                 `;
 
                 // Update the status cell styles based on the order status
@@ -95,18 +92,19 @@ const displayOrderHistory = () => {
     });
 };
 
-
-// ${order.buying_status === 'Pending' ? 'disabled' : ''}
 function SSLpayment(orderId, totalPrice, length) {  
     console.log("OrderId:", orderId, "Total Price:", totalPrice);
-   console.log("Length", length)
+    console.log("Length", length);
+
     const token = localStorage.getItem("token");
+    const user_id = localStorage.getItem("user_id");
+    console.log("user_id",user_id)
     if (!token) {
         alert("You are not logged in! Please log in first.");
         return;
     }
 
-    fetch("http://127.0.0.1:8000/payment/pay/", {
+    fetch("https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/payment/pay/", {
         method: "POST",
         headers: {
             "Authorization": `Token ${token}`,  
@@ -114,13 +112,16 @@ function SSLpayment(orderId, totalPrice, length) {
         },
         body: JSON.stringify({
             order_id: orderId,
-            total_amount: totalPrice,  // Pass total price here
-            total_item: length,  // Pass total price here
+            total_amount: totalPrice,  
+            total_item: length,
+            user_id : user_id,  
         }),
     })
     .then(response => response.json())
     .then(result => {
+        console.log("Request", result)
         if (result.status === "success") {
+            console.log("success",result.status)
             window.location.href = result.payment_url;  
         } else {
             alert("Payment initiation failed: " + result.message);
@@ -131,6 +132,13 @@ function SSLpayment(orderId, totalPrice, length) {
         alert("Something went wrong. Please check your connection.");
     });
 }
+
+
+
+
+
+displayOrderHistory();
+
 
 // // Delete order function
 // const deleteOrder = (orderId) => {
@@ -160,4 +168,4 @@ function SSLpayment(orderId, totalPrice, length) {
 // };
 
 // Initial call to display order history
-displayOrderHistory();
+

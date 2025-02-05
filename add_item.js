@@ -1,6 +1,6 @@
 const fetchCategory = () => {
     const sellerId = localStorage.getItem("seller_id");
-    fetch(`http://127.0.0.1:8000/category/seller_category_list/${sellerId}`, {
+    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/category/seller_category_list/${sellerId}`, {
         method: 'GET',
         headers: {
             // Authorization: `Token ${token}`, 
@@ -11,7 +11,7 @@ const fetchCategory = () => {
         .then((categories) => {
             // console.log('Fetched Categories:', categories);
 
-            const parent = document.getElementById("category"); 
+            const parent = document.getElementById("category");
             if (!parent) {
                 console.error("Category <select> element not found!");
                 return;
@@ -20,8 +20,8 @@ const fetchCategory = () => {
             parent.innerHTML = '<option value="" selected disabled>Select Category</option>';
             categories.forEach((category) => {
                 const option = document.createElement("option");
-                option.value = category.id; 
-                option.textContent = category.name; 
+                option.value = category.id;
+                option.textContent = category.name;
                 parent.appendChild(option);
             });
         })
@@ -35,7 +35,7 @@ fetchCategory();
 
 
 const handleAddFoodItem = (event) => {
-    event.preventDefault(); 
+    event.preventDefault();
 
     const name = document.getElementById("name").value;
     const price = document.getElementById("price").value;
@@ -43,6 +43,7 @@ const handleAddFoodItem = (event) => {
     const description = document.getElementById("description").value;
     const imageInput = document.getElementById("image").files[0];
 
+    // Validation checks
     if (!name || !price || !category || !description) {
         document.getElementById("error").innerText = "All fields are required.";
         return;
@@ -53,18 +54,22 @@ const handleAddFoodItem = (event) => {
         return;
     }
 
+    // Upload image to Cloudinary
     const formData = new FormData();
-    formData.append("image", imageInput);
+    formData.append("file", imageInput); // Use 'file' for key
+    formData.append("upload_preset", "ecommerce_upload"); // Your Cloudinary preset
 
-    fetch("https://api.imgbb.com/1/upload?key=13f268ce593eb3a2e14811c1e1de5660", {
+    fetch("https://api.cloudinary.com/v1_1/dtyxxpqdl/image/upload", {
         method: "POST",
         body: formData,
     })
     .then((res) => res.json())
     .then((data) => {
-        if (data.success) {
-            const imageUrl = data.data.url;
+        // Check if image upload is successful (check for secure_url)
+        if (data.secure_url) {
+            const imageUrl = data.secure_url;
 
+            // Prepare the food item data
             const productData = {
                 name,
                 price: parseFloat(price),
@@ -74,10 +79,10 @@ const handleAddFoodItem = (event) => {
                 category,
             };
 
-            // console.log("Product Data:", productData);
+            // Send the product data to your API
             const sellerId = localStorage.getItem("seller_id");
             const token = localStorage.getItem("token");
-            fetch(`http://127.0.0.1:8000/food/food-item/${sellerId}/`, {
+            fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/food/food-item/${sellerId}/`, {
                 method: "POST",
                 headers: {
                     Authorization: `Token ${token}`,
@@ -87,29 +92,34 @@ const handleAddFoodItem = (event) => {
             })
             .then((res) => res.json())
             .then((data) => {
-                console.log("Posted Food Data", data)
-                
+                console.log("Posted Food Data:", data);
+
+                // Display success message
                 document.getElementById("error").innerText = "Product added successfully!";
 
-                // Reset the form fields
+                // Clear form fields
                 document.getElementById("name").value = '';
                 document.getElementById("price").value = '';
                 document.getElementById("category").value = '';
                 document.getElementById("description").value = '';
                 document.getElementById("image").value = '';
 
-                // Reload the page
+                // Optionally, reload the page or redirect
                 setTimeout(() => {
                     window.location.reload();
-                }, 100); 
-                
+                }, 100);
             })
-            
+            .catch((error) => {
+                console.error("Error posting food data:", error);
+                document.getElementById("error").innerText = "Error adding product. Please try again.";
+            });
+
         } else {
             document.getElementById("error").innerText = "Image upload failed. Please try again.";
         }
     })
     .catch((error) => {
+        console.error("Error during image upload:", error);
         document.getElementById("error").innerText = "Error during image upload. Please check your connection.";
     });
 };
@@ -117,12 +127,10 @@ const handleAddFoodItem = (event) => {
 
 
 
-
-
 const fetchFoodItem = () => {
     const token = localStorage.getItem("token");
     const sellerId = localStorage.getItem("seller_id");
-    fetch(`http://127.0.0.1:8000/food/food-items-for-seller/${sellerId}/`, {
+    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/food/food-items-for-seller/${sellerId}/`, {
         method: 'GET',
         headers: {
             Authorization: `Token ${token}`,
@@ -141,8 +149,21 @@ const fetchFoodItem = () => {
                     const div = document.createElement("div");
                     div.classList.add("food-item");
 
+                    // Fix the image URL
+                    let imageUrl = item?.image;
+
+                    // Remove incorrect "image/upload/" prefix if it exists
+                    if (imageUrl.includes("image/upload/https://")) {
+                        imageUrl = imageUrl.replace("image/upload/", "");
+                    }
+
+                    // Ensure the image URL is properly formatted
+                    if (!imageUrl.startsWith("https://")) {
+                        imageUrl = `https://res.cloudinary.com/dtyxxpqdl/image/upload/${imageUrl}`;
+                    }
+
                     div.innerHTML = `
-                        <img src="${item.image}" alt="${item.name}" />
+                        <img src="${imageUrl}" alt="${item.name}" />
                         <p>${item.name}</p>
                         <p>Price: $${item.price}</p>
                         <p>Category: ${item.category}</p>
@@ -164,7 +185,7 @@ const deleteFood = (id) => {
     const sellerId = localStorage.getItem("seller_id");
     // if (!confirm("Are you sure you want to delete this mango?")) return;
 
-    fetch(`http://127.0.0.1:8000/food/food-item/delete/${id}/${sellerId}/`, {
+    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/food/food-item/delete/${id}/${sellerId}/`, {
         method: 'DELETE',
         headers: {
             Authorization: `Token ${token}`,

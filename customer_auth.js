@@ -1,4 +1,3 @@
-
 const customerRegistration = (event) => {
     event.preventDefault();
 
@@ -8,15 +7,16 @@ const customerRegistration = (event) => {
     const email = getValue("email");
     const password = getValue("password");
     const confirm_password = getValue("confirm_password");
-    const mobile_no = getValue("mobile_no"); 
+    const mobile_no = getValue("mobile_no");
 
     const imageInput = document.getElementById("image").files[0];
-    console.log("Image",imageInput)
+    console.log("Image", imageInput);
     
     if (!imageInput) {
         document.getElementById("error").innerText = "Please upload an image.";
         return;
     }
+    
     if (password !== confirm_password) {
         document.getElementById("error").innerText = "Password and Confirm Password do not match.";
         return;
@@ -27,19 +27,20 @@ const customerRegistration = (event) => {
         return;
     }
 
-   
+    // Create form data to upload the image to Cloudinary
     const formData = new FormData();
-    formData.append("image", imageInput);
+    formData.append("file", imageInput);  // Use 'file' for the key
+    formData.append("upload_preset", "ecommerce_upload");  // Your Cloudinary upload preset
 
-    // Upload image to ImageBB
-    fetch("https://api.imgbb.com/1/upload?key=13f268ce593eb3a2e14811c1e1de5660", {
+    // Upload image to Cloudinary
+    fetch("https://api.cloudinary.com/v1_1/dtyxxpqdl/image/upload", { // Replace 'your_cloud_name' with your actual Cloudinary cloud name
         method: "POST",
         body: formData,
     })
         .then((res) => res.json())
         .then((data) => {
-            if (data.success) {
-                const imageUrl = data.data.url; 
+            if (data.secure_url) { // Check if the upload is successful
+                const imageUrl = data.secure_url;
                 console.log("Image uploaded successfully:", imageUrl);
 
                 const info = {
@@ -52,12 +53,13 @@ const customerRegistration = (event) => {
                     password,
                     confirm_password,
                 };
-                console.log("Customer Info", info)
+                console.log("Customer Info", info);
 
-                fetch("http://127.0.0.1:8000/customer/register/", {
+                fetch("https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/customer/register/", {
                     method: "POST",
                     headers: { 
-                        "Content-Type": "application/json" },
+                        "Content-Type": "application/json" 
+                    },
                     body: JSON.stringify(info),
                 })
                     .then((res) => res.json())
@@ -65,7 +67,7 @@ const customerRegistration = (event) => {
                         if (data.error) {
                             document.getElementById("error").innerText = data.error;
                         } else {
-                            document.getElementById("error").innerText ="Registration successful!";
+                            document.getElementById("error").innerText = "Registration successful!";
                         }
                     })
                     .catch((error) => {
@@ -86,6 +88,7 @@ const customerRegistration = (event) => {
 
 
 
+
 const getValue = (id) => {
     const value = document.getElementById(id).value;
     return value;
@@ -102,7 +105,7 @@ const customerLogin = async (event) => {
     if (username && password) {
         try {
             // Step 1: Attempt admin login first
-            const adminLoginResponse = await fetch("http://127.0.0.1:8000/customer/login/", {
+            const adminLoginResponse = await fetch("https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/customer/login/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -123,7 +126,7 @@ const customerLogin = async (event) => {
             }
 
             // Step 2: If not an admin, proceed to check if the user is a customer
-            const customerListResponse = await fetch("http://127.0.0.1:8000/customer/customer-list/");
+            const customerListResponse = await fetch("https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/customer/customer-list/");
             if (!customerListResponse.ok) {
                 throw new Error("Failed to fetch customer list.");
             }
@@ -136,7 +139,7 @@ const customerLogin = async (event) => {
             }
 
             // Step 3: Login as a customer
-            const customerLoginResponse = await fetch("http://127.0.0.1:8000/customer/login/", {
+            const customerLoginResponse = await fetch("https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/customer/login/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

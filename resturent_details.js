@@ -4,7 +4,7 @@ const loadcartId = () => {
         alert("Please login");
         return;
     }
-    fetch(`http://127.0.0.1:8000/cart/cart-details/${localStorage.getItem("user_id")}/`,{
+    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/cart/cart-details/${localStorage.getItem("user_id")}/`,{
         headers: {
             'Authorization': `Token ${token}`,
             'Content-Type': 'application/json',
@@ -24,7 +24,7 @@ const getparams = () => {
     const token = localStorage.getItem("token");
     const param = new URLSearchParams(window.location.search).get("resturentId");
     // console.log("Resturent Id", param);
-    fetch(`http://127.0.0.1:8000/seller/seller-detail/${param}`,{
+    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/seller/seller-detail/${param}`,{
         method : "GET",
         headers : {
             Authorization: `Token ${token}`,
@@ -54,13 +54,25 @@ const displayResturentDetails = (data) => {
     const formattedDistrict = data?.district
             ? data.district.charAt(0).toUpperCase() + data.district.slice(1).toLowerCase()
             : ""; 
- 
+    
+            // Fix the image URL
+        let imageUrl = data?.image;
+        
+        // Remove incorrect "image/upload/" prefix if it exists
+        if (imageUrl.includes("image/upload/https://")) {
+            imageUrl = imageUrl.replace("image/upload/", "");  
+        }
+
+        // Ensure the image URL is properly formatted
+        if (!imageUrl.startsWith("https://")) {
+            imageUrl = `https://res.cloudinary.com/dtyxxpqdl/image/upload/${imageUrl}`;
+        }
     resturentContainer.innerHTML = `
     
         <div class="d-flex align-items-start gap-3">
             <!-- Image Section -->
             <div class="col-md-7">
-                <img src="${data.image}" alt="${data.company_name}" class="img-fluid rounded w-100">
+                <img src="${imageUrl}" alt="${data.company_name}" class="img-fluid rounded w-100">
             </div>
             <!-- Details Section -->
             <div class="res-Details col-md-5">
@@ -87,7 +99,7 @@ const loadCategorys = () => {
     const param = new URLSearchParams(window.location.search).get("resturentId");
     console.log("Resturent Id", param);
     const token = localStorage.getItem("token");
-    fetch(`http://127.0.0.1:8000/category/seller_category_list/${param}/`)
+    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/category/seller_category_list/${param}/`)
         .then((res) => res.json())
         // .then((data) => console.log("Category" ,data))
         .then((data) => displayCategorys(data))
@@ -113,7 +125,7 @@ const displayCategorys = ((data)=>{
     // console.log(search)
     const param = new URLSearchParams(window.location.search).get("resturentId");
     document.getElementById("card").innerHTML = "";
-    fetch(`http://127.0.0.1:8000/food/food-items-for-seller/${param}/?search=${search ? search : ""}`) 
+    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/food/food-items-for-seller/${param}/?search=${search ? search : ""}`) 
         .then((res) => res.json())
         // .then((data) => console.log(data))
         .then((data) =>{
@@ -137,10 +149,23 @@ const displayFoods = (items) => {
 
     items?.forEach((item) => {
         console.log("Food", item)
+
+        // Fix the image URL
+        let imageUrl = item?.image;
+        
+        // Remove incorrect "image/upload/" prefix if it exists
+        if (imageUrl.includes("image/upload/https://")) {
+            imageUrl = imageUrl.replace("image/upload/", "");  
+        }
+
+        // Ensure the image URL is properly formatted
+        if (!imageUrl.startsWith("https://")) {
+            imageUrl = `https://res.cloudinary.com/dtyxxpqdl/image/upload/${imageUrl}`;
+        }
         const div = document.createElement("div");
         div.classList.add("items-card");
         div.innerHTML = `
-            <img class="items-img" src="${item?.image}" />
+            <img class="items-img" src="${imageUrl}" />
             <h4>${item?.name}</h4>
             <h6>Price: $${item?.price}</h6>
             <h6>Category: ${item?.category}</h6>

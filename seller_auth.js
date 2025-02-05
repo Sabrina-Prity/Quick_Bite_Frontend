@@ -5,7 +5,7 @@ const fetchDistricts = () => {
         return;
     }
 
-    fetch("http://127.0.0.1:8000/seller/districts/", {
+    fetch("https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/seller/districts/", {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -18,6 +18,7 @@ const fetchDistricts = () => {
         return response.json();
     })
     .then((data) => {
+        console.log("district", data)
         districtSelect.innerHTML = '<option value="" selected disabled>Select District</option>';
 
         const districts = data.districts;
@@ -39,10 +40,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
+
 const sellerRegistration = (event) => {
     event.preventDefault();
 
-    
     const username = getValue("username");
     const first_name = getValue("first_name");
     const last_name = getValue("last_name");
@@ -57,7 +58,7 @@ const sellerRegistration = (event) => {
     const mobile_no = getValue("mobile_no"); 
 
     const imageInput = document.getElementById("image").files[0];
-    console.log("Image",imageInput)
+    console.log("Image", imageInput);
     
     if (!imageInput) {
         document.getElementById("error").innerText = "Please upload an image.";
@@ -73,77 +74,73 @@ const sellerRegistration = (event) => {
         return;
     }
 
-   
     const formData = new FormData();
-    formData.append("image", imageInput);
+    formData.append("file", imageInput); // Use 'file' instead of 'image' as the key
+    formData.append("upload_preset", "ecommerce_upload"); // Replace with your upload preset
 
-    // Upload image to ImageBB
-    fetch("https://api.imgbb.com/1/upload?key=13f268ce593eb3a2e14811c1e1de5660", {
+    // Upload image to Cloudinary
+    fetch("https://api.cloudinary.com/v1_1/dtyxxpqdl/image/upload", {  // Replace with your cloud name
         method: "POST",
         body: formData,
     })
-        .then((res) => res.json())
-        .then((data) => {
-            if (data.success) {
-                const imageUrl = data.data.url; 
-                console.log("Image uploaded successfully:", imageUrl);
+    .then((res) => res.json())
+    .then((data) => {
+        if (data.secure_url) { 
+            const imageUrl = data.secure_url; 
+            console.log("Image uploaded successfully:", imageUrl);
 
-                const info = {
-                    username,
-                    first_name,
-                    last_name,
-                    email,
-                    password,
-                    confirm_password,
-                    company_name, 
-                    mobile_no,
-                    street_name,
-                    postal_code,
-                    district,
-                    image: imageUrl,
-                };
-                console.log("Info", info)
+            const info = {
+                username,
+                first_name,
+                last_name,
+                email,
+                password,
+                confirm_password,
+                company_name, 
+                mobile_no,
+                street_name,
+                postal_code,
+                district,
+                image: imageUrl,
+            };
+            console.log("Info", info)
 
-                fetch("http://127.0.0.1:8000/seller/register/", {
-                    method: "POST",
-                    headers: { 
-                        "Content-Type": "application/json" },
-                    body: JSON.stringify(info),
-                })
-                    .then((res) => res.json())
-                    .then((data) => {
-                        if (data.error) {
-                            document.getElementById("error").innerText = data.error;
-                        } else {
-                            localStorage.setItem('seller_id', data.seller_id);
-                            console.log("Registration successful:", data);
-                            document.getElementById("error").innerText =
-                                "Registration successful! A confirmation email has been sent to your email address.";
-                        }
-                    })
-                    .catch((error) => {
-                        console.error("Error during registration:", error);
-                        document.getElementById("error").innerText = "Error during registration. Please try again.";
-                    });
-            } else {
-                console.error("Image upload failed:", data);
-                document.getElementById("error").innerText = "Image upload failed. Please try again.";
-            }
-        })
-        .catch((error) => {
-            console.error("Error during image upload:", error);
-            document.getElementById("error").innerText = "Error during image upload. Please check your connection.";
-        });
+            fetch("https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/seller/register/", {
+                method: "POST",
+                headers: { 
+                    "Content-Type": "application/json" },
+                body: JSON.stringify(info),
+            })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.error) {
+                    document.getElementById("error").innerText = data.error;
+                } else {
+                    localStorage.setItem('seller_id', data.seller_id);
+                    console.log("Registration successful:", data);
+                    document.getElementById("error").innerText =
+                        "Registration successful! A confirmation email has been sent to your email address.";
+                }
+            })
+            .catch((error) => {
+                console.error("Error during registration:", error);
+                document.getElementById("error").innerText = "Error during registration. Please try again.";
+            });
+        } else {
+            console.error("Image upload failed:", data);
+            document.getElementById("error").innerText = "Image upload failed. Please try again.";
+        }
+    })
+    .catch((error) => {
+        console.error("Error during image upload:", error);
+        document.getElementById("error").innerText = "Error during image upload. Please check your connection.";
+    });
 };
-
-
-
 
 const getValue = (id) => {
     const value = document.getElementById(id).value;
     return value;
 };
-
 
 const sellerLogin = async (event) => {
     event.preventDefault();
@@ -153,7 +150,7 @@ const sellerLogin = async (event) => {
     if (username && password) {
         try {
             // Fetch the list of sellers
-            const sellerListResponse = await fetch("http://127.0.0.1:8000/seller/seller-list/");
+            const sellerListResponse = await fetch("https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/seller/seller-list/");
             if (!sellerListResponse.ok) {
                 throw new Error("Failed to fetch seller list.");
             }
@@ -167,7 +164,7 @@ const sellerLogin = async (event) => {
             }
 
             // Proceed with login if the username exists in the seller list
-            const loginResponse = await fetch("http://127.0.0.1:8000/seller/login/", {
+            const loginResponse = await fetch("https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/seller/login/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -207,7 +204,7 @@ const handlelogOut = (event) => {
     event.preventDefault();
     const token = localStorage.getItem("token");
 
-    fetch("http://127.0.0.1:8000/seller/logout", {
+    fetch("https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/seller/logout", {
         method: "GET",
         headers: {
             Authorization: `Token ${token}`,

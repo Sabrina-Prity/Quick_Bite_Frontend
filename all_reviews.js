@@ -2,7 +2,7 @@ const loadReview = () => {
     const token = localStorage.getItem("token");
     const seller_id = localStorage.getItem("seller_id");
     console.log("SellerId", seller_id)
-    fetch(`http://127.0.0.1:8000/seller/reviews/${seller_id}`,{
+    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/seller/reviews/${seller_id}`,{
         method : "GET",
         headers : {
             Authorization: `Token ${token}`,
@@ -69,7 +69,7 @@ const deleteReview = (reviewId, sellerId) => {
         return;
     }
 
-    fetch(`http://127.0.0.1:8000/seller/reviews/delete/${sellerId}/${reviewId}/`, {
+    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/seller/reviews/delete/${sellerId}/${reviewId}/`, {
         method: "DELETE",
         headers: {
             Authorization: `Token ${token}`,

@@ -14,7 +14,7 @@ if (sellerId) {
 
     const token = localStorage.getItem("token");
 
-    fetch(`http://127.0.0.1:8000/cart/see-cart-items-for-seller/${cartId}/${sellerId}/`, {
+    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/cart/see-cart-items-for-seller/${cartId}/${sellerId}/`, {
         method: "GET",
         headers: {
             Authorization: `Token ${token}`,
@@ -140,7 +140,7 @@ const handleOrder = (event) => {
 
     const token = localStorage.getItem("token");
 
-    fetch(`http://127.0.0.1:8000/order/place-order/${cartId}/${sellerId}/`, {
+    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/order/place-order/${cartId}/${sellerId}/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -169,7 +169,7 @@ const handleOrder = (event) => {
 const deleteCartItems = (cartId, sellerId) => {
     const token = localStorage.getItem("token");
 
-    fetch(`http://127.0.0.1:8000/cart/clear-seller-cart/${cartId}/${sellerId}/`, {
+    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/cart/clear-seller-cart/${cartId}/${sellerId}/`, {
         method: "DELETE",
         headers: {
             "Authorization": `Token ${token}`,
@@ -194,70 +194,42 @@ const deleteCartItems = (cartId, sellerId) => {
 };
 
 
-function SSLpayment(event) {
-    event.preventDefault();  
-
-    const token = localStorage.getItem("token");
-    if (!token) {
-        alert("You are not logged in! Please log in first.");
-        return;
-    }
-
-    fetch("http://127.0.0.1:8000/payment/post_payment/", {
-        method: "POST",
-        headers: {
-            "Authorization": `Token ${token}`,  
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            order_id: 1,  // Ensure this is a valid order ID
-        }),
-    })
-    .then(response => {
-        if (response.status === 403) {
-            alert("Access forbidden. Please check your authentication token.");
-        }
-        return response.json();
-    })
-    .then(result => {
-        if (result.status === "success") {
-            window.location.href = result.payment_url;  
-        } else {
-            alert("Payment initiation failed: " + result.message);
-        }
-    })
-    .catch(error => {
-        console.error("Error initiating payment:", error);
-        alert("Something went wrong. Please check your connection.");
-    });
-}
-
-
 // function SSLpayment(event) {
 //     event.preventDefault();  
 
 //     const token = localStorage.getItem("token");
+//     if (!token) {
+//         alert("You are not logged in! Please log in first.");
+//         return;
+//     }
 
-//     try {
-//         const response = fetch("http://127.0.0.1:8000/payment/post_payment/", {
-//             method: "POST",
-//             headers: {
-//                 "Authorization": `Token ${token}`,  
-//                 "Content-Type": "application/json",
-//             },
-//         });
-
-//         const result = response.json();
-
+//     fetch("http://127.0.0.1:8000/payment/post_payment/", {
+//         method: "POST",
+//         headers: {
+//             "Authorization": `Token ${token}`,  
+//             "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({
+//             order_id: 1,  // Ensure this is a valid order ID
+//         }),
+//     })
+//     .then(response => {
+//         if (response.status === 403) {
+//             alert("Access forbidden. Please check your authentication token.");
+//         }
+//         return response.json();
+//     })
+//     .then(result => {
 //         if (result.status === "success") {
 //             window.location.href = result.payment_url;  
 //         } else {
 //             alert("Payment initiation failed: " + result.message);
 //         }
-//     } catch (error) {
+//     })
+//     .catch(error => {
 //         console.error("Error initiating payment:", error);
 //         alert("Something went wrong. Please check your connection.");
-//     }
+//     });
 // }
 
 

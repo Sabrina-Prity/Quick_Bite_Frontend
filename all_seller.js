@@ -1,7 +1,7 @@
 const loadSellers = () => {
     const token = localStorage.getItem("token");
     
-    fetch("http://127.0.0.1:8000/seller/seller-list/",{
+    fetch("hhttps://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/seller/seller-list/",{
         method : "GET",
         headers : {
             Authorization: `Token ${token}`,
@@ -33,9 +33,21 @@ const displaySellers = (sellers) => {
         const sellerDiv = document.createElement("div");
         sellerDiv.classList.add("seller-card");
 
+        // Fix the image URL
+        let imageUrl = seller?.image;
+        
+        // Remove incorrect "image/upload/" prefix if it exists
+        if (imageUrl.includes("image/upload/https://")) {
+            imageUrl = imageUrl.replace("image/upload/", "");  
+        }
+
+        // Ensure the image URL is properly formatted
+        if (!imageUrl.startsWith("https://")) {
+            imageUrl = `https://res.cloudinary.com/dtyxxpqdl/image/upload/${imageUrl}`;
+        }
         sellerDiv.innerHTML = `
             <div class="seller-image-container">
-                <img src="${seller.image}" alt="${seller.company_name}" class="seller-image">
+                <img src="${imageUrl}" alt="${seller.company_name}" class="seller-image">
             </div>
             <div class="seller-details">
                 <h3 class="seller-company">${seller.company_name}</h3>

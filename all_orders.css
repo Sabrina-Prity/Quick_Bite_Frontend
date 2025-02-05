@@ -152,6 +152,27 @@ button.disabled {
     pointer-events: none;  /* Disable click events */
     cursor: not-allowed;  /* Change cursor to 'not-allowed' */
 }
+
+/* Order Status Colors */
+.status-pending {
+    color: orange;
+}
+
+.status-completed {
+    color: green;
+}
+
+.status-canceled {
+    color: red;
+}
+
+.status-failed {
+    color: darkred;
+}
+
+
+
+
 /* Responsive Design (for smaller screens) */
 @media (max-width: 768px) {
     .order-content {

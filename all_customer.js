@@ -1,7 +1,7 @@
 const loadCustomers = () => {
     const token = localStorage.getItem("token");
     
-    fetch("http://127.0.0.1:8000/customer/customer-list/",{
+    fetch("https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/customer/customer-list/",{
         method : "GET",
         headers : {
             Authorization: `Token ${token}`,
@@ -33,9 +33,22 @@ const displayCustomers = (customers) => {
         const customerDiv = document.createElement("div");
         customerDiv.classList.add("seller-card");
 
+        // Fix the image URL
+        let imageUrl = customer?.image;
+        
+        // Remove incorrect "image/upload/" prefix if it exists
+        if (imageUrl.includes("image/upload/https://")) {
+            imageUrl = imageUrl.replace("image/upload/", "");  
+        }
+
+        // Ensure the image URL is properly formatted
+        if (!imageUrl.startsWith("https://")) {
+            imageUrl = `https://res.cloudinary.com/dtyxxpqdl/image/upload/${imageUrl}`;
+        }
+
         customerDiv.innerHTML = `
             <div class="seller-image-container">
-                <img src="${customer.image}" alt="${customer.user}" class="seller-image">
+                <img src="${imageUrl}" alt="${customer.user}" class="seller-image">
             </div>
             <div class="seller-details">
                 <p><strong>User Name:</strong> ${customer.user}</p>

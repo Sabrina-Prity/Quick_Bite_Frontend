@@ -1,6 +1,6 @@
 const loadResturents = (search) => {
     document.getElementById("card").innerHTML = "";
-    fetch(`http://127.0.0.1:8000/seller/seller-list/?search=${search ? search : ""}`)
+    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/seller/seller-list/?search=${search ? search : ""}`)
         .then((res) => res.json())
         .then((data) => {
             console.log("resturent Data",data)
@@ -23,10 +23,23 @@ const displayResturents = (data) => {
         const formattedDistrict = item?.district
             ? item.district.charAt(0).toUpperCase() + item.district.slice(1).toLowerCase()
             : ""; 
+
+         // Fix the image URL
+        let imageUrl = item?.image;
+        
+        // Remove incorrect "image/upload/" prefix if it exists
+        if (imageUrl.includes("image/upload/https://")) {
+            imageUrl = imageUrl.replace("image/upload/", "");  
+        }
+
+        // Ensure the image URL is properly formatted
+        if (!imageUrl.startsWith("https://")) {
+            imageUrl = `https://res.cloudinary.com/dtyxxpqdl/image/upload/${imageUrl}`;
+        }
         const div = document.createElement("div");
         div.classList.add("item-card");
         div.innerHTML = `
-            <img class="item-img" src="${item?.image}" alt="${item?.company_name}" />
+            <img class="item-img" src="${imageUrl}" alt="${item?.company_name}" />
             <h4>${item?.company_name}</h4>
             <p>Street: ${item?.street_name}</p>
             <p>Postal Code: ${item?.postal_code}</p>
@@ -76,7 +89,7 @@ const createCart=()=>{
         user : localStorage.getItem("user_id"),
     }
     console.log(object)
-    fetch("http://127.0.0.1:8000/cart/create-cart/",{
+    fetch("https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/cart/create-cart/",{
         method : "POST",
         headers : {
             Authorization: `Token ${token}`,

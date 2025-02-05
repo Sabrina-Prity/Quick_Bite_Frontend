@@ -2,14 +2,14 @@
 const displayFoodDetails = () => {
     const param = new URLSearchParams(window.location.search).get("foodId");
     // console.log("Food Id:", param);
-    fetch(`http://127.0.0.1:8000/food/food-item/get/${param}/`)
-    .then((res) => res.json())
-    .then((food) => {
-        // console.log("Food:", food);
-        const parent = document.getElementById("food-details");
-        parent.innerHTML = "";
+    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/food/food-item/get/${param}/`)
+        .then((res) => res.json())
+        .then((food) => {
+            // console.log("Food:", food);
+            const parent = document.getElementById("food-details");
+            parent.innerHTML = "";
 
-        const div = document.createElement("div");
+            const div = document.createElement("div");
 
             if (!food || food.length === 0) {
                 console.error("No food details available");
@@ -17,6 +17,20 @@ const displayFoodDetails = () => {
             }
 
             const foodItem = food[0]
+
+            // Fix the image URL
+            let imageUrl = foodItem?.image;
+
+            // Remove incorrect "image/upload/" prefix if it exists
+            if (imageUrl.includes("image/upload/https://")) {
+                imageUrl = imageUrl.replace("image/upload/", "");
+            }
+
+            // Ensure the image URL is properly formatted
+            if (!imageUrl.startsWith("https://")) {
+                imageUrl = `https://res.cloudinary.com/dtyxxpqdl/image/upload/${imageUrl}`;
+            }
+
             div.classList.add("food-detail");
 
             const closeButton = document.createElement("span");
@@ -27,7 +41,7 @@ const displayFoodDetails = () => {
 
             div.innerHTML = `
                 <div class="food-image">
-                    <img src="${foodItem.image}" alt="${foodItem.name}" />
+                    <img src="${imageUrl}" alt="${foodItem.name}" />
                 </div>
                 <div class="food-info">
                     <h4>${foodItem.name}</h4>
@@ -41,11 +55,11 @@ const displayFoodDetails = () => {
             `;
 
             parent.appendChild(div);
-       
-    })
-    .catch((error) => {
-        console.error("Error fetching food details:", error);
-    });
+
+        })
+        .catch((error) => {
+            console.error("Error fetching food details:", error);
+        });
 
 };
 
@@ -63,17 +77,17 @@ const postComment = () => {
     const user_id = localStorage.getItem("user_id");
 
     const commentText = document.getElementById("comment-text").value;
-    const rating = document.getElementById("rating").value;  
-     
+    const rating = document.getElementById("rating").value;
+
     const commentData = {
         body: commentText,
         rating: rating,
         user: user_id,
-        food_item: foodId,  
+        food_item: foodId,
     };
 
     console.log(commentData);
-    fetch(`http://127.0.0.1:8000/food/comment/${foodId}/${sellerId}/`, {
+    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/food/comment/${foodId}/${sellerId}/`, {
         method: 'POST',
         headers: {
             'Authorization': `Token ${token}`,
@@ -81,19 +95,19 @@ const postComment = () => {
         },
         body: JSON.stringify(commentData),
     })
-    .then((response) => response.json())
-    .then((data) => {
-        
-        console.log("Comment posted:", data);
-        commentText.value = "";
-        rating.value = ""; 
-        // displayComments(data);  
-        location.reload();
-        
-    })
-    .catch((error) => {
-        console.error("Error posting comment:", error);
-    });
+        .then((response) => response.json())
+        .then((data) => {
+
+            console.log("Comment posted:", data);
+            commentText.value = "";
+            rating.value = "";
+            // displayComments(data);  
+            location.reload();
+
+        })
+        .catch((error) => {
+            console.error("Error posting comment:", error);
+        });
 };
 
 const displayComments = () => {
@@ -101,11 +115,11 @@ const displayComments = () => {
     console.log("Food Id:", foodId);
     const sellerId = new URLSearchParams(window.location.search).get("sellerId");
     console.log("seller Id:", sellerId);
-    fetch(`http://127.0.0.1:8000/food/comment/${foodId}/${sellerId}/`)
+    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/food/comment/${foodId}/${sellerId}/`)
         .then((res) => res.json())
         .then((data) => {
             const commentsList = document.getElementById("comments-list");
-            commentsList.innerHTML = ''; 
+            commentsList.innerHTML = '';
             // const username = localStorage.getItem("username")
 
             data.forEach((comment) => {
@@ -127,11 +141,11 @@ const displayComments = () => {
             // Show the comment form if the user is logged in
             const token = localStorage.getItem("token");
             if (token) {
-                document.getElementById("comment-form").style.display = "block";  
-                document.getElementById("comment-login-msg").style.display = "none"; 
+                document.getElementById("comment-form").style.display = "block";
+                document.getElementById("comment-login-msg").style.display = "none";
             } else {
-                document.getElementById("comment-form").style.display = "none";  
-                document.getElementById("comment-login-msg").style.display = "block"; 
+                document.getElementById("comment-form").style.display = "none";
+                document.getElementById("comment-login-msg").style.display = "block";
             }
         });
 };

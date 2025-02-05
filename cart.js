@@ -19,7 +19,7 @@ const addToCart = (foodId, price) => {
 
     console.log("Cart Data", data)
     const token = localStorage.getItem("token");
-    fetch("http://127.0.0.1:8000/cart/cart-item/", {
+    fetch("https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/cart/cart-item/", {
         method: "POST",
         headers: {
             Authorization: `Token ${token}`,
@@ -47,7 +47,7 @@ const loadCartProduct = () => {
     const token = localStorage.getItem("token");
 
 
-    fetch(`http://127.0.0.1:8000/cart/see-cart-item/${cartId}/`,
+    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/cart/see-cart-item/${cartId}/`,
         {
             method: "GET",
             headers: {
@@ -104,10 +104,24 @@ const displayCart = (items) => {
             div.classList.add("cart-item");
             div.id = item.id;
 
+
+            // Fix the image URL
+        let imageUrl = item.food_item?.image;
+        
+        // Remove incorrect "image/upload/" prefix if it exists
+        if (imageUrl.includes("image/upload/https://")) {
+            imageUrl = imageUrl.replace("image/upload/", "");  
+        }
+
+        // Ensure the image URL is properly formatted
+        if (!imageUrl.startsWith("https://")) {
+            imageUrl = `https://res.cloudinary.com/dtyxxpqdl/image/upload/${imageUrl}`;
+        }
+
             div.innerHTML = `
                 <div class="cart-item-container">
                     <div class="cart-item-image">
-                        <img src="${item.food_item.image}" alt="Food Image" style="width:100px; height:auto;">
+                        <img src="${imageUrl}" alt="Food Image" style="width:100px; height:auto;">
                     </div>
                     <div class="cart-item-details">
                         <h4>Name: ${item.food_item.name}</h4>
@@ -147,87 +161,6 @@ const displayCart = (items) => {
 };
 
 
-// const displayCart = (items) => {
-//     const parent = document.getElementById("cart-section");
-//     parent.innerHTML = ""; // Clear previous cart content
-
-//     if (!items || items.length === 0) {
-//         parent.innerHTML += `
-//         <img src="Images/cart_empty.jpg" alt="Empty Cart" class="empty-cart">
-//         <p>Your cart is empty!</p>`;
-//         return;
-//     }
-
-//     // Group items by seller
-//     const groupedItems = items.reduce((groups, item) => {
-//         const sellerId = item.food_item.seller.id;
-//         if (!groups[sellerId]) {
-//             groups[sellerId] = {
-//                 company_name: item.food_item.seller.company_name,
-//                 items: [],
-//             };
-//         }
-//         groups[sellerId].items.push(item);
-//         return groups;
-//     }, {});
-
-//     // Display grouped items in the cart
-//     Object.values(groupedItems).forEach((group) => {
-//         const sellerHeading = document.createElement("h3");
-//         sellerHeading.textContent = `Seller: ${group.company_name}`;
-//         parent.appendChild(sellerHeading);
-
-//         // Create a container for the seller's items
-//         const sellerContainer = document.createElement("div");
-//         sellerContainer.classList.add("seller-container");
-
-//         group.items.forEach((item) => {
-//             const div = document.createElement("div");
-//             div.classList.add("cart-item");
-//             div.id = item.id;
-
-//             div.innerHTML = `
-//                 <div class="cart-item-container">
-//                     <div class="cart-item-image">
-//                         <img src="${item.food_item.image}" alt="Food Image" style="width:100px; height:auto;">
-//                     </div>
-//                     <div class="cart-item-details">
-//                         <h4>Name: ${item.food_item.name}</h4>
-//                         <label for="quantity-${item.id}">Quantity:</label>
-//                         <input type="number" class="quantity" id="quantity-${item.id}" name="quantity" min="1"
-//                             max="${item.food_item?.quantity}" value="${item.quantity}"
-//                             onchange="updatePrice('${item.id}', ${item.food_item.price})">
-//                         <p>Price: $<span id="price-${item.id}">${(item.food_item.price * item.quantity).toFixed(2)}</span></p>
-//                     </div>
-//                     <div class="cart-item-actions">
-//                         <button class="detail-btn">
-//                             <a href="foodDetails.html?foodId=${item.food_item.id}" class="detail-link">Details</a>
-//                         </button>
-//                         <button class="delete-btn" onclick="deleteCartItem('${item.id}')">Delete</button>
-//                     </div>
-//                 </div>
-//             `;
-
-//             sellerContainer.appendChild(div);
-//         });
-
-        
-
-//         parent.appendChild(sellerContainer);
-        
-//     });
-//     const checkoutButton = document.createElement("button");
-//     checkoutButton.classList.add("checkout-btn");
-//     checkoutButton.textContent = "Place Order";
-
-//     checkoutButton.addEventListener("click", () => {
-//         window.location.href = "checkout.html"; 
-//     });
-
-//     // Append the checkout button at the end of the cart
-//     parent.appendChild(checkoutButton);
-// };
-
 
 
 
@@ -242,7 +175,7 @@ function updatePrice(cartItemId, unitPrice) {
 
 
 function deleteCartItem(cartItemId) {
-    const url = `http://127.0.0.1:8000/cart/cart-item/update/${cartItemId}/`;
+    const url = `https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/cart/cart-item/update/${cartItemId}/`;
     const token = localStorage.getItem("token");
     fetch(url, {
         method: 'DELETE',
@@ -266,59 +199,6 @@ function deleteCartItem(cartItemId) {
         console.error('Error deleting cart item:', error);
     });
 }
-
-
-{/* <button class="buy-now-btn" onclick="buyNowIntoCart('${item.mango.id}', ${item.mango.price}, ${item.mango.quantity}, '${item.id}')">Buy Now</button>  */}
-
-
-// function buyNowIntoCart(mangoId, price, maxQuantity, cartItemId) {
-//     const token = localStorage.getItem("token");
-//     const user_id = localStorage.getItem("user_id");
-//     const quantity = document.getElementById("quantity").value;
-
-//     if (!token) {
-//         alert("Please Login first.");
-//         return;
-//     }
-
-//     if (quantity < 1 || quantity > maxQuantity) {
-//         alert(`Please enter a valid quantity (1-${maxQuantity}).`);
-//         return;
-//     }
-
-//     const orderData = {
-//         quantity: quantity,
-//         buying_status: "Pending",
-//         user: user_id,
-//         product: mangoId,
-//     };
-
-//     // Step 1: Place the Order
-//     fetch("https://mango-project-six.vercel.app/add_to_cart/orders-view/", {
-//         method: "POST",
-//         headers: {
-//             Authorization: `Token ${token}`,
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify(orderData),
-//     })
-//         .then((res) => {
-//             if (!res.ok) {
-//                 throw new Error("Failed to place order.");
-//             }
-//             return res.json();
-//         })
-//         .then((orderResponse) => {
-//             console.log("Order placed successfully:", orderResponse);
-//             alert("Successfully bought the product!");
-
-//             // Step 2: Remove the Item from Cart
-//             deleteCartItem(cartItemId);
-//         })
-//         .catch((error) => {
-//             console.error("Error during purchase or cart update:", error);
-//         });
-// }
 
 
 
