@@ -21,32 +21,32 @@ const loadOrderDetails = () => {
             console.log("Received Cart Data:", data);
             
             // Group data by seller
-            const groupedItems = data.reduce((acc, item) => {
-                const sellerName = item.food_item.seller.company_name;
+            // const groupedItems = data.reduce((acc, item) => {
+            //     const sellerName = item.food_item.seller.company_name;
 
-                if (!acc[sellerName]) {
-                    acc[sellerName] = {
-                        company_name: sellerName,
-                        items: [],
-                    };
-                }
-                acc[sellerName].items.push(item);
+            //     if (!acc[sellerName]) {
+            //         acc[sellerName] = {
+            //             company_name: sellerName,
+            //             items: [],
+            //         };
+            //     }
+            //     acc[sellerName].items.push(item);
 
-                return acc;
-            }, {});
+            //     return acc;
+            // }, {});
 
             // Display the order details
-            displayOrderDetails(groupedItems);
+            displayOrderDetails(data);
         })
         .catch((error) => {
             console.error("Error fetching cart details:", error);
         });
 };
 
-const displayOrderDetails = (groupedItems) => {
+const displayOrderDetails = (items) => {
     const orderDetailsDiv = document.querySelector(".order-details");
 
-    if (!groupedItems || Object.keys(groupedItems).length === 0) {
+    if (!items || Object.keys(items).length === 0) {
         orderDetailsDiv.innerHTML = "<p>No items found in your order!</p>";
         return;
     }
@@ -68,12 +68,12 @@ const displayOrderDetails = (groupedItems) => {
     let grandTotal = 0;
 
     // Loop through grouped items
-    Object.values(groupedItems).forEach((group) => {
-        const { company_name, items } = group;
+    // Object.values(groupedItems).forEach((group) => {
+    //     const { company_name, items } = group;
 
         // Loop through items for each seller
-        items.forEach((item, index) => {
-            const { food_item, quantity, price } = item;
+        items.forEach((item) => {
+            // const { food_item, quantity, price } = item;
             const totalPrice = parseFloat(price) * quantity;
             grandTotal += totalPrice;
 
@@ -87,7 +87,7 @@ const displayOrderDetails = (groupedItems) => {
                 </tr>
             `;
         });
-    });
+    // });
 
     orderHTML += `
             </tbody>
