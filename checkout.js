@@ -48,11 +48,19 @@ if (sellerId) {
         });
 };
 
-const displayOrderDetails = (groupedItems) => {
+const displayOrderDetails = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const sellerId = urlParams.get("seller_id");
+    const cartData = JSON.parse(decodeURIComponent(urlParams.get("cart")) || "[]");
+
+    // Display the order details in console for debugging
+    console.log("Seller ID:", sellerId);
+    console.log("Cart Items:", cartData);
+
     const orderDetailsDiv = document.querySelector(".order-details");
 
-    // Check if groupedItems exist and have content
-    if (!groupedItems || Object.keys(groupedItems).length === 0) {
+    // Check if cartData exists and has content
+    if (!cartData || cartData.length === 0) {
         orderDetailsDiv.innerHTML = "<p>No items found in your order!</p>";
         return;
     }
@@ -73,36 +81,97 @@ const displayOrderDetails = (groupedItems) => {
 
     let grandTotal = 0;
 
-    // Loop through grouped items
-    Object.values(groupedItems).forEach((group) => {
-        const { company_name, items } = group;
+    // Loop through the cartData to display items
+    cartData.forEach((item, index) => {
+        // Assuming you have a way to get the food details (like price and name) from the food_id
+        const foodItem = getFoodDetailsById(item.food_id);  // Create this function to fetch food item details by ID
+        const quantity = item.quantity;
+        const price = foodItem.price;  // Assuming price is in foodItem
+        const totalPrice = parseFloat(price) * quantity;
+        grandTotal += totalPrice;
 
-        // Loop through items for each seller
-        items.forEach((item, index) => {
-            const { food_item, quantity, price } = item;
-            const totalPrice = parseFloat(price) * quantity;
-            grandTotal += totalPrice;
-
-            orderHTML += `
-                <tr>
-                    ${index === 0 ? `<td rowspan="${items.length}">${company_name}</td>` : ""}
-                    <td>${food_item.name}</td>
-                    <td>${quantity}</td>
-                    <td>$${parseFloat(price).toFixed(2)}</td>
-                    <td>$${totalPrice.toFixed(2)}</td>
-                </tr>
-            `;
-        });
+        orderHTML += `
+            <tr>
+                <td>${foodItem.seller.company_name}</td>
+                <td>${foodItem.name}</td>
+                <td>${quantity}</td>
+                <td>$${parseFloat(price).toFixed(2)}</td>
+                <td>$${totalPrice.toFixed(2)}</td>
+            </tr>
+        `;
     });
 
     orderHTML += `
-            </tbody>
-        </table>
-        <h3>Grand Total: $${grandTotal.toFixed(2)}</h3>
+        </tbody>
+    </table>
+    <h3>Grand Total: $${grandTotal.toFixed(2)}</h3>
     `;
 
     orderDetailsDiv.innerHTML = orderHTML;
 };
+
+// const displayOrderDetails = () => {
+//     const urlParams = new URLSearchParams(window.location.search);
+// const sellerId = urlParams.get("seller_id");
+// const cartData = JSON.parse(decodeURIComponent(urlParams.get("cart")) || "[]");
+
+// // Display the order details
+// console.log("Seller ID:", sellerId);
+// console.log("Cart Items:", cartData);
+//     const orderDetailsDiv = document.querySelector(".order-details");
+
+//     // Check if groupedItems exist and have content
+//     if (!groupedItems || Object.keys(groupedItems).length === 0) {
+//         orderDetailsDiv.innerHTML = "<p>No items found in your order!</p>";
+//         return;
+//     }
+
+//     let orderHTML = `
+//         <table class="order-table">
+//             <thead>
+//                 <tr>
+//                     <th>Seller</th>
+//                     <th>Product</th>
+//                     <th>Quantity</th>
+//                     <th>Unit Price</th>
+//                     <th>Total Price</th>
+//                 </tr>
+//             </thead>
+//             <tbody>
+//     `;
+
+//     let grandTotal = 0;
+
+//     // Loop through grouped items
+//     Object.values(groupedItems).forEach((group) => {
+//         const { company_name, items } = group;
+
+//         // Loop through items for each seller
+//         items.forEach((item, index) => {
+//             const { food_item, quantity, price } = item;
+//             const totalPrice = parseFloat(price) * quantity;
+//             grandTotal += totalPrice;
+
+//             orderHTML += `
+//                 <tr>
+//                     ${index === 0 ? `<td rowspan="${items.length}">${company_name}</td>` : ""}
+//                     <td>${food_item.name}</td>
+//                     <td>${quantity}</td>
+//                     <td>$${parseFloat(price).toFixed(2)}</td>
+//                     <td>$${totalPrice.toFixed(2)}</td>
+//                 </tr>
+//             `;
+//         });
+//     });
+
+//     orderHTML += `
+//             </tbody>
+//         </table>
+//         <h3>Grand Total: $${grandTotal.toFixed(2)}</h3>
+//     `;
+
+//     orderDetailsDiv.innerHTML = orderHTML;
+// };
 
 const handleOrder = (event) => {
     event.preventDefault();
