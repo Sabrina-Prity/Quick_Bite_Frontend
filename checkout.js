@@ -1,9 +1,8 @@
 const loadOrderDetails = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const sellerId = urlParams.get("seller_id");
-
-
     const cartId = localStorage.getItem("cartId");
+    
     if (!cartId) {
         console.log("No cart found. Please create a cart first.");
         return;
@@ -20,7 +19,7 @@ const loadOrderDetails = () => {
         .then((res) => res.json())
         .then((data) => {
             console.log("Received Cart Data:", data);
-           
+            
             // Group data by seller
             const groupedItems = data.reduce((acc, item) => {
                 const sellerName = item.food_item.seller.company_name;
@@ -36,7 +35,7 @@ const loadOrderDetails = () => {
                 return acc;
             }, {});
 
-            
+            // Display the order details
             displayOrderDetails(groupedItems);
         })
         .catch((error) => {
@@ -44,12 +43,10 @@ const loadOrderDetails = () => {
         });
 };
 
-
 const displayOrderDetails = (groupedItems) => {
-   
     const orderDetailsDiv = document.querySelector(".order-details");
 
-    if (!cartData || cartData.length === 0) {
+    if (!groupedItems || Object.keys(groupedItems).length === 0) {
         orderDetailsDiv.innerHTML = "<p>No items found in your order!</p>";
         return;
     }
