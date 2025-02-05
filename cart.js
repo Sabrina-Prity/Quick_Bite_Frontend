@@ -65,7 +65,6 @@ const loadCartProduct = () => {
         });
 };
 
-
 const displayCart = (items) => {
     const parent = document.getElementById("cart-section");
     parent.innerHTML = "";
@@ -123,7 +122,7 @@ const displayCart = (items) => {
                         <label for="quantity-${item.id}">Quantity:</label>
                         <input type="number" class="quantity" id="quantity-${item.id}" name="quantity" min="1"
                             max="${item.food_item?.quantity}" value="${item.quantity}"
-                            onchange="updateCartQuantity('${item.id}', this.value)">
+                            onchange="updateCartQuantity('${item.id}')">
                         <p>Price: $<span id="price-${item.id}">${(item.food_item.price * item.quantity).toFixed(2)}</span></p>
                     </div>
                     <div class="cart-item-actions">
@@ -153,23 +152,38 @@ const displayCart = (items) => {
 };
 
 
-const updateCartQuantity = (cartItemId, newQuantity) => {
+const updateCartQuantity = (cartItemId) => {
+    const quantityInput = document.getElementById(`quantity-${cartItemId}`);
+    if (!quantityInput) return;
+
+    let newQuantity = parseInt(quantityInput.value);
+    if (newQuantity < 1) {
+        quantityInput.value = 1;  // Prevent negative or zero quantities
+        newQuantity = 1;
+    }
+
     let cartData = JSON.parse(localStorage.getItem("cartData")) || [];
 
+    let itemFound = false;
     cartData = cartData.map(item => {
         if (item.id === cartItemId) {
-            item.quantity = parseInt(newQuantity);
+            item.quantity = newQuantity;
+            itemFound = true;
         }
         return item;
     });
 
-    localStorage.setItem("cartData", JSON.stringify(cartData));
+    if (itemFound) {
+        localStorage.setItem("cartData", JSON.stringify(cartData));
 
-    // Update price dynamically
-    const priceElement = document.getElementById(`price-${cartItemId}`);
-    if (priceElement) {
-        const updatedItem = cartData.find(item => item.id === cartItemId);
-        priceElement.textContent = (updatedItem.food_item.price * updatedItem.quantity).toFixed(2);
+        // Update price dynamically
+        const priceElement = document.getElementById(`price-${cartItemId}`);
+        if (priceElement) {
+            const updatedItem = cartData.find(item => item.id === cartItemId);
+            priceElement.textContent = (updatedItem.food_item.price * updatedItem.quantity).toFixed(2);
+        }
+    } else {
+        console.error("Item not found in cart.");
     }
 };
 
