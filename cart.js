@@ -64,6 +64,8 @@ const loadCartProduct = () => {
             console.error("Error adding to cart:", error);
         });
 };
+
+
 const displayCart = (items) => {
     const parent = document.getElementById("cart-section");
     parent.innerHTML = ""; // Clear previous cart content

@@ -46,7 +46,7 @@ const loadOrderDetails = () => {
 const displayOrderDetails = (items) => {
     const orderDetailsDiv = document.querySelector(".order-details");
 
-    if (!items || Object.keys(items).length === 0) {
+    if (!items || items.length === 0) {
         orderDetailsDiv.innerHTML = "<p>No items found in your order!</p>";
         return;
     }
@@ -66,28 +66,33 @@ const displayOrderDetails = (items) => {
     `;
 
     let grandTotal = 0;
+    let sellerRows = {}; // Track the number of rows for each seller
 
-    // Loop through grouped items
-    // Object.values(groupedItems).forEach((group) => {
-    //     const { company_name, items } = group;
+    // Count items per seller for rowspan
+    items.forEach((item) => {
+        const sellerName = item.food_item.seller.company_name;
+        sellerRows[sellerName] = (sellerRows[sellerName] || 0) + 1;
+    });
 
-        // Loop through items for each seller
-        items.forEach((item) => {
-            // const { food_item, quantity, price } = item;
-            const totalPrice = parseFloat(price) * quantity;
-            grandTotal += totalPrice;
+    let addedSellers = {}; // Track which sellers have been added
 
-            orderHTML += `
-                <tr>
-                    ${index === 0 ? `<td rowspan="${items.length}">${company_name}</td>` : ""}
-                    <td>${food_item.name}</td>
-                    <td>${quantity}</td>
-                    <td>$${parseFloat(price).toFixed(2)}</td>
-                    <td>$${totalPrice.toFixed(2)}</td>
-                </tr>
-            `;
-        });
-    // });
+    items.forEach((item) => {
+        const sellerName = item.food_item.seller.company_name;
+        const totalPrice = parseFloat(item.food_item.price) * item.quantity;
+        grandTotal += totalPrice;
+
+        orderHTML += `
+            <tr>
+                ${!addedSellers[sellerName] ? `<td rowspan="${sellerRows[sellerName]}">${sellerName}</td>` : ""}
+                <td>${item.food_item.name}</td>
+                <td>${item.quantity}</td>
+                <td>$${parseFloat(item.food_item.price).toFixed(2)}</td>
+                <td>$${totalPrice.toFixed(2)}</td>
+            </tr>
+        `;
+
+        addedSellers[sellerName] = true; // Mark this seller as added
+    });
 
     orderHTML += `
             </tbody>
@@ -97,6 +102,7 @@ const displayOrderDetails = (items) => {
 
     orderDetailsDiv.innerHTML = orderHTML;
 };
+
 
 
 
