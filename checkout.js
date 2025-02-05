@@ -20,21 +20,8 @@ const loadOrderDetails = () => {
         .then((data) => {
             console.log("Received Cart Data:", data);
             
-            // Group data by seller
-            // const groupedItems = data.reduce((acc, item) => {
-            //     const sellerName = item.food_item.seller.company_name;
-
-            //     if (!acc[sellerName]) {
-            //         acc[sellerName] = {
-            //             company_name: sellerName,
-            //             items: [],
-            //         };
-            //     }
-            //     acc[sellerName].items.push(item);
-
-            //     return acc;
-            // }, {});
-
+            // Save cart data to local storage
+        localStorage.setItem("cartData", JSON.stringify(data));
             // Display the order details
             displayOrderDetails(data);
         })
@@ -121,7 +108,7 @@ const handleOrder = (event) => {
     const sellerId = urlParams.get("seller_id");
 
     // Get cart data from localStorage
-    let cartData = JSON.parse(localStorage.getItem("cart_data"));
+    let cartData = JSON.parse(localStorage.getItem("cartData"));
 
     if (!cartData || cartData.length === 0) {
         alert("Your cart is empty!");
