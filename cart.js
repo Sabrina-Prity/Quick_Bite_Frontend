@@ -68,7 +68,7 @@ const loadCartProduct = () => {
 
 const displayCart = (items) => {
     const parent = document.getElementById("cart-section");
-    parent.innerHTML = ""; // Clear previous cart content
+    parent.innerHTML = "";
 
     if (!items || items.length === 0) {
         parent.innerHTML += `
@@ -83,7 +83,7 @@ const displayCart = (items) => {
         if (!groups[sellerId]) {
             groups[sellerId] = {
                 company_name: item.food_item.seller.company_name,
-                seller_id: sellerId,  // Store seller ID for later use
+                seller_id: sellerId,
                 items: [],
             };
         }
@@ -91,34 +91,27 @@ const displayCart = (items) => {
         return groups;
     }, {});
 
-    // Display grouped items in the cart
+    // Display grouped items
     Object.values(groupedItems).forEach((group) => {
         const sellerHeading = document.createElement("h3");
         sellerHeading.textContent = `Seller: ${group.company_name}`;
         parent.appendChild(sellerHeading);
 
-        // Create a container for the seller's items
         const sellerContainer = document.createElement("div");
         sellerContainer.classList.add("seller-container");
 
         group.items.forEach((item) => {
             const div = document.createElement("div");
             div.classList.add("cart-item");
-            div.id = item.id;
+            div.id = `cart-item-${item.id}`;
 
-
-            // Fix the image URL
-        let imageUrl = item.food_item?.image;
-        
-        // Remove incorrect "image/upload/" prefix if it exists
-        if (imageUrl.includes("image/upload/https://")) {
-            imageUrl = imageUrl.replace("image/upload/", "");  
-        }
-
-        // Ensure the image URL is properly formatted
-        if (!imageUrl.startsWith("https://")) {
-            imageUrl = `https://res.cloudinary.com/dtyxxpqdl/image/upload/${imageUrl}`;
-        }
+            let imageUrl = item.food_item?.image;
+            if (imageUrl.includes("image/upload/https://")) {
+                imageUrl = imageUrl.replace("image/upload/", "");
+            }
+            if (!imageUrl.startsWith("https://")) {
+                imageUrl = `https://res.cloudinary.com/dtyxxpqdl/image/upload/${imageUrl}`;
+            }
 
             div.innerHTML = `
                 <div class="cart-item-container">
@@ -130,7 +123,7 @@ const displayCart = (items) => {
                         <label for="quantity-${item.id}">Quantity:</label>
                         <input type="number" class="quantity" id="quantity-${item.id}" name="quantity" min="1"
                             max="${item.food_item?.quantity}" value="${item.quantity}"
-                            onchange="updatePrice('${item.id}', ${item.food_item.price})">
+                            onchange="updateCartQuantity('${item.id}', this.value)">
                         <p>Price: $<span id="price-${item.id}">${(item.food_item.price * item.quantity).toFixed(2)}</span></p>
                     </div>
                     <div class="cart-item-actions">
@@ -147,33 +140,149 @@ const displayCart = (items) => {
 
         parent.appendChild(sellerContainer);
 
-        // Create a checkout button specific for this seller
         const checkoutButton = document.createElement("button");
         checkoutButton.classList.add("checkout-btn");
         checkoutButton.textContent = "Place Order";
 
         checkoutButton.addEventListener("click", () => {
-            // Redirect to the checkout page with the seller_id in the URL
             window.location.href = `checkout.html?seller_id=${group.seller_id}`;
         });
 
-        // Append the checkout button at the end of the seller's section
         sellerContainer.appendChild(checkoutButton);
     });
 };
 
 
+const updateCartQuantity = (cartItemId, newQuantity) => {
+    let cartData = JSON.parse(localStorage.getItem("cartData")) || [];
 
+    cartData = cartData.map(item => {
+        if (item.id === cartItemId) {
+            item.quantity = parseInt(newQuantity);
+        }
+        return item;
+    });
 
+    localStorage.setItem("cartData", JSON.stringify(cartData));
 
-function updatePrice(cartItemId, unitPrice) {
-    const quantityInput = document.getElementById(`quantity-${cartItemId}`);
+    // Update price dynamically
     const priceElement = document.getElementById(`price-${cartItemId}`);
+    if (priceElement) {
+        const updatedItem = cartData.find(item => item.id === cartItemId);
+        priceElement.textContent = (updatedItem.food_item.price * updatedItem.quantity).toFixed(2);
+    }
+};
+
+
+
+// const displayCart = (items) => {
+//     const parent = document.getElementById("cart-section");
+//     parent.innerHTML = ""; // Clear previous cart content
+
+//     if (!items || items.length === 0) {
+//         parent.innerHTML += `
+//         <img src="Images/cart_empty.jpg" alt="Empty Cart" class="empty-cart">
+//         <p>Your cart is empty!</p>`;
+//         return;
+//     }
+
+//     // Group items by seller
+//     const groupedItems = items.reduce((groups, item) => {
+//         const sellerId = item.food_item.seller.id;
+//         if (!groups[sellerId]) {
+//             groups[sellerId] = {
+//                 company_name: item.food_item.seller.company_name,
+//                 seller_id: sellerId,  // Store seller ID for later use
+//                 items: [],
+//             };
+//         }
+//         groups[sellerId].items.push(item);
+//         return groups;
+//     }, {});
+
+//     // Display grouped items in the cart
+//     Object.values(groupedItems).forEach((group) => {
+//         const sellerHeading = document.createElement("h3");
+//         sellerHeading.textContent = `Seller: ${group.company_name}`;
+//         parent.appendChild(sellerHeading);
+
+//         // Create a container for the seller's items
+//         const sellerContainer = document.createElement("div");
+//         sellerContainer.classList.add("seller-container");
+
+//         group.items.forEach((item) => {
+//             const div = document.createElement("div");
+//             div.classList.add("cart-item");
+//             div.id = item.id;
+
+
+//             // Fix the image URL
+//         let imageUrl = item.food_item?.image;
+        
+//         // Remove incorrect "image/upload/" prefix if it exists
+//         if (imageUrl.includes("image/upload/https://")) {
+//             imageUrl = imageUrl.replace("image/upload/", "");  
+//         }
+
+//         // Ensure the image URL is properly formatted
+//         if (!imageUrl.startsWith("https://")) {
+//             imageUrl = `https://res.cloudinary.com/dtyxxpqdl/image/upload/${imageUrl}`;
+//         }
+
+//             div.innerHTML = `
+//                 <div class="cart-item-container">
+//                     <div class="cart-item-image">
+//                         <img src="${imageUrl}" alt="Food Image" style="width:100px; height:auto;">
+//                     </div>
+//                     <div class="cart-item-details">
+//                         <h4>Name: ${item.food_item.name}</h4>
+//                         <label for="quantity-${item.id}">Quantity:</label>
+//                         <input type="number" class="quantity" id="quantity-${item.id}" name="quantity" min="1"
+//                             max="${item.food_item?.quantity}" value="${item.quantity}"
+//                             onchange="updatePrice('${item.id}', ${item.food_item.price})">
+//                         <p>Price: $<span id="price-${item.id}">${(item.food_item.price * item.quantity).toFixed(2)}</span></p>
+//                     </div>
+//                     <div class="cart-item-actions">
+//                         <button class="detail-btn">
+//                             <a href="foodDetails.html?foodId=${item.food_item.id}" class="detail-link">Details</a>
+//                         </button>
+//                         <button class="delete-btn" onclick="deleteCartItem('${item.id}')">Delete</button>
+//                     </div>
+//                 </div>
+//             `;
+
+//             sellerContainer.appendChild(div);
+//         });
+
+//         parent.appendChild(sellerContainer);
+
+//         // Create a checkout button specific for this seller
+//         const checkoutButton = document.createElement("button");
+//         checkoutButton.classList.add("checkout-btn");
+//         checkoutButton.textContent = "Place Order";
+
+//         checkoutButton.addEventListener("click", () => {
+//             // Redirect to the checkout page with the seller_id in the URL
+//             window.location.href = `checkout.html?seller_id=${group.seller_id}`;
+//         });
+
+//         // Append the checkout button at the end of the seller's section
+//         sellerContainer.appendChild(checkoutButton);
+//     });
+// };
+
+
+
+
+
+// function updatePrice(cartItemId, unitPrice) {
+//     const quantityInput = document.getElementById(`quantity-${cartItemId}`);
+//     const priceElement = document.getElementById(`price-${cartItemId}`);
     
-    const quantity = parseInt(quantityInput.value);
-    const totalPrice = unitPrice * quantity;
-    priceElement.textContent = totalPrice.toFixed(2);
-}
+//     const quantity = parseInt(quantityInput.value);
+//     const totalPrice = unitPrice * quantity;
+//     priceElement.textContent = totalPrice.toFixed(2);
+// }
 
 
 function deleteCartItem(cartItemId) {
