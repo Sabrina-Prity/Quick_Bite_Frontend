@@ -3,7 +3,7 @@ const displayOrderHistory = () => {
     const token = localStorage.getItem("token");
     const id = localStorage.getItem("user_id");
 
-    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/order/orders-view/${id}/`, {
+    fetch(`https://quick-bite-backend-pink.vercel.app/order/orders-view/${id}/`, {
         method: "GET",
         headers: {
             Authorization: `Token ${token}`,
@@ -104,7 +104,7 @@ function SSLpayment(orderId, totalPrice, length) {
         return;
     }
 
-    fetch("https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/payment/pay/", {
+    fetch("https://quick-bite-backend-pink.vercel.app/payment/pay/", {
         method: "POST",
         headers: {
             "Authorization": `Token ${token}`,  

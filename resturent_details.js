@@ -4,7 +4,7 @@ const loadcartId = () => {
         alert("Please login");
         return;
     }
-    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/cart/cart-details/${localStorage.getItem("user_id")}/`,{
+    fetch(`https://quick-bite-backend-pink.vercel.app/cart/cart-details/${localStorage.getItem("user_id")}/`,{
         headers: {
             'Authorization': `Token ${token}`,
             'Content-Type': 'application/json',
@@ -24,7 +24,7 @@ const getparams = () => {
     const token = localStorage.getItem("token");
     const param = new URLSearchParams(window.location.search).get("resturentId");
     // console.log("Resturent Id", param);
-    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/seller/seller-detail/${param}`,{
+    fetch(`https://quick-bite-backend-pink.vercel.app/seller/seller-detail/${param}`,{
         method : "GET",
         headers : {
             Authorization: `Token ${token}`,
@@ -99,7 +99,7 @@ const loadCategorys = () => {
     const param = new URLSearchParams(window.location.search).get("resturentId");
     console.log("Resturent Id", param);
     const token = localStorage.getItem("token");
-    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/category/seller_category_list/${param}/`)
+    fetch(`https://quick-bite-backend-pink.vercel.app/category/seller_category_list/${param}/`)
         .then((res) => res.json())
         // .then((data) => console.log("Category" ,data))
         .then((data) => displayCategorys(data))
@@ -125,7 +125,7 @@ const displayCategorys = ((data)=>{
     // console.log(search)
     const param = new URLSearchParams(window.location.search).get("resturentId");
     document.getElementById("card").innerHTML = "";
-    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/food/food-items-for-seller/${param}/?search=${search ? search : ""}`) 
+    fetch(`https://quick-bite-backend-pink.vercel.app/food/food-items-for-seller/${param}/?search=${search ? search : ""}`) 
         .then((res) => res.json())
         // .then((data) => console.log(data))
         .then((data) =>{

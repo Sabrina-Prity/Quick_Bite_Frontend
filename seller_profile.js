@@ -5,7 +5,7 @@ const fetchDistrict = () => {
         return;
     }
 
-    fetch("https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/seller/districts/", {
+    fetch("https://quick-bite-backend-pink.vercel.app/seller/districts/", {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -42,7 +42,7 @@ const fetchSellerDetail = async () => {
     const token = localStorage.getItem('token');
 
     try {
-        const response = await fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/seller/seller-details-update/${seller_id}/`, {
+        const response = await fetch(`https://quick-bite-backend-pink.vercel.app/seller/seller-details-update/${seller_id}/`, {
             headers: {
                 Authorization: `Token ${token}`,
                 'Content-Type': 'application/json',
@@ -158,7 +158,7 @@ const updateSellerDetail = async (event) => {
             };
 
             // Update seller profile
-            const response = await fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/seller/seller-details-update/${seller_id}/`, {
+            const response = await fetch(`https://quick-bite-backend-pink.vercel.app/seller/seller-details-update/${seller_id}/`, {
                 method: 'PUT',
                 headers: {
                     Authorization: `Token ${token}`,

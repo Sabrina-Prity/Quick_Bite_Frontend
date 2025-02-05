@@ -5,7 +5,7 @@ const fetchDistricts = () => {
         return;
     }
 
-    fetch("https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/seller/districts/", {
+    fetch("https://quick-bite-backend-pink.vercel.app/seller/districts/", {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -105,7 +105,7 @@ const sellerRegistration = (event) => {
             };
             console.log("Info", info)
 
-            fetch("https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/seller/register/", {
+            fetch("https://quick-bite-backend-pink.vercel.app/seller/register/", {
                 method: "POST",
                 headers: { 
                     "Content-Type": "application/json" },
@@ -150,7 +150,7 @@ const sellerLogin = async (event) => {
     if (username && password) {
         try {
             // Fetch the list of sellers
-            const sellerListResponse = await fetch("https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/seller/seller-list/");
+            const sellerListResponse = await fetch("https://quick-bite-backend-pink.vercel.app/seller/seller-list/");
             if (!sellerListResponse.ok) {
                 throw new Error("Failed to fetch seller list.");
             }
@@ -164,7 +164,7 @@ const sellerLogin = async (event) => {
             }
 
             // Proceed with login if the username exists in the seller list
-            const loginResponse = await fetch("https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/seller/login/", {
+            const loginResponse = await fetch("https://quick-bite-backend-pink.vercel.app/seller/login/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -204,7 +204,7 @@ const handlelogOut = (event) => {
     event.preventDefault();
     const token = localStorage.getItem("token");
 
-    fetch("https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/seller/logout", {
+    fetch("https://quick-bite-backend-pink.vercel.app/seller/logout", {
         method: "GET",
         headers: {
             Authorization: `Token ${token}`,

@@ -2,7 +2,7 @@
 const displayFoodDetails = () => {
     const param = new URLSearchParams(window.location.search).get("foodId");
     // console.log("Food Id:", param);
-    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/food/food-item/get/${param}/`)
+    fetch(`https://quick-bite-backend-pink.vercel.app/food/food-item/get/${param}/`)
         .then((res) => res.json())
         .then((food) => {
             // console.log("Food:", food);
@@ -87,7 +87,7 @@ const postComment = () => {
     };
 
     console.log(commentData);
-    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/food/comment/${foodId}/${sellerId}/`, {
+    fetch(`https://quick-bite-backend-pink.vercel.app/food/comment/${foodId}/${sellerId}/`, {
         method: 'POST',
         headers: {
             'Authorization': `Token ${token}`,
@@ -115,7 +115,7 @@ const displayComments = () => {
     console.log("Food Id:", foodId);
     const sellerId = new URLSearchParams(window.location.search).get("sellerId");
     console.log("seller Id:", sellerId);
-    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/food/comment/${foodId}/${sellerId}/`)
+    fetch(`https://quick-bite-backend-pink.vercel.app/food/comment/${foodId}/${sellerId}/`)
         .then((res) => res.json())
         .then((data) => {
             const commentsList = document.getElementById("comments-list");

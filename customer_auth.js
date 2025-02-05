@@ -55,7 +55,7 @@ const customerRegistration = (event) => {
                 };
                 console.log("Customer Info", info);
 
-                fetch("https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/customer/register/", {
+                fetch("https://quick-bite-backend-pink.vercel.app/customer/register/", {
                     method: "POST",
                     headers: { 
                         "Content-Type": "application/json" 
@@ -105,7 +105,7 @@ const customerLogin = async (event) => {
     if (username && password) {
         try {
             // Step 1: Attempt admin login first
-            const adminLoginResponse = await fetch("https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/customer/login/", {
+            const adminLoginResponse = await fetch("https://quick-bite-backend-pink.vercel.app/customer/login/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -126,7 +126,7 @@ const customerLogin = async (event) => {
             }
 
             // Step 2: If not an admin, proceed to check if the user is a customer
-            const customerListResponse = await fetch("https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/customer/customer-list/");
+            const customerListResponse = await fetch("https://quick-bite-backend-pink.vercel.app/customer/customer-list/");
             if (!customerListResponse.ok) {
                 throw new Error("Failed to fetch customer list.");
             }
@@ -139,7 +139,7 @@ const customerLogin = async (event) => {
             }
 
             // Step 3: Login as a customer
-            const customerLoginResponse = await fetch("https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/customer/login/", {
+            const customerLoginResponse = await fetch("https://quick-bite-backend-pink.vercel.app/customer/login/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

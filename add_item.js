@@ -1,6 +1,6 @@
 const fetchCategory = () => {
     const sellerId = localStorage.getItem("seller_id");
-    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/category/seller_category_list/${sellerId}`, {
+    fetch(`https://quick-bite-backend-pink.vercel.app/category/seller_category_list/${sellerId}`, {
         method: 'GET',
         headers: {
             // Authorization: `Token ${token}`, 
@@ -82,7 +82,7 @@ const handleAddFoodItem = (event) => {
             // Send the product data to your API
             const sellerId = localStorage.getItem("seller_id");
             const token = localStorage.getItem("token");
-            fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/food/food-item/${sellerId}/`, {
+            fetch(`https://quick-bite-backend-pink.vercel.app/food/food-item/${sellerId}/`, {
                 method: "POST",
                 headers: {
                     Authorization: `Token ${token}`,
@@ -130,7 +130,7 @@ const handleAddFoodItem = (event) => {
 const fetchFoodItem = () => {
     const token = localStorage.getItem("token");
     const sellerId = localStorage.getItem("seller_id");
-    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/food/food-items-for-seller/${sellerId}/`, {
+    fetch(`https://quick-bite-backend-pink.vercel.app/food/food-items-for-seller/${sellerId}/`, {
         method: 'GET',
         headers: {
             Authorization: `Token ${token}`,
@@ -185,7 +185,7 @@ const deleteFood = (id) => {
     const sellerId = localStorage.getItem("seller_id");
     // if (!confirm("Are you sure you want to delete this mango?")) return;
 
-    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/food/food-item/delete/${id}/${sellerId}/`, {
+    fetch(`https://quick-bite-backend-pink.vercel.app/food/food-item/delete/${id}/${sellerId}/`, {
         method: 'DELETE',
         headers: {
             Authorization: `Token ${token}`,

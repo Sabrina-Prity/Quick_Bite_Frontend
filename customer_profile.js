@@ -3,7 +3,7 @@ const fetchCustomerDetails = async () => {
     const token = localStorage.getItem('token');
 
     try {
-      const response = await fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/customer/customer-detail/${user_id}/`, {
+      const response = await fetch(`https://quick-bite-backend-pink.vercel.app/customer/customer-detail/${user_id}/`, {
         headers: {
           Authorization: `Token ${token}`,
           'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ const fetchCustomerDetails = async () => {
 
     // Update customer profile
     try {
-        const response = await fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/customer/customer-detail/${user_id}/`, {
+        const response = await fetch(`https://quick-bite-backend-pink.vercel.app/customer/customer-detail/${user_id}/`, {
             method: 'PUT',
             headers: {
                 Authorization: `Token ${token}`,

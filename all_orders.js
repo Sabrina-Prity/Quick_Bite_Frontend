@@ -2,7 +2,7 @@ const fetchSellerOrders = () => {
     const token = localStorage.getItem("token");
     const sellerId = localStorage.getItem("seller_id");
 
-    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/order/seller-orders/${sellerId}/`, {
+    fetch(`https://quick-bite-backend-pink.vercel.app/order/seller-orders/${sellerId}/`, {
         method: 'GET',
         headers: {
             "Authorization": `Token ${token}`,
@@ -129,7 +129,7 @@ const updateStatus = (orderId, status) => {
     completedButton.classList.add('disabled');
     cancelButton.classList.add('disabled');
 
-    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/order/admin-order-updated/${orderId}/`, {
+    fetch(`https://quick-bite-backend-pink.vercel.app/order/admin-order-updated/${orderId}/`, {
         method: "PUT",
         headers: {
             Authorization: `Token ${token}`,

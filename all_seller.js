@@ -1,7 +1,7 @@
 const loadSellers = () => {
     const token = localStorage.getItem("token");
     
-    fetch("hhttps://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/seller/seller-list/",{
+    fetch("https://quick-bite-backend-pink.vercel.app/seller/seller-list/",{
         method : "GET",
         headers : {
             Authorization: `Token ${token}`,

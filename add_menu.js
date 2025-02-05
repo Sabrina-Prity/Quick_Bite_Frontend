@@ -9,7 +9,7 @@ const handleAddMenu = (event) => {
         return;
     }
 
-    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/category/seller_category_list/${sellerId}/`, {
+    fetch(`https://quick-bite-backend-pink.vercel.app/category/seller_category_list/${sellerId}/`, {
         method: 'POST',
         headers: {
             Authorization: `Token ${token}`,
@@ -37,7 +37,7 @@ const fetchMenu = () => {
    
     const sellerId = localStorage.getItem("seller_id");
     const token = localStorage.getItem("token");
-    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/category/seller_category_list/${sellerId}/`, {
+    fetch(`https://quick-bite-backend-pink.vercel.app/category/seller_category_list/${sellerId}/`, {
         method: 'GET',
         headers: {
             Authorization: `Token ${token}`,
@@ -70,7 +70,7 @@ const fetchMenu = () => {
 const deleteCategory = (id) => {
     // if (!confirm("Are you sure you want to delete this category?")) return;
     const sellerId = localStorage.getItem("seller_id");
-    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/category/delete_seller_category/${sellerId}/${id}/`, {
+    fetch(`https://quick-bite-backend-pink.vercel.app/category/delete_seller_category/${sellerId}/${id}/`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',

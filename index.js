@@ -1,6 +1,6 @@
 const loadResturents = (search) => {
     document.getElementById("card").innerHTML = "";
-    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/seller/seller-list/?search=${search ? search : ""}`)
+    fetch(`https://quick-bite-backend-pink.vercel.app/seller/seller-list/?search=${search ? search : ""}`)
         .then((res) => res.json())
         .then((data) => {
             console.log("resturent Data",data)
@@ -89,7 +89,7 @@ const createCart=()=>{
         user : localStorage.getItem("user_id"),
     }
     console.log(object)
-    fetch("https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/cart/create-cart/",{
+    fetch("https://quick-bite-backend-pink.vercel.app/cart/create-cart/",{
         method : "POST",
         headers : {
             Authorization: `Token ${token}`,

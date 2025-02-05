@@ -2,7 +2,7 @@ const loadReviews = () => {
     const token = localStorage.getItem("token");
     const param = new URLSearchParams(window.location.search).get("sellerId");
     console.log("SellerId", param)
-    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/seller/reviews/${param}`,{
+    fetch(`https://quick-bite-backend-pink.vercel.app/seller/reviews/${param}`,{
         method : "GET",
         headers : {
             Authorization: `Token ${token}`,
@@ -73,7 +73,7 @@ const postReview = () => {
     const token = localStorage.getItem("token");
   
 
-    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/seller/reviews/${param}/`, {
+    fetch(`https://quick-bite-backend-pink.vercel.app/seller/reviews/${param}/`, {
         method: "POST",
         headers: {
             Authorization: `Token ${token}`,

@@ -14,7 +14,7 @@ if (sellerId) {
 
     const token = localStorage.getItem("token");
 
-    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/cart/see-cart-items-for-seller/${cartId}/${sellerId}/`, {
+    fetch(`https://quick-bite-backend-pink.vercel.app/cart/see-cart-items-for-seller/${cartId}/${sellerId}/`, {
         method: "GET",
         headers: {
             Authorization: `Token ${token}`,
@@ -140,7 +140,7 @@ const handleOrder = (event) => {
 
     const token = localStorage.getItem("token");
 
-    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/order/place-order/${cartId}/${sellerId}/`, {
+    fetch(`https://quick-bite-backend-pink.vercel.app/order/place-order/${cartId}/${sellerId}/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -169,7 +169,7 @@ const handleOrder = (event) => {
 const deleteCartItems = (cartId, sellerId) => {
     const token = localStorage.getItem("token");
 
-    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/cart/clear-seller-cart/${cartId}/${sellerId}/`, {
+    fetch(`https://quick-bite-backend-pink.vercel.app/cart/clear-seller-cart/${cartId}/${sellerId}/`, {
         method: "DELETE",
         headers: {
             "Authorization": `Token ${token}`,

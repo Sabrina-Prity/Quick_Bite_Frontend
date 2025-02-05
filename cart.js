@@ -19,7 +19,7 @@ const addToCart = (foodId, price) => {
 
     console.log("Cart Data", data)
     const token = localStorage.getItem("token");
-    fetch("https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/cart/cart-item/", {
+    fetch("https://quick-bite-backend-pink.vercel.app/cart/cart-item/", {
         method: "POST",
         headers: {
             Authorization: `Token ${token}`,
@@ -47,7 +47,7 @@ const loadCartProduct = () => {
     const token = localStorage.getItem("token");
 
 
-    fetch(`https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/cart/see-cart-item/${cartId}/`,
+    fetch(`https://quick-bite-backend-pink.vercel.app/cart/see-cart-item/${cartId}/`,
         {
             method: "GET",
             headers: {
@@ -175,7 +175,7 @@ function updatePrice(cartItemId, unitPrice) {
 
 
 function deleteCartItem(cartItemId) {
-    const url = `https://quick-bite-backend-ovp5144ku-sabrinapritys-projects.vercel.app/cart/cart-item/update/${cartItemId}/`;
+    const url = `https://quick-bite-backend-pink.vercel.app/cart/cart-item/update/${cartItemId}/`;
     const token = localStorage.getItem("token");
     fetch(url, {
         method: 'DELETE',
