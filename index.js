@@ -76,6 +76,37 @@ const handleSearch = (event) => {
 
 loadResturents();
 
+document.addEventListener("DOMContentLoaded", function () {
+    fetch("https://quick-bite-backend-pink.vercel.app/seller/sellers/average-rating/")
+        .then(response => response.json())
+        .then(data => {
+            console.log("Review data", data)
+            const reviewsContainer = document.querySelector(".all-reviews");
+            reviewsContainer.innerHTML = ""; // Clear previous content
+
+            if (data.length === 0) {
+                reviewsContainer.innerHTML = "<p>No reviews available.</p>";
+                return;
+            }
+
+            data.forEach(seller => {
+                const reviewCard = document.createElement("div");
+                reviewCard.classList.add("review-card");
+
+                reviewCard.innerHTML = `
+                    <h3>${seller.seller_name}</h3>
+                    <p><strong>Average Rating:</strong> ${seller.average_rating} (${seller.average_stars})</p>
+                    <p>${seller.message}</p>
+                `;
+
+                reviewsContainer.appendChild(reviewCard);
+            });
+        })
+        .catch(error => {
+            console.error("Error fetching reviews:", error);
+            document.querySelector(".all-reviews").innerHTML = "<p>Failed to load reviews.</p>";
+        });
+});
 
 
 const createCart=()=>{

@@ -1,7 +1,7 @@
 const loadReviews = () => {
     const token = localStorage.getItem("token");
     const param = new URLSearchParams(window.location.search).get("sellerId");
-    console.log("SellerId", param)
+    // console.log("SellerId", param)
     fetch(`https://quick-bite-backend-pink.vercel.app/seller/reviews/${param}`,{
         method : "GET",
         headers : {

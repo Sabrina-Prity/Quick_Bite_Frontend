@@ -164,3 +164,40 @@
     font-weight: bold;
     text-decoration: none;
 }
+
+
+.avg-review {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.rating-box {
+    background: #fff;
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 350px;
+    margin-bottom: 30px;
+    margin-top: 10px;
+}
+
+.rating-box h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.rating-score {
+    font-size: 22px;
+    font-weight: bold;
+    color: #ff9800;
+}
+
+.rating-stars {
+    font-size: 24px;
+    color: #ffcc00;
+}
