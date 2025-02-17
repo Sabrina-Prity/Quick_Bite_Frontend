@@ -1,3 +1,28 @@
+
+const loadcartId = () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+        alert("Please login");
+        return;
+    }
+    fetch(`https://quick-bite-backend-pink.vercel.app/cart/cart-details/${localStorage.getItem("user_id")}/`,{
+        headers: {
+            'Authorization': `Token ${token}`,
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            console.log("Cart Data", data)
+            const cartId = data.id;
+            localStorage.setItem("cartId", cartId); 
+        });
+};
+loadcartId();
+
+
+
+
 const getparams = () => {
     const token = localStorage.getItem("token");
     const param = new URLSearchParams(window.location.search).get("resturentId");
@@ -86,26 +111,6 @@ const displayResturentDetails = (data) => {
 
 
 
-// const loadcartId = () => {
-//     const token = localStorage.getItem("token");
-//     if (!token) {
-//         alert("Please login");
-//         return;
-//     }
-//     fetch(`https://quick-bite-backend-pink.vercel.app/cart/cart-details/${localStorage.getItem("user_id")}/`,{
-//         headers: {
-//             'Authorization': `Token ${token}`,
-//             'Content-Type': 'application/json',
-//         },
-//     })
-//         .then((res) => res.json())
-//         .then((data) => {
-//             console.log("Cart Data", data)
-//             const cartId = data.id;
-//             localStorage.setItem("cartId", cartId); 
-//         });
-// };
-// loadcartId();
 
 
 // const getparams = () => {

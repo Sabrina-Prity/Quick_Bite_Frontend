@@ -1,5 +1,5 @@
 const addToCart = (foodId, price) => {
-
+    // console.log("Asce")
     const cartId = localStorage.getItem("cartId");
 
     if (!cartId) {
