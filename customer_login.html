@@ -39,20 +39,26 @@
       <div class="registration-container">
         <div class="form-column">
           <h1 class="form-title">Please Login</h1>
+
+          <!-- Add Demo Credential Buttons -->
+          <div class="credentials">
+            <button onclick="fillCredentials('user')">User</button>
+            <button onclick="fillCredentials('admin')">Admin</button>
+          </div>
+    
           <form action="#" enctype="multipart/form-data" method="post" id="upload-form">
             <p id="error" class="form-error"></p>
     
             <div class="form-row">
               <input id="login-username" type="text" class="form-input half-width" placeholder="Username" required />
-                </div>
+            </div>
             <div class="form-row">
               <input id="login-password" type="password" class="form-input half-width" placeholder="Password" required />
-                </div>
-            <button onclick="customerLogin(event)" class="form-button">Login</button>
+            </div>
+            <button type="submit" onclick="customerLogin(event)" class="form-button">Login</button>
           </form>
         </div>
       </div>
-    </main>
     
     
 
@@ -111,6 +117,28 @@
         <small>Copyright 2025 © Quick Bite. All Rights Reserved</small>
       </p>
     </footer>
+
+    <script>
+      function fillCredentials(type) {
+        if (type === 'user') {
+          document.getElementById('login-username').value = 'karim70';
+          document.getElementById('login-password').value = 'naim123@';
+        } else if (type === 'admin') {
+          document.getElementById('login-username').value = 'admin';
+          document.getElementById('login-password').value = '123';
+        }
+      }
+
+      function customerLogin(event) {
+        event.preventDefault(); // Prevent the form from submitting
+        // Your login logic here
+        const username = document.getElementById('login-username').value;
+        const password = document.getElementById('login-password').value;
+
+        // Example of handling login (you could validate the credentials or send to a server)
+        console.log('Logging in as:', username, password);
+      }
+    </script>
 
     <!-- Script file cdn -->
     <!-- <script src="app.js"></script>

@@ -92,6 +92,34 @@
   }
   
 
+  /* Styling for the demo credential buttons */
+.credentials button {
+  margin-bottom: 10px;
+  background-color: #007bff; /* Green background */
+  color: white; /* White text */
+  border: none; /* Remove border */
+  padding: 10px 20px; /* Padding inside the button */
+  text-align: center; /* Center the text */
+  text-decoration: none; /* Remove underline */
+  display: inline-block; /* Align buttons horizontally */
+  font-size: 16px; /* Font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  border-radius: 5px; /* Rounded corners */
+  transition: background-color 0.3s ease; /* Smooth background color transition */
+}
+
+/* Hover effect */
+.credentials button:hover {
+  background-color: #0659b1; /* Darker green on hover */
+}
+
+/* Focus effect for accessibility */
+.credentials button:focus {
+  outline: none; /* Remove default outline */
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Add custom focus effect */
+}
+
+
   
   /* Responsive Design */
   @media (max-width: 768px) {
