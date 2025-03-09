@@ -185,7 +185,9 @@ const sellerLogin = async (event) => {
                 localStorage.setItem("user_id", data.user_id);
                 localStorage.setItem("seller_id", data.seller_id);
                 localStorage.setItem("is_admin", data.is_admin);
-                window.location.href = "index.html";
+                loadcartId().then(() => {
+                    window.location.href = "index.html"; // Redirect after cartId is loaded
+                });
             }
         } catch (error) {
             console.error("Login error:", error.message);
@@ -194,6 +196,29 @@ const sellerLogin = async (event) => {
     } else {
         alert("Please enter both username and password.");
     }
+};
+
+
+
+
+const loadcartId = () => {
+    const token = localStorage.getItem("token");
+    // if (!token) {
+    //     alert("Please login");
+    //     return;
+    // }
+    fetch(`https://quick-bite-backend-pink.vercel.app/cart/cart-details/${localStorage.getItem("user_id")}/`,{
+        headers: {
+            'Authorization': `Token ${token}`,
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            console.log("Cart Data", data)
+            const cartId = data.id;
+            localStorage.setItem("cartId", cartId); 
+        });
 };
 
 

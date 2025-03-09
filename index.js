@@ -56,13 +56,15 @@ const displayResturents = (data) => {
     const buttons = parent.querySelectorAll(".details-btn");
     buttons.forEach((button) => {
         button.addEventListener("click", (event) => {
-            const token = localStorage.getItem("token"); // Check for token in localStorage
-            if (token) {
-                const resturentId = button.dataset.id;
-                window.location.href = `resturent_details.html?resturentId=${resturentId}`;
-            } else {
-                alert("Please login first.");
-            }
+            const resturentId = button.dataset.id;
+            window.location.href = `resturent_details.html?resturentId=${resturentId}`;
+            // const token = localStorage.getItem("token"); // Check for token in localStorage
+            // if (token) {
+            //     const resturentId = button.dataset.id;
+            //     window.location.href = `resturent_details.html?resturentId=${resturentId}`;
+            // } else {
+            //     alert("Please login first.");
+            // }
         });
     });
 };
@@ -112,10 +114,10 @@ document.addEventListener("DOMContentLoaded", function () {
 const createCart=()=>{
     const token = localStorage.getItem("token");
     console.log("Create Cart",token)
-    if(!token){
-        alert("Please Login!")
-        return
-    }
+    // if(!token){
+    //     alert("Please Login!")
+    //     return
+    // }
     object = {
         user : localStorage.getItem("user_id"),
     }
