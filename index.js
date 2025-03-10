@@ -1,39 +1,45 @@
-let currentPage = 1;
-const itemsPerPage = 5; // Show only 5 cards per page
+const loadRestaurants = (search = "") => {
+    const parent = document.getElementById("card");
+    const loading = document.getElementById("loading");
 
-const loadRestaurants = (search = "", page = 1) => {
-    document.getElementById("card").innerHTML = "";
+    // ✅ Show the loading image
+    loading.style.display = "flex";
+    parent.innerHTML = "";
+
     fetch(`https://quick-bite-backend-pink.vercel.app/seller/seller-list/?search=${search}`)
         .then((res) => res.json())
         .then((data) => {
             console.log("Restaurant Data:", data);
 
-            const startIndex = (page - 1) * itemsPerPage;
-            const paginatedData = data.slice(startIndex, startIndex + itemsPerPage);
+            // ✅ Hide the loading image
+            loading.style.display = "none";
 
-            if (paginatedData.length > 0) {
+            if (data.length > 0) {
                 document.getElementById("nodata").style.display = "none";
-                displayRestaurants(paginatedData);
-                updatePagination(page, data.length);
+                displayRestaurants(data);
             } else {
-                document.getElementById("card").innerHTML = "";
+                parent.innerHTML = "";
                 document.getElementById("nodata").style.display = "block";
             }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+            console.log(err);
+            loading.style.display = "none"; // Hide loading if an error occurs
+        });
 };
 
+
+
+// Display Restaurants (All Items)
 const displayRestaurants = (data) => {
     const parent = document.getElementById("card");
     parent.innerHTML = "";
 
     data.forEach((item) => {
         let imageUrl = item?.image;
-
         if (imageUrl.includes("image/upload/https://")) {
-            imageUrl = imageUrl.replace("image/upload/", "");  
+            imageUrl = imageUrl.replace("image/upload/", "");
         }
-
         if (!imageUrl.startsWith("https://")) {
             imageUrl = `https://res.cloudinary.com/dtyxxpqdl/image/upload/${imageUrl}`;
         }
@@ -43,85 +49,34 @@ const displayRestaurants = (data) => {
         div.innerHTML = `
             <img class="item-img" src="${imageUrl}" alt="${item?.company_name}" />
             <h4>${item?.company_name}</h4>
-            <p>Street: ${item?.street_name}</p>
-            <p>Postal Code: ${item?.postal_code}</p>
-            <p>District: ${item?.district}</p>
-            <p>Mobile: ${item?.mobile_no}</p>
+            <p>${item?.street_name}</p>
             <button class="details-btn" data-id="${item.id}">Details</button>
         `;
         parent.appendChild(div);
     });
 
+    // Add event listener for details buttons
     document.querySelectorAll(".details-btn").forEach((button) => {
         button.addEventListener("click", () => {
             const restaurantId = button.dataset.id;
-            window.location.href = `restaurant_details.html?restaurantId=${restaurantId}`;
+            const url = `resturent_details.html?restaurantId=${restaurantId}`;
+            console.log("Redirecting to:", url); // Debugging step
+            window.location.href = url;
         });
     });
 };
 
-// Pagination Update
-const updatePagination = (page, totalItems) => {
-    const totalPages = Math.ceil(totalItems / itemsPerPage);
-    const paginationContainer = document.querySelector(".pagination");
-    paginationContainer.innerHTML = ""; // Clear previous pagination
-
-    const prevButton = document.createElement("li");
-    prevButton.classList.add("page-item");
-    prevButton.innerHTML = `
-        <a class="page-link" href="#" id="prevPage">&laquo;</a>
-    `;
-    prevButton.addEventListener("click", (event) => {
-        event.preventDefault();
-        if (currentPage > 1) {
-            currentPage--;
-            loadRestaurants("", currentPage);
-        }
-    });
-    paginationContainer.appendChild(prevButton);
-
-    for (let i = 1; i <= totalPages; i++) {
-        const pageButton = document.createElement("li");
-        pageButton.classList.add("page-item");
-        if (i === page) {
-            pageButton.classList.add("active");
-        }
-        pageButton.innerHTML = `<a class="page-link page-number" href="#">${i}</a>`;
-        pageButton.addEventListener("click", (event) => {
-            event.preventDefault();
-            currentPage = i;
-            loadRestaurants("", currentPage);
-        });
-        paginationContainer.appendChild(pageButton);
-    }
-
-    const nextButton = document.createElement("li");
-    nextButton.classList.add("page-item");
-    nextButton.innerHTML = `
-        <a class="page-link" href="#" id="nextPage">&raquo;</a>
-    `;
-    nextButton.addEventListener("click", (event) => {
-        event.preventDefault();
-        if (currentPage < totalPages) {
-            currentPage++;
-            loadRestaurants("", currentPage);
-        }
-    });
-    paginationContainer.appendChild(nextButton);
-};
-
-
-
-
-
-
-
+// Handle Search
 const handleSearch = (event) => {
     event.preventDefault();
     const value = document.getElementById("search").value;
-    loadRestaurants();(value);
+    loadRestaurants(value);
 };
+
+// Initial Load
 loadRestaurants();
+
+
 
 document.addEventListener("DOMContentLoaded", function () {
     fetch("https://quick-bite-backend-pink.vercel.app/seller/sellers/average-rating/")
@@ -163,7 +118,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    const reviewsContainer = document.querySelector("#reviews-carousel .carousel-inner");
+    const reviewsContainer = document.querySelector("#customer-review-slider");
 
     fetch("https://quick-bite-backend-pink.vercel.app/food/comment/")
         .then(response => response.json())
@@ -171,19 +126,15 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("Fetched Reviews:", data); // Debugging step
 
             if (data.length > 0) {
-                reviewsContainer.innerHTML = ""; // Clear previous data
+                reviewsContainer.innerHTML = ""; // Clear previous content
 
-                data.forEach((review, index) => {
+                data.forEach((review) => {
                     const reviewItem = document.createElement("div");
-                    reviewItem.classList.add("carousel-item");
-
-                    if (index === 0) {
-                        reviewItem.classList.add("active"); // Ensure first item is active
-                    }
+                    reviewItem.classList.add("slide-visible");
 
                     reviewItem.innerHTML = `
-                        <div class="review-card p-4">
-                            <h3 class="text-primary">${review.food_name}</h3>
+                        <div class="customer-review-card p-4">
+                            <h4 class="text-primary">${review.food_name}</h4>
                             <p><strong>Review:</strong> ${review.body}</p>
                             <p><strong>Rating:</strong> ⭐${review.rating}</p>
                             <p><strong>Date:</strong> ${new Date(review.created_on).toLocaleDateString()}</p>
@@ -191,12 +142,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     `;
 
                     reviewsContainer.appendChild(reviewItem);
-                });
-
-                // ✅ Start the carousel and auto-slide every 3 seconds
-                $('#reviews-carousel').carousel({
-                    interval: 3000, // Slide every 3 seconds
-                    pause: "hover" // Pause when hovered
                 });
             } else {
                 reviewsContainer.innerHTML = "<p class='text-center'>No reviews available.</p>";
@@ -208,28 +153,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-const createCart=()=>{
+
+const createCart = () => {
     const token = localStorage.getItem("token");
-    console.log("Create Cart",token)
+    console.log("Create Cart", token)
     // if(!token){
     //     alert("Please Login!")
     //     return
     // }
     object = {
-        user : localStorage.getItem("user_id"),
+        user: localStorage.getItem("user_id"),
     }
     console.log(object)
-    fetch("https://quick-bite-backend-pink.vercel.app/cart/create-cart/",{
-        method : "POST",
-        headers : {
+    fetch("https://quick-bite-backend-pink.vercel.app/cart/create-cart/", {
+        method: "POST",
+        headers: {
             Authorization: `Token ${token}`,
             'Content-Type': 'application/json',
         },
-        body : JSON.stringify(object)
+        body: JSON.stringify(object)
     })
-    .then((data)=> {
-        console.log("Cart Create Successful", data)
-    })
+        .then((data) => {
+            console.log("Cart Create Successful", data)
+        })
 
 }
 

@@ -1,7 +1,4 @@
 
-
-
-
 const getparams = () => {
     // const token = localStorage.getItem("token");
     const param = new URLSearchParams(window.location.search).get("resturentId");
