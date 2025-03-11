@@ -104,8 +104,8 @@ const customerLogin = async (event) => {
 
     if (username && password) {
         try {
-            // Step 1: Attempt admin login first
-            const adminLoginResponse = await fetch("https://quick-bite-backend-pink.vercel.app/customer/login/", {
+            // Step 1: Attempt login
+            const loginResponse = await fetch("https://quick-bite-backend-pink.vercel.app/customer/login/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -113,53 +113,33 @@ const customerLogin = async (event) => {
                 body: JSON.stringify({ username, password }),
             });
 
-            if (adminLoginResponse.ok) {
-                const adminData = await adminLoginResponse.json();
-                if (adminData.token && adminData.is_admin) {
-                    alert("Admin Login Successful");
-                    localStorage.setItem("token", adminData.token);
-                    localStorage.setItem("user_id", adminData.user_id);
-                    localStorage.setItem("is_admin", true);
-                    window.location.href = "index.html"; 
-                    return; 
+            if (!loginResponse.ok) {
+                const errorData = await loginResponse.json();
+                throw new Error(errorData.detail || "Login failed.");
+            }
+
+            const userData = await loginResponse.json();
+            if (!userData.token || !userData.user_id) {
+                throw new Error("Invalid login response.");
+            }
+
+            localStorage.setItem("token", userData.token);
+            localStorage.setItem("user_id", userData.user_id);
+            localStorage.setItem("is_admin", userData.is_admin || false);
+
+            alert(userData.is_admin ? "Admin Login Successful" : "Customer Login Successful");
+
+            // Load cart if customer login
+            if (!userData.is_admin) {
+                try {
+                    await loadcartId();
+                } catch (error) {
+                    console.error("Error loading cart:", error);
                 }
             }
 
-            // Step 2: If not an admin, proceed to check if the user is a customer
-            const customerListResponse = await fetch("https://quick-bite-backend-pink.vercel.app/customer/customer-list/");
-            if (!customerListResponse.ok) {
-                throw new Error("Failed to fetch customer list.");
-            }
+            window.location.href = "index.html";
 
-            const customerList = await customerListResponse.json();
-            const customer = customerList.find((s) => s.user === username);
-
-            if (!customer) {
-                throw new Error("This username does not belong to a customer.");
-            }
-
-            // Step 3: Login as a customer
-            const customerLoginResponse = await fetch("https://quick-bite-backend-pink.vercel.app/customer/login/", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ username, password }),
-            });
-
-            if (!customerLoginResponse.ok) {
-                const errorData = await customerLoginResponse.json();
-                throw new Error(errorData.detail || "Customer login failed.");
-            }
-
-            const customerData = await customerLoginResponse.json();
-            if (customerData.token && customerData.user_id) {
-                alert("Customer Login Successful");
-                localStorage.setItem("token", customerData.token);
-                localStorage.setItem("user_id", customerData.user_id);
-                localStorage.setItem("is_admin", false);
-                window.location.href = "index.html";
-            }
         } catch (error) {
             console.error("Login error:", error.message);
             alert(error.message || "An error occurred. Please try again.");
@@ -167,4 +147,38 @@ const customerLogin = async (event) => {
     } else {
         alert("Please enter both username and password.");
     }
+};
+
+// Function to load cart ID
+const loadcartId = () => {
+    return new Promise((resolve, reject) => {
+        const token = localStorage.getItem("token");
+        const userId = localStorage.getItem("user_id");
+
+        if (!token || !userId) {
+            console.log("User is not logged in, cannot load cart ID.");
+            return resolve();
+        }
+
+        fetch(`https://quick-bite-backend-pink.vercel.app/cart/cart-details/${userId}/`, {
+            headers: {
+                'Authorization': `Token ${token}`,
+                'Content-Type': 'application/json',
+            },
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            if (data && data.id) {
+                localStorage.setItem("cartId", data.id);
+                console.log("Cart ID loaded:", data.id);
+            } else {
+                console.log("No cart found for this user.");
+            }
+            resolve(); // Resolve after cart processing
+        })
+        .catch((error) => {
+            console.error("Error loading cart ID:", error);
+            reject(error); // Reject on error
+        });
+    });
 };

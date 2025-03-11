@@ -1,3 +1,5 @@
+
+
 .registration-container {
     display: flex;
     flex-wrap: wrap;
@@ -5,7 +7,36 @@
     align-items: center;
     padding: 40px 20px;
     gap: 30px;
+    background-color: rgb(0, 0, 0);
   }
+
+  /* Credentials Button */
+.credentials {
+  margin-bottom: 15px;
+}
+
+.demo-cre {
+  color: #65acf7;
+  font-size: 25px;
+  /* font-family: 'Times New Roman', Times, serif; */
+  /* font-weight: bold; */
+}
+.credentials button {
+  /* padding: 6px 10px; */
+  margin: 5px;
+
+  font-size: 1rem;
+  cursor: pointer;
+  background-color: #fff;
+  color: rgb(107, 107, 107);
+  /* font-weight: bold; */
+  transition: 0.3s;
+}
+
+.credentials button:hover {
+  background-color: #007bff;
+  color: #fff;
+}
   
   .form-column {
     flex: 1 1 50%;
@@ -18,7 +49,8 @@
   }
   
   .form-title {
-    font-size: 2rem;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 3rem;
     text-align: center;
     color: white;
     margin-bottom: 20px;

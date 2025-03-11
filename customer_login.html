@@ -39,6 +39,12 @@
       <div class="registration-container">
         <div class="form-column">
           <h1 class="form-title">Please Login</h1>
+
+          <h3 class="demo-cre">Demo Credentials:</h3>
+            <div class="credentials">
+                <button onclick="fillCredentials('user')">User</button>
+                <button onclick="fillCredentials('admin')">Admin</button>
+            </div>
           <form action="#" enctype="multipart/form-data" method="post" id="upload-form">
             <p id="error" class="form-error"></p>
     
@@ -113,6 +119,18 @@
     </footer>
 
     <!-- Script file cdn -->
+    <script>
+      function fillCredentials(type) {
+          if (type === 'user') {
+              document.getElementById('login-username').value = 'sabu70';
+              document.getElementById('login-password').value = 'naim123@';
+          } else if (type === 'admin') {
+              document.getElementById('login-username').value = 'admin';
+              document.getElementById('login-password').value = '123';
+          }
+      }
+
+  </script>
     <!-- <script src="app.js"></script>
     <script src="auth.js"></script> -->
     <script src="nav_bar.js"></script>

@@ -1,8 +1,10 @@
+
 #resturent-container {
     width: 80%;
     margin: auto;
     margin-top: 20px;
     margin-bottom: 50px;
+    background-color: black;
 }
 
 #resturent-container img {
