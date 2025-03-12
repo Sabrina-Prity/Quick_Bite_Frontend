@@ -6,24 +6,25 @@ Welcome to **Quick Bite** – a sleek and user-friendly food delivery platform t
 - 🔍 **Search Functionality** – Find meals by name or keyword.
 - 🍱 **Random Meal Display** – Shows 20 random meals with a responsive grid layout.
 - 🛒 **Add to Cart** – Easily add items to your cart and manage your selections.
-- 📺 **YouTube Meal Video** – Watch related videos for each meal.
 - 📱 **Fully Responsive Design** – Works smoothly on all screen sizes.
+- 💳 **Secure Payment Integration** – Integrated with **SSLCOMMERZ** for safe and secure online transactions.
 
 ## 🌍 Live Demo: [Quick Bite](https://sabrina-prity.github.io/Quick_Bite_Frontend/)
-
-Check out the live version of the app:
-
-[Quick Bite Live Demo](https://your-live-demo-link.com)
-
 You can explore the features and see how the app functions in real time.
 
 <div align="right">
   <img src="https://raw.githubusercontent.com/Sabrina-Prity/Quick_Bite_Frontend/main/assets/cover.png" width="400" />
 </div>
 
-## 🏗️ Tech Stack
-- **HTML** – Structuring the content.
-- **CSS** – Styling for an elegant and responsive UI.
-- **JavaScript** – Handles search, meal display, and cart management.
+## 🖥️ Technologies Used:
+- 🚀 **Frontend:** HTML, CSS, JavaScript
+- ⚙️ **Backend:** Python, Django, PostgreSQL
+- 🎨 **Styling:** Bootstrap, CSS
+- 💳 **Payment Integration:** SSLCOMMERZ
 
-## 📂 Project Structure
+## 📬 Contact
+For any questions or collaboration, feel free to reach out:
+- 🔗 **GitHub:** [Sabrina-Prity](https://github.com/Sabrina-Prity)
+- 📧 **Email:** [sabrinaprity898@gmail.com](mailto:sabrinaprity898@gmail.com)
+
+Happy coding! 🚀
