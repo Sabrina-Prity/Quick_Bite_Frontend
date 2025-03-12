@@ -13,7 +13,7 @@ Welcome to **Quick Bite** – a sleek and user-friendly food delivery platform t
 You can explore the features and see how the app functions in real time.
 
 <div align="right">
-  <img src="https://raw.githubusercontent.com/Sabrina-Prity/Quick_Bite_Frontend/main/assets/cover.png" width="400" />
+  <img src="https://github.com/Sabrina-Prity/Quick_Bite_Frontend/blob/main/Images/Cover-1.png" width="400" />
 </div>
 
 ## 🖥️ Technologies Used:
