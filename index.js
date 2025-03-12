@@ -133,10 +133,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     reviewItem.classList.add("slide-visible");
 
                     reviewItem.innerHTML = `
-                        <div class="customer-review-card p-4">
-                            <h4 class="text-primary">${review.food_name}</h4>
+                        <div class="customer-review-card p-5">
+                            <h4>${review.food_name}</h4>
                             <p><strong>Review:</strong> ${review.body}</p>
-                            <p><strong>Rating:</strong> ⭐${review.rating}</p>
+                            <p><strong>Rating:</strong> ${review.rating}</p>
                             <p><strong>Date:</strong> ${new Date(review.created_on).toLocaleDateString()}</p>
                         </div>
                     `;

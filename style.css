@@ -1,12 +1,14 @@
-
-
 body {
     width: 100%;
-    height: 100vh; /* Ensures it takes the full viewport height */
+    height: 100vh;
+    /* Ensures it takes the full viewport height */
     background-color: rgb(0, 0, 0);
-    margin: 0; /* Ensure there is no extra margin */
-    padding: 0; /* Remove padding */
-    overflow-x: hidden; /* Prevent horizontal scroll */
+    margin: 0;
+    /* Ensure there is no extra margin */
+    padding: 0;
+    /* Remove padding */
+    overflow-x: hidden;
+    /* Prevent horizontal scroll */
 }
 
 
@@ -106,7 +108,7 @@ body {
     border-radius: 10px;
     padding: 20px;
     margin: 20px auto;
-    max-width: 80%;
+    max-width: 87%;
     position: relative;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -215,10 +217,10 @@ body {
 
 /* Center the h2 and p */
 .how-it-works {
-    width: 83%;
+    width: 95%;
     text-align: center;
     margin: auto;
-    padding: 60px 20px;
+    padding: 40px 10px;
     background-color: #faebd7;
     /* Background color for this section */
 }
@@ -249,7 +251,7 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    width: 430px;
+    width: 400px;
     transition: transform 0.3s ease;
     display: flex;
     flex-direction: column;
@@ -289,6 +291,7 @@ main {
     background-color: #faebd7;
     width: 100%;
 }
+
 /* 🌍 Global Container */
 .main-container {
     width: 100%;
@@ -297,19 +300,21 @@ main {
     /* background-color: #f9f9f9; */
 }
 
-.resturent-data h1{
+.resturent-data h1 {
     font-family: 'Times New Roman', Times, serif;
     font-weight: bold;
     font-size: 3rem;
     margin-bottom: 10px;
     text-align: center;
 }
-.resturent-data p{
+
+.resturent-data p {
     font-size: 1.2rem;
     color: #666;
     margin-bottom: 50px;
     text-align: center;
 }
+
 /* 🔍 Search Bar */
 .search-bar-container {
     display: flex;
@@ -362,8 +367,10 @@ main {
 /* ✅ Add this to make #card a grid */
 #card {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* ✅ Ensures 4 cards per row */
-    gap: 20px; /* ✅ Space between cards */
+    grid-template-columns: repeat(4, 1fr);
+    /* ✅ Ensures 4 cards per row */
+    gap: 20px;
+    /* ✅ Space between cards */
     width: 100%;
 }
 
@@ -398,12 +405,13 @@ main {
     transition: all 0.3s ease;
 }
 
-.item-card h4{
+.item-card h4 {
     font-family: 'Times New Roman', Times, serif;
     font-size: 1.7rem;
     margin-top: 15px;
 }
-.item-card p{
+
+.item-card p {
     font-size: 1rem;
     margin-bottom: 10px;
 }
@@ -421,9 +429,12 @@ main {
 
 #loading {
     display: flex;
-    justify-content: center; /* Horizontally center */
-    align-items: center; /* Vertically center */
-    position: fixed; /* Make it cover the screen */
+    justify-content: center;
+    /* Horizontally center */
+    align-items: center;
+    /* Vertically center */
+    position: fixed;
+    /* Make it cover the screen */
     top: 0;
     left: 0;
     width: 100%;
@@ -433,7 +444,8 @@ main {
 }
 
 #loading img {
-    width: 200px; /* Adjust size */
+    width: 200px;
+    /* Adjust size */
     height: auto;
 }
 
@@ -464,7 +476,7 @@ main {
 }
 
 .image-container img {
-    width: 100%; 
+    width: 100%;
     height: 100%;
     object-fit: cover;
     filter: brightness(45%);
@@ -510,7 +522,7 @@ main {
 /* Review Carousel Section */
 .all-reviews {
     background-color: #ffffff;
-    width: 79%;
+    width: 87%;
     margin: auto;
     padding: 20px;
     border-radius: 10px;
@@ -532,7 +544,8 @@ main {
 
 /* Customer Image Styling */
 .customer-image-container img {
-    width: 550px; /* Increased size */
+    width: 550px;
+    /* Increased size */
     height: auto;
     object-fit: contain;
     /* border-radius: 20px; Soft rounded corners */
@@ -552,18 +565,39 @@ main {
     transform: translateY(-5px);
 }
 
+.customer-slider-container h2 {
+    font-size: 2.5rem;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+}
+
 /* Swiffy Slider Custom Styling */
 .customer-slider-container .swiffy-slider {
     overflow: hidden;
     max-width: 100%;
 }
 
-.customer-slider-container h2{
-    font-family: 'Times New Roman', Times, serif;
-    font-weight: bold;
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-    text-align: center;
+.customer-slider-container .swiffy-slider .slider-container {
+    display: flex;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Review Card Styling */
+.customer-review-card {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    flex-shrink: 0;
+    /* Prevents cards from shrinking */
+    width: 280px;
+    height: 200px;
+}
+
+.customer-review-card h4 {
+    color: #f29f05;
+    font-size: 18px;
 }
 
 /* Swiffy Slider Navigation Buttons */
@@ -581,12 +615,6 @@ main {
     transition: background-color 0.3s ease-in-out;
 }
 
-/* .slider-container{
-    height: 200px;
-} */
-/* .slider-nav:hover {
-    background-color: #b81b1b;
-} */
 
 
 
@@ -658,23 +686,25 @@ footer {
 
 /* Responsive Design for Small Screens */
 @media (max-width: 768px) {
-    .for-business{
-        padding: 5px;
+    .for-business {
+        width: 85%;
+        padding: 8px;
     }
 
     .for-business h1 {
         font-size: 1.1rem;
     }
-    
+
     .for-business ul {
         gap: 10px;
         margin-top: 14px;
     }
 
-    
+
     .for-business a {
         font-size: 0.8rem;
-    } 
+    }
+
     .custom-navbar {
         padding: 5px 15px;
         border-radius: 0;
@@ -699,27 +729,57 @@ footer {
         padding: 5px 10px;
     }
 
-    .search-bar {
-        width: 100%;
-        margin-bottom: 10px;
+    /* 🔍 Search Bar */
+    .search-bar-container {
+        gap: 5px;
         padding: 5px;
-        font-size: 14px;
+        width: 400px;
+    }
+
+    .search-bar {
+        flex-grow: 1;
+        padding: 6px;
+    }
+
+    .search-bar:focus {
+        outline: none;
+        border: 2px solid #ffbe0b;
+        box-shadow: 0px 0px 8px rgba(255, 190, 11, 0.5);
     }
 
     .btn-search {
-        font-size: 12px;
-        padding: 5px 10px;
+        padding: 7px 10px;
+    }
+
+
+    .resturent-data h1 {
+        font-size: 2.5rem;
+        margin-bottom: -10px;
+    }
+
+    .resturent-data p {
+        font-size: 1rem;
+        padding: 10px;
+        margin-bottom: -15px;
     }
 
     .card-container {
-        grid-template-columns: repeat(2, 1fr);
-        /* 2 cards per row */
+        width: 100%;
+        margin-top: 20px;
+        margin-bottom: 30px;
     }
 
-    .pagination {
-        justify-content: center;
-        /* Center pagination for smaller screens */
+    /* ✅ Add this to make #card a grid */
+    #card {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        /* ✅ Ensures 4 cards per row */
+        gap: 50px;
+        width: 86%;
+        margin: auto;
     }
+
+
 
     .hero {
         position: relative;
@@ -752,49 +812,64 @@ footer {
         width: 300px;
         /* margin-left: 40px; */
     }
+
     #card {
-        grid-template-columns: repeat(3, 1fr); /* ✅ Ensures 4 cards per row */
-        gap: 10px; /* ✅ Space between cards */
+        grid-template-columns: repeat(3, 1fr);
+        /* ✅ Ensures 4 cards per row */
+        gap: 10px;
+        /* ✅ Space between cards */
     }
 
     .item-card img {
         width: 100%;
         height: 100px;
     }
-    
+
     .item-card button {
         background-color: #f8c12b;
         padding: 5px 10px;
     }
-    
-    .item-card h4{
+
+    .item-card h4 {
         font-size: 1.3rem;
         margin-top: 8px;
     }
-    .item-card p{
+
+    .item-card p {
         font-size: 0.8rem;
     }
-    
-    
+
+    /* 🔍 Search Bar */
+    .search-bar-container {
+        gap: 5px;
+        padding: 5px;
+        width: 240px;
+    }
+
+    .search-bar {
+        flex-grow: 1;
+        padding: 6px;
+    }
 
 
-    .how-it-works h2{
+    .how-it-works h2 {
         margin-top: -30px;
         font-size: 1.8rem;
     }
-    .how-it-works p{
+
+    .how-it-works p {
         font-size: 1rem;
     }
 
     .steps {
         margin-bottom: 20px;
-        width: 300px;
-        height: 280px;
+        width: 350px;
+        height: 230px;
     }
 
     /* Center images */
     .steps img {
-        width: 120px;
+        width: 100px;
         display: block;
         margin: 0 auto 10px;
         /* Centers image and adds spacing */
@@ -808,8 +883,34 @@ footer {
         font-size: 0.8rem;
     }
 
+    .rating-title {
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    /* Paragraph Styling */
+    .rating-p {
+        font-size: 0.9rem;
+        max-width: 100%;
+        line-height: 1;
+        ;
+
+    }
+
     .customer-image-container img {
-        width: 100%; /* Make it responsive on smaller screens */
+        width: 100%;
+        /* Make it responsive on smaller screens */
+    }
+
+    .customer-image-container img {
+        width: 400px;
+        /* Increased size */
+        height: auto;
+
+    }
+
+    .customer-slider-container h2 {
+        font-size: 2rem;
     }
 
 }
@@ -854,30 +955,39 @@ footer {
         padding: 5px;
     }
 
-    /* #nodata img {
-        width: 200px;
-        margin-right: -200px;
-    } */
-
-    .welcome-container {
-        flex-direction: column;
-        padding: 10px;
+    .resturent-data h1 {
+        font-size: 1.5rem;
     }
 
-    .welcome-img img {
-        width: 100%;
+    .resturent-data p {
+        font-size: 0.8rem;
+        padding: 20px;
+    }
+
+    .rating-title {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    /* Paragraph Styling */
+    .rating-p {
+        font-size: 0.7rem;
+        max-width: 100%;
+        line-height: 1;
+        ;
+
+    }
+
+    .customer-image-container img {
+        width: 300px;
         height: auto;
-        margin-bottom: 10px;
+
     }
 
-    .welcome-text h1 {
-        font-size: 24px;
+    .customer-slider-container h2 {
+        font-size: 1.6rem;
     }
 
-    .welcome-text p {
-        font-size: 12px;
-        padding: 5px;
-    }
 
     footer {
         padding: 20px 10px;
