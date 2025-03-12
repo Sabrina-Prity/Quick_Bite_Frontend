@@ -851,6 +851,26 @@ footer {
         padding: 6px;
     }
 
+    .item-card button {
+        background-color: #f8c12b;
+        color: white;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .item-card h4 {
+        font-size: 1.3rem;
+    }
+    
+    .item-card p {
+        font-size: 0.8rem;
+        margin-top: -15px;
+        margin-bottom: 6px;
+    }
+
 
     .how-it-works h2 {
         margin-top: -30px;
@@ -863,8 +883,8 @@ footer {
 
     .steps {
         margin-bottom: 20px;
-        width: 350px;
-        height: 230px;
+        width: 300px;
+        height: 250px;
     }
 
     /* Center images */
@@ -897,6 +917,20 @@ footer {
 
     }
 
+    .all-reviews {
+        background-color: #ffffff;
+        width: 80%;
+        margin: auto;
+        padding: 20px;
+        border-radius: 10px;
+        position: relative;
+        margin-top: -100px;
+        margin-bottom: 50px;
+
+       
+    }
+    
+
     .customer-image-container img {
         width: 100%;
         /* Make it responsive on smaller screens */
@@ -916,7 +950,10 @@ footer {
 }
 
 /* Additional Styles for Very Small Screens (425px width) */
-@media (max-width: 425px) {
+@media (max-width: 426px) {
+    .for-business{
+        width: 75%;
+    }
     .custom-navbar {
         padding: 5px 10px;
         margin-bottom: 10px;
@@ -956,12 +993,14 @@ footer {
     }
 
     .resturent-data h1 {
-        font-size: 1.5rem;
+        font-size: 2rem;
+        margin-bottom: -10px;
     }
 
     .resturent-data p {
         font-size: 0.8rem;
-        padding: 20px;
+        padding: 10px;
+        margin-bottom: -15px;
     }
 
     .rating-title {
@@ -974,8 +1013,22 @@ footer {
         font-size: 0.7rem;
         max-width: 100%;
         line-height: 1;
-        ;
 
+    }
+    /* ✅ Add this to make #card a grid */
+    #card {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        /* ✅ Ensures 4 cards per row */
+        gap: 20px;
+        width: 86%;
+        margin: auto;
+    }
+
+    .item-card button {
+        background-color: #f8c12b;
+        padding: 3px 6px;
+        margin-top: 15px;
     }
 
     .customer-image-container img {
