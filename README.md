@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="https://github.com/Sabrina-Prity/Quick_Bite_Frontend/blob/main/Images/Cover-1.png" />
+</div>
+
 # 🍔 Quick Bite - Food Delivery App Frontend
 
 Welcome to **Quick Bite** – a sleek and user-friendly food delivery platform that makes ordering your favorite meals quick and easy! This repository contains the frontend of the project, built with **HTML, CSS, and JavaScript**.
@@ -11,10 +15,6 @@ Welcome to **Quick Bite** – a sleek and user-friendly food delivery platform t
 
 ## 🌍 Live Demo: [Quick Bite](https://sabrina-prity.github.io/Quick_Bite_Frontend/)
 You can explore the features and see how the app functions in real time.
-
-<div align="right">
-  <img src="https://github.com/Sabrina-Prity/Quick_Bite_Frontend/blob/main/Images/Cover-1.png" width="400" />
-</div>
 
 ## 🖥️ Technologies Used:
 - 🚀 **Frontend:** HTML, CSS, JavaScript
