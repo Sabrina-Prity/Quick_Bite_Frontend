@@ -9,7 +9,7 @@ Welcome to **Quick Bite** – a sleek and user-friendly food delivery platform t
 - 📺 **YouTube Meal Video** – Watch related videos for each meal.
 - 📱 **Fully Responsive Design** – Works smoothly on all screen sizes.
 
-## 🌍 Live Demo
+## 🌍 Live Demo: [Quick Bite](https://sabrina-prity.github.io/Quick_Bite_Frontend/)
 
 Check out the live version of the app:
 
