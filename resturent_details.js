@@ -90,83 +90,9 @@ const displayResturentDetails = (data) => {
 
 
 
-// const getparams = () => {
-//     const token = localStorage.getItem("token");
-//     const param = new URLSearchParams(window.location.search).get("resturentId");
-//     // console.log("Resturent Id", param);
-//     fetch(`https://quick-bite-backend-pink.vercel.app/seller/seller-detail/${param}`,{
-//         method : "GET",
-//         headers : {
-//             Authorization: `Token ${token}`,
-//             'Content-Type': 'application/json',
-//         }
-//     })
-//         .then((res) => res.json())
-//         .then((data) => {
-//             // console.log("Resturent Details", data);
-//             displayResturentDetails(data);
-//         });
-// };
-
-// getparams();
-
-
-// const displayResturentDetails = (data) => {
-//     // console.log("Resturent Details", data)
-//     const resturentContainer = document.getElementById("resturent-container");
-
-//     if (!resturentContainer) {
-//         console.error("Restaurant container not found!");
-//         return;
-//     }
-
-//     resturentContainer.innerHTML = "";
-//     const formattedDistrict = data?.district
-//             ? data.district.charAt(0).toUpperCase() + data.district.slice(1).toLowerCase()
-//             : ""; 
-    
-//             // Fix the image URL
-//         let imageUrl = data?.image;
-        
-//         // Remove incorrect "image/upload/" prefix if it exists
-//         if (imageUrl.includes("image/upload/https://")) {
-//             imageUrl = imageUrl.replace("image/upload/", "");  
-//         }
-
-//         // Ensure the image URL is properly formatted
-//         if (!imageUrl.startsWith("https://")) {
-//             imageUrl = `https://res.cloudinary.com/dtyxxpqdl/image/upload/${imageUrl}`;
-//         }
-//     resturentContainer.innerHTML = `
-    
-//         <div class="d-flex align-items-start gap-3">
-//             <!-- Image Section -->
-//             <div class="col-md-7">
-//                 <img src="${imageUrl}" alt="${data.company_name}" class="img-fluid rounded w-100">
-//             </div>
-//             <!-- Details Section -->
-//             <div class="res-Details col-md-5">
-//                 <h2>${data.company_name}</h2>
-//                 <p><strong>Street Name:</strong> ${data.street_name}</p>
-//                 <p><strong>District:</strong> ${formattedDistrict}</p>
-//                 <p><strong>Postal Code:</strong> ${data.postal_code}</p>
-//                 <p><strong>Mobile Number:</strong> ${data.mobile_no}</p>
-
-//                 <button class="details-btn" onclick="window.location.href='resturent-review.html?sellerId=${data.id}'">
-//                 Resturent Reviews
-//                 </button>
-//             </div>
-//         </div>
-//     `;
-// };
-
-
-
-
-
 
 const loadCategorys = () => {
-    const param = new URLSearchParams(window.location.search).get("resturentId");
+    const param = new URLSearchParams(window.location.search).get("restaurantId");
     console.log("Resturent Id", param);
     const token = localStorage.getItem("token");
     fetch(`https://quick-bite-backend-pink.vercel.app/category/seller_category_list/${param}/`)
@@ -193,7 +119,7 @@ const displayCategorys = ((data)=>{
 
  const loadFoods = (search) => {
     // console.log(search)
-    const param = new URLSearchParams(window.location.search).get("resturentId");
+    const param = new URLSearchParams(window.location.search).get("restaurantId");
     document.getElementById("card").innerHTML = "";
     fetch(`https://quick-bite-backend-pink.vercel.app/food/food-items-for-seller/${param}/?search=${search ? search : ""}`) 
         .then((res) => res.json())

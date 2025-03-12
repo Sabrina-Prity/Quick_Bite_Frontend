@@ -11,11 +11,15 @@ fetch("nav_bar.html")
     const userContainer = document.getElementById("user-container");
     const businessSection = document.getElementById("business-section");
 
+    // Check if we are on the home page
+    const isHomePage = window.location.pathname.endsWith("index.html") || window.location.pathname === "/";
+
     if (token && businessSection) {
       businessSection.style.padding = "0";
       businessSection.style.margin = "0";
-      businessSection.remove(); // Only remove it after setting styles
+      businessSection.remove(); // Remove business section only after setting styles
     }
+
     // Dynamically update Navbar links
     if (token) {
       userContainer.innerHTML = `
@@ -64,8 +68,8 @@ fetch("nav_bar.html")
         <li class="nav-item"><a class="nav-link" href="customer_register.html">Register</a></li>
       `;
 
-      // Default Business Section for unauthenticated users
-      if (businessSection) {
+      // Default Business Section for unauthenticated users (only on Home Page)
+      if (isHomePage && businessSection) {
         businessSection.innerHTML = `
           <button class="close-btn" onclick="removeBusinessSection()">×</button>
           <h1>For Business Account</h1>
@@ -74,6 +78,8 @@ fetch("nav_bar.html")
             <li class="nav-item"><a class="nav-link" href="seller_login.html">Login</a></li>
           </ul>
         `;
+      } else if (!isHomePage && businessSection) {
+        businessSection.remove(); // Remove business section if not on the home page
       }
     }
   })
@@ -83,8 +89,7 @@ fetch("nav_bar.html")
 
 function removeBusinessSection() {
   const section = document.getElementById("business-section");
-  section.style.display = "none";
-  // if (section) {
-  //   section.remove(); // Fully removes the section from the DOM
-  // }
+  if (section) {
+    section.style.display = "none"; // Hide section instead of removing
+  }
 }
