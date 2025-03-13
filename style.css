@@ -358,6 +358,31 @@ main {
     background-color: #f79c00;
 }
 
+ /* Loading Container */
+ .loading-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    margin-left: 520px
+  }
+  
+  .loading-container img {
+    /* margin-top: 40px; */
+    margin: auto;
+    width: 300px; /* Set the size of the loading image */
+    height: 300px;
+    align-items: center;
+    animation: spin 2s linear infinite;
+  }
+  
+  .loading-container p {
+    font-size: 1.2rem;
+    color: #333;
+    margin-top: 10px;
+  }
+
 .card-container {
     width: 100%;
     margin-top: 20px;
@@ -947,6 +972,15 @@ footer {
         font-size: 2rem;
     }
 
+    .loading-container {
+        margin-left: 180px
+      }
+
+      .loading-container img {
+        width: 200px; /* Set the size of the loading image */
+        height: 200px;
+      }
+
 }
 
 /* Additional Styles for Very Small Screens (425px width) */
@@ -1015,6 +1049,9 @@ footer {
         line-height: 1;
 
     }
+    .loading-container {
+        margin-left: 60px
+      }
     /* ✅ Add this to make #card a grid */
     #card {
         display: grid;

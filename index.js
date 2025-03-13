@@ -2,32 +2,54 @@ const loadRestaurants = (search = "") => {
     const parent = document.getElementById("card");
     const loading = document.getElementById("loading");
 
-    // ✅ Show the loading image
-    loading.style.display = "flex";
-    parent.innerHTML = "";
+    // Check if the 'loading' element exists before trying to modify it
+    if (loading) {
+        // Show the loading image if the element exists
+        loading.style.display = "flex";
+    }
 
+    parent.innerHTML = ""; // Clear previous content
+
+    // Create and append a loading message and spinner inside the parent element
+    const loadingDiv = document.createElement("div");
+    loadingDiv.classList.add("loading-container");
+    loadingDiv.innerHTML = `
+        <img src="Images/loading.png" alt="Loading..." />
+        <p>Loading restaurants...</p>
+    `;
+    parent.appendChild(loadingDiv); // Show loading spinner
+
+    // Fetch the restaurant data based on the search query
     fetch(`https://quick-bite-backend-pink.vercel.app/seller/seller-list/?search=${search}`)
         .then((res) => res.json())
         .then((data) => {
             console.log("Restaurant Data:", data);
 
-            // ✅ Hide the loading image
-            loading.style.display = "none";
+            // Hide the loading image once data is fetched (only if the loading element exists)
+            if (loading) {
+                loading.style.display = "none";
+            }
+
+            parent.innerHTML = ""; // Clear the loading spinner
 
             if (data.length > 0) {
                 document.getElementById("nodata").style.display = "none";
-                displayRestaurants(data);
+                displayRestaurants(data); // Call function to display restaurants
             } else {
-                parent.innerHTML = "";
-                document.getElementById("nodata").style.display = "block";
+                document.getElementById("nodata").style.display = "block"; // Show "No data" message
             }
         })
         .catch((err) => {
             console.log(err);
-            loading.style.display = "none"; // Hide loading if an error occurs
+
+            // Hide loading spinner if an error occurs (only if the loading element exists)
+            if (loading) {
+                loading.style.display = "none";
+            }
+
+            parent.innerHTML = "<p>Error loading data. Please try again.</p>"; // Show error message
         });
 };
-
 
 
 // Display Restaurants (All Items)

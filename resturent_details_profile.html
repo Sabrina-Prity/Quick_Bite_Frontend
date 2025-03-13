@@ -35,12 +35,44 @@
 
     <main>
 
-      <!-- Resturent Details Container -->
-      <div id="resturent-container" class="resturent-container row">
-
+      <!-- Restaurant Details Container -->
+      <div class="restaurant-details-container">
+        <div id="restaurant-details">
+          <div class="loading-container-resturent"></div>
+        </div>
       </div>
-    </main>
 
+
+
+      <!-- Review Section -->
+      <div id="review-section">
+
+        <!-- Review form -->
+        <div id="review-form">
+          <h4>Add Rating</h4>
+
+          <select id="rating" class="form-control">
+            <option value="⭐">⭐</option>
+            <option value="⭐⭐">⭐⭐</option>
+            <option value="⭐⭐⭐">⭐⭐⭐</option>
+            <option value="⭐⭐⭐⭐">⭐⭐⭐⭐</option>
+            <option value="⭐⭐⭐⭐⭐">⭐⭐⭐⭐⭐</option>
+          </select>
+          <br>
+          <button id="post-review-btn" class="btn btn-primary"
+            onclick="postReview()">Post Review</button>
+
+          <p id="comment-login-msg"></p> <!-- Message when not logged in -->
+        </div>
+
+        <!-- Display existing reviews here -->
+        <h3>All Reviews</h3>
+        <div id="reviews-list">
+          <!-- Reviews will be populated here via JavaScript -->
+        </div>
+      </div>
+
+    </main>
 
     <footer class="footer p-5">
       <div class="container row">

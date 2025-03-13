@@ -1,16 +1,38 @@
 /* General body styling */
 body {
-  height: 100vh;            
+  height: 100%;         
   font-family: Arial, sans-serif;
   background-color: #f4f4f9;
   color: #333;
   margin: 0;
 }
 
+ /* Loading Container */
+ .loading-container-cart {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.loading-container-cart img {
+  margin-top: 40px;
+  width: 50px; /* Set the size of the loading image */
+  height: 50px;
+  animation: spin 2s linear infinite;
+}
+
+.loading-container-cart p {
+  font-size: 1.2rem;
+  color: #333;
+  margin-top: 10px;
+}
 /* Cart section container */
 #cart-section {
-  width: 60%;    
+  width: 80%;    
   margin: auto;
+  min-height: 50vh;
   background: #fff;
   padding: 1rem;
   border-radius: 5px;
@@ -22,10 +44,10 @@ body {
 
 /* Checkout button */
 .checkout-btn {
-  background-color: #41aa1e;
-  color: white;
+  background-color: #cd6c4f;
+  color: #faebd7;
   padding: 10px 15px;
-  font-size: 14px;
+  font-size: 1.1rem;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -37,12 +59,19 @@ body {
 }
 
 .checkout-btn:hover {
-  background-color: #448f1e;
+  background-color: #cd6c4f;
+  color: #fff;
 }
 
 .checkout-btn .checkout-link {
   text-decoration: none;
   color: white;
+}
+
+.seller-heading{
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 2rem;
+  font-weight: bold;
 }
 
 /* Seller container */

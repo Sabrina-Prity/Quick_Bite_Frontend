@@ -1,3 +1,31 @@
+.loading-container-customer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .loading-container-customer img {
+    margin-top: 40px;
+    width: 200px; /* Set the size of the loading image */
+    height: 200px;
+    animation: spin 2s linear infinite;
+  }
+  
+  .loading-container-customer p {
+    font-size: 1.2rem;
+    color: #333;
+    margin-top: 10px;
+  }
+  
+
+
+.order-history{
+    min-height: 70vh;
+    margin-top: -15px;
+}
+
 .order-history-table {
     width: 100%;
     max-width: 900px;
@@ -35,6 +63,7 @@
     font-weight: bold;
 }
 
+ 
 .pay-button {
     background: rgb(70, 150, 179);
     color: white;

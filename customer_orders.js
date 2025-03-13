@@ -1,8 +1,21 @@
-
 const displayOrderHistory = () => {
     const token = localStorage.getItem("token");
     const id = localStorage.getItem("user_id");
 
+    // Get the order-history container
+    const orderHistoryContainer = document.getElementById("order-history");
+
+    // Create and append the loading message and spinner inside the order-history div
+    const loadingDiv = document.createElement("div");
+    loadingDiv.classList.add("loading-container-customer");
+    loadingDiv.innerHTML = `
+        <img src="Images/loading.png" alt="Loading..." />
+        <p>Loading your order history...</p>
+    `;
+    orderHistoryContainer.innerHTML = ''; // Clear any previous content
+    orderHistoryContainer.appendChild(loadingDiv); // Append the loading div
+
+    // Fetch the order history from the server
     fetch(`https://quick-bite-backend-pink.vercel.app/order/orders-view/${id}/`, {
         method: "GET",
         headers: {
@@ -13,8 +26,7 @@ const displayOrderHistory = () => {
     .then((response) => response.json())
     .then((orders) => {
         console.log(orders);
-        const orderHistoryContainer = document.getElementById("order-history");
-        orderHistoryContainer.innerHTML = "";
+        orderHistoryContainer.innerHTML = ""; // Clear the loading spinner
 
         if (orders.length === 0) {
             orderHistoryContainer.innerHTML = "<p>No orders found.</p>";
@@ -61,10 +73,9 @@ const displayOrderHistory = () => {
                     <td class="status-cell">${order.buying_status}</td>
                     <td class="payment-status status-complete">${order.payment_status}</td>
                     <td> 
-                        <button class="pay-button " 
+                        <button class="pay-button" 
                             onclick="SSLpayment(${order.id}, ${totalPrice}, ${order.order_items.length})"
-                            ${order.payment_status === "Completed" ? "disabled style='background:gray; cursor:not-allowed;'" : ""}
-                            >
+                            ${order.payment_status === "Completed" ? "disabled style='background:gray; cursor:not-allowed;'" : ""}>
                             ${order.payment_status === "Completed" ? "Paid" : "Pay Now"}
                         </button>
                     </td> 
@@ -91,6 +102,9 @@ const displayOrderHistory = () => {
         console.error("Error fetching orders:", error);
     });
 };
+
+
+
 
 function SSLpayment(orderId, totalPrice, length) {  
     console.log("OrderId:", orderId, "Total Price:", totalPrice);

@@ -7,7 +7,8 @@
     align-items: center;
     padding: 40px 20px;
     gap: 30px;
-    background-color: rgb(0, 0, 0);
+    margin-top: -20px;
+    background-color: #faebd7;
   }
 
   /* Credentials Button */
@@ -16,10 +17,10 @@
 }
 
 .demo-cre {
-  color: #65acf7;
+  color: black;
   font-size: 25px;
-  /* font-family: 'Times New Roman', Times, serif; */
-  /* font-weight: bold; */
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: 500;
 }
 .credentials button {
   /* padding: 6px 10px; */
@@ -34,7 +35,7 @@
 }
 
 .credentials button:hover {
-  background-color: #007bff;
+  background-color: #cd6c4f;
   color: #fff;
 }
   
@@ -50,9 +51,10 @@
   
   .form-title {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 3rem;
+    font-size: 2.2rem;
+    font-weight: bold;
     text-align: center;
-    color: white;
+    color: black;
     margin-bottom: 20px;
   }
   
@@ -107,11 +109,11 @@
   /* Button Styling */
   .form-button {
     width: 100%;
-    background-color: #007bff;
-    color: #fff;
+    background-color: #cd6c4f;
+    color: #faebd7;
     border: none;
     padding: 12px 15px;
-    font-size: 1rem;
+    font-size: 1.2rem;
     border-radius: 4px;
     cursor: pointer;
     margin-top: 20px;
@@ -119,15 +121,15 @@
   }
   
   .form-button:hover {
-    background-color: #0056b3;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    background-color: #d07b60;
+    color: black;
   }
   
 
   /* Styling for the demo credential buttons */
 .credentials button {
   margin-bottom: 10px;
-  background-color: #007bff; /* Green background */
+  background-color: #cd6c4f; /* Green background */
   color: white; /* White text */
   border: none; /* Remove border */
   padding: 10px 20px; /* Padding inside the button */
@@ -142,14 +144,11 @@
 
 /* Hover effect */
 .credentials button:hover {
-  background-color: #0659b1; /* Darker green on hover */
+  background-color: #d07b60;
+    color: black;
 }
 
-/* Focus effect for accessibility */
-.credentials button:focus {
-  outline: none; /* Remove default outline */
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Add custom focus effect */
-}
+
 
 
   

@@ -39,30 +39,45 @@ const addToCart = (foodId, price) => {
 
 const loadCartProduct = () => {
     const cartId = localStorage.getItem("cartId");
-    // console.log(cartId);
     if (!cartId) {
         console.log("No cart found. Please create a cart first.");
         return;
     }
+
     const token = localStorage.getItem("token");
 
+    // Get the cart container where cart items will be displayed
+    const cartContainer = document.getElementById("cart-section");
 
-    fetch(`https://quick-bite-backend-pink.vercel.app/cart/see-cart-item/${cartId}/`,
-        {
-            method: "GET",
-            headers: {
-                Authorization: `Token ${token}`,
-            },
-        }
-    )
-        .then((res) => res.json())
-        .then((data) => {
-            // console.log("Received Cart Data:", data);
-            displayCart(data);
-        })
-        .catch((error) => {
-            console.error("Error adding to cart:", error);
-        });
+    // Create and append the loading message and spinner inside the cart-container
+    const loadingDiv = document.createElement("div");
+    loadingDiv.classList.add("loading-container-cart");
+    loadingDiv.innerHTML = `
+        <img src="Images/loading.jpg" alt="Loading..." />
+        <p>Loading your cart...</p>
+    `;
+    cartContainer.innerHTML = ''; // Clear any previous content
+    cartContainer.appendChild(loadingDiv); // Append the loading div
+
+    fetch(`https://quick-bite-backend-pink.vercel.app/cart/see-cart-item/${cartId}/`, {
+        method: "GET",
+        headers: {
+            Authorization: `Token ${token}`,
+        },
+    })
+    .then((res) => res.json())
+    .then((data) => {
+        // Clear the loading spinner once the cart data is received
+        cartContainer.innerHTML = "";
+        console.log("Received Cart Data:", data);
+        
+        // Call function to display the cart data
+        displayCart(data);
+    })
+    .catch((error) => {
+        console.error("Error loading cart:", error);
+        cartContainer.innerHTML = "<p>Error loading cart items. Please try again.</p>";
+    });
 };
 
 
@@ -95,6 +110,8 @@ const displayCart = (items) => {
     Object.values(groupedItems).forEach((group) => {
         const sellerHeading = document.createElement("h3");
         sellerHeading.textContent = `Seller: ${group.company_name}`;
+        // Add a class name for styling
+        sellerHeading.classList.add("seller-heading");
         parent.appendChild(sellerHeading);
 
         // Create a container for the seller's items
@@ -108,17 +125,17 @@ const displayCart = (items) => {
 
 
             // Fix the image URL
-        let imageUrl = item.food_item?.image;
-        
-        // Remove incorrect "image/upload/" prefix if it exists
-        if (imageUrl.includes("image/upload/https://")) {
-            imageUrl = imageUrl.replace("image/upload/", "");  
-        }
+            let imageUrl = item.food_item?.image;
 
-        // Ensure the image URL is properly formatted
-        if (!imageUrl.startsWith("https://")) {
-            imageUrl = `https://res.cloudinary.com/dtyxxpqdl/image/upload/${imageUrl}`;
-        }
+            // Remove incorrect "image/upload/" prefix if it exists
+            if (imageUrl.includes("image/upload/https://")) {
+                imageUrl = imageUrl.replace("image/upload/", "");
+            }
+
+            // Ensure the image URL is properly formatted
+            if (!imageUrl.startsWith("https://")) {
+                imageUrl = `https://res.cloudinary.com/dtyxxpqdl/image/upload/${imageUrl}`;
+            }
 
             div.innerHTML = `
                 <div class="cart-item-container">
@@ -169,7 +186,7 @@ const displayCart = (items) => {
 function updatePrice(cartItemId, unitPrice) {
     const quantityInput = document.getElementById(`quantity-${cartItemId}`);
     const priceElement = document.getElementById(`price-${cartItemId}`);
-    
+
     const quantity = parseInt(quantityInput.value);
     const totalPrice = unitPrice * quantity;
     priceElement.textContent = totalPrice.toFixed(2);
@@ -186,20 +203,20 @@ function deleteCartItem(cartItemId) {
             'Content-Type': 'application/json',
         }
     })
-    .then(response => response.json())
-    .then(data => {
-        const cartItemElement = document.getElementById(cartItemId);
-        if (cartItemElement) {
-            cartItemElement.remove(); 
-        }
-        setTimeout(() => {
-            window.location.reload();
-        }, 100); 
+        .then(response => response.json())
+        .then(data => {
+            const cartItemElement = document.getElementById(cartItemId);
+            if (cartItemElement) {
+                cartItemElement.remove();
+            }
+            setTimeout(() => {
+                window.location.reload();
+            }, 100);
 
-    })
-    .catch(error => {
-        console.error('Error deleting cart item:', error);
-    });
+        })
+        .catch(error => {
+            console.error('Error deleting cart item:', error);
+        });
 }
 
 

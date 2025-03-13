@@ -6,7 +6,10 @@
     justify-content: center;
     margin: 2rem auto;
     padding: 1rem;
-    width: 100%;;
+    width: 100%;
+    min-height: 50vh;
+    margin-top: -20px;
+    margin-bottom: -4px;
 }
 
 /* Form Column */

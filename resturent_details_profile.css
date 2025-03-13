@@ -1,96 +1,187 @@
-#resturent-container {
-    width: 100%;
-    margin: auto;
-    margin-top: 20px;
-    margin-bottom: 50px;
-    background-color: black;
-}
-
-#resturent-container img {
-    border-radius: 10px;
-}
-
-.res-Details{
-    /* text-align: center; */
-    margin-left: 30px;
-    margin-top: 80px;
-    color: white;
-}
-#resturent-container h2 {
-    margin-bottom: 15px;
-    font-size: 30px;
-    font-weight: bold;
-}
-
-#resturent-container p {
-    margin-bottom: 8px;
-    font-size: 20px;
-}
-
-
-
-
-/* Review */
-
-#reviews-list .review-item {
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-}
-#reviews-list hr {
-    margin: 10px 0;
-}
-
-#review-form {
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    max-width: 500px;
+.restaurant-details-container {
+    width: 90%;
     margin: 20px auto;
+    padding: 50px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
 }
 
-#review-form h4 {
-    font-size: 1.5rem;
+.loading-container-resturent {
+    text-align: center;
+    padding: 20px;
+}
+
+.loading-container-resturent img {
+    width: 50px;
+    height: 50px;
+}
+
+.loading-container-resturent p {
+    margin-top: 10px;
+    font-size: 1.2rem;
+}
+
+.restaurant-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.restaurant-image img {
+    width: 100%;
+    width: 520px;
+    margin-right: 70px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.restaurant-info {
+    flex: 1;
+}
+
+.restaurant-info h4 {
+    font-size: 2rem;
+    font-weight: bold;
     color: #333;
     margin-bottom: 10px;
 }
 
-
-#review-form textarea {
-    width: 100%;
-    height: 150px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+.restaurant-info p {
     font-size: 1rem;
-    margin-bottom: 15px;
-    resize: none;
+    color: #555;
+    margin: 10px 0;
 }
 
-#review-form select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 1rem;
-    margin-bottom: 15px;
+.close-btn {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    transition: color 0.3s ease;
 }
 
-#review-form button {
-    background-color: #007bff;
-    color: white;
+.close-btn:hover {
+    color: #f44336;
+}
+
+/* Review Section Styling */
+#review-section {
+    width: 90%;
+    height: auto;
+    margin: auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  
+  #review-section h3 {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 3rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+    margin-top: 50px;
+    text-align: center;
+  }
+  
+  /* Review Form */
+  #review-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  #review-form h4 {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  #review-form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
     font-size: 1rem;
-    padding: 10px 20px;
+    margin-top: 10px;
+  }
+  
+  #review-form button {
+    width: 100%;
+    padding: 12px;
+    background: #faebd7;
     border: none;
     border-radius: 5px;
+    color: #cd6c4f;
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-top: 15px;
     cursor: pointer;
-    width: 100%;
-    transition: background-color 0.3s ease;
-}
-
-#review-form button:hover {
-    background-color: #0056b3;
-}
+  }
+  
+  #review-form button:hover {
+    background: #e5e2df;
+  }
+  
+  /* Message when not logged in */
+  #comment-login-msg {
+    color: #ff0000;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  /* Disable the Post Review button when not logged in */
+  #review-form button:disabled {
+    background-color: #e0e0e0;
+    cursor: not-allowed;
+  }
+  
+  /* Reviews List Styling */
+  #reviews-list {
+    margin-top: 20px;
+  }
+  
+  .review {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+  }
+  
+  .review .review-item p {
+    font-size: 1rem;
+    color: #444;
+    margin-bottom: 10px;
+  }
+  
+  .review .review-item strong {
+    font-weight: bold;
+  }
+  
+  .review hr {
+    border: 1px solid #ddd;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  /* Button disabled styling */
+  .disabled-btn {
+    background-color: #e0e0e0;
+    cursor: not-allowed;
+  }
+  
