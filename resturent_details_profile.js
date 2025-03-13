@@ -1,8 +1,8 @@
 
 const getparams = () => {
     // const token = localStorage.getItem("token");
-    const param = new URLSearchParams(window.location.search).get("restaurantId");
-
+    const param = new URLSearchParams(window.location.search).get("resturantId");
+    console.log("Profile ID:", param)
 
     // Fetch the restaurant details
     fetch(`https://quick-bite-backend-pink.vercel.app/seller/seller-detail/${param}`, {

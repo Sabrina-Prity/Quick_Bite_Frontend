@@ -5,6 +5,18 @@ document.getElementById("products-btn").addEventListener("click", function(event
 });
 
 
+document.addEventListener("DOMContentLoaded", function () {
+    // Get the restaurant ID from localStorage or any other source (adjust this based on how you store the ID)
+    const resturantId = new URLSearchParams(window.location.search).get("restaurantId");
+
+    // If restaurant ID is available, update the profile link dynamically
+    if (resturantId) {
+        const profileLink = document.getElementById("profile-btn");
+        profileLink.href = `resturent_details_profile.html?resturantId=${resturantId}`;
+    } else {
+        console.error("Restaurant ID is not available.");
+    }
+});
 
 
 const loadCategorys = () => {
@@ -35,7 +47,7 @@ const displayCategorys = ((data)=>{
 
  const loadFoods = (search) => {
     const param = new URLSearchParams(window.location.search).get("restaurantId");
-    const parent = document.getElementById("card");
+    const parent = document.getElementById("food-card");
     const loading = document.getElementById("loading");
     const noData = document.getElementById("nodata");
 
@@ -65,13 +77,12 @@ const displayCategorys = ((data)=>{
         });
 };
 
-
 const displayFoods = (items) => {
-    const parent = document.getElementById("card");
+    const parent = document.getElementById("food-card");
     parent.innerHTML = ""; 
 
     items?.forEach((item) => {
-        console.log("Food", item)
+        console.log("Food", item);
 
         // Fix the image URL
         let imageUrl = item?.image;
@@ -85,19 +96,19 @@ const displayFoods = (items) => {
         if (!imageUrl.startsWith("https://")) {
             imageUrl = `https://res.cloudinary.com/dtyxxpqdl/image/upload/${imageUrl}`;
         }
+
         const div = document.createElement("div");
-        div.classList.add("items-card");
+        div.classList.add("food-card");  // Use 'food-card' class here
         div.innerHTML = `
-            <img class="items-img" src="${imageUrl}" />
+            <img class="food-img" src="${imageUrl}" />
             <h4>${item?.name}</h4>
-            <h6>Price: $${item?.price}</h6>
-            <h6>Category: ${item?.category}</h6>
+            <h6>$${item?.price}</h6>
             
             <button class="detail-btn">
                 <a href="foodDetails.html?foodId=${item.id}&sellerId=${item.seller}">Details</a>
             </button>
             <button class="detail-btn">
-                <a  onclick="addToCart('${item.id}', '${item.price}')">Add To Cart</a>
+                <a onclick="addToCart('${item.id}', '${item.price}')">Add To Cart</a>
             </button>
         `;
         parent.appendChild(div);

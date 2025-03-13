@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Quick Bite</title>
-    <link rel="shortcut icon" href="Images/logo4.avif"> type="image/x-icon">
+    <link rel="shortcut icon" href="Images/logo4.avif">
 
     <!-- Bootstrap cdn -->
     <link
@@ -34,53 +34,55 @@
       <!-- Navbar Here -->
     </div>
 
-
-
-
     <main>
+      <div class="product-details">
+        <div id="food-details">
+          <div class="food-detail">
+            <div class="loading-container">
+          
+            </div>
+          </div>
+        </div>
+        
 
-            <div id="food-details"></div>
-         
-      
-          <!-- Comment Section -->
-          <div id="comments-section">
-            <h3>Comments</h3>
-      
-            
-      
-            <!-- Comment form (only visible if user is logged in) -->
-            <div id="comment-form">
-              <h4>Add a Comment</h4>
-              <textarea id="comment-text" placeholder="Write your comment here"
-                class="form-control"></textarea>
-              <br>
-              <label for="rating">Rating:</label>
-              <select id="rating" class="form-control">
-                <option value="⭐">⭐</option>
-                <option value="⭐⭐">⭐⭐</option>
-                <option value="⭐⭐⭐">⭐⭐⭐</option>
-                <option value="⭐⭐⭐⭐">⭐⭐⭐⭐</option>
-                <option value="⭐⭐⭐⭐⭐">⭐⭐⭐⭐⭐</option>
-              </select>
-              <br>
-              <button class="btn btn-primary" onclick="postComment()">Post
-                Comment</button>
-            </div>
-      
-            <!-- Display existing comments here -->
-            <div id="comments-list">
-              <!-- Comments will be populated here via JavaScript -->
-            </div>
-            
+        
+        <!-- Comment Section -->
+        <div id="comments-section">
+          <h3>Comments</h3>
+
+          <!-- Comment form (always visible, button disabled if not logged in) -->
+          <div id="comment-form">
+            <h4>Add a Comment</h4>
+            <textarea id="comment-text" placeholder="Write your comment here"
+              class="form-control"></textarea>
+            <br>
+            <label for="rating">Rating:</label>
+            <select id="rating" class="form-control">
+              <option value="⭐">⭐</option>
+              <option value="⭐⭐">⭐⭐</option>
+              <option value="⭐⭐⭐">⭐⭐⭐</option>
+              <option value="⭐⭐⭐⭐">⭐⭐⭐⭐</option>
+              <option value="⭐⭐⭐⭐⭐">⭐⭐⭐⭐⭐</option>
+            </select>
+            <br>
+            <button id="submit-comment-btn" class="btn btn-primary"
+              onclick="postComment()">Post Comment</button>
+          </div>
+
+          <!-- Message when not logged in -->
+          <div id="comment-login-msg" style="display:none;">
+            <p>You are not logged in. Please log in to post a comment.</p>
+          </div>
+
+          <!-- Display existing comments here -->
+          <div id="comments-list">
+            <!-- Comments will be populated here via JavaScript -->
+          </div>
+        </div>
+
+      </div>
 
     </main>
-     
-     
-
-
-      
-    
-    
 
     <footer class="footer p-5">
       <div class="container row">
@@ -88,14 +90,19 @@
         <div class="col-md-3">
           <h5>Follow Us</h5>
           <div class="icons">
-            <a href="#" aria-label="Facebook" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
-            <a href="#" aria-label="Email" title="Email"><i class="fa-solid fa-envelope"></i></a>
-            <a href="#" aria-label="WhatsApp" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-            <a href="#" aria-label="LinkedIn" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
-            <a href="#" aria-label="Twitter" title="Twitter"><i class="fa-brands fa-square-twitter"></i></a>
+            <a href="#" aria-label="Facebook" title="Facebook"><i
+                class="fa-brands fa-facebook"></i></a>
+            <a href="#" aria-label="Email" title="Email"><i
+                class="fa-solid fa-envelope"></i></a>
+            <a href="#" aria-label="WhatsApp" title="WhatsApp"><i
+                class="fa-brands fa-whatsapp"></i></a>
+            <a href="#" aria-label="LinkedIn" title="LinkedIn"><i
+                class="fa-brands fa-linkedin"></i></a>
+            <a href="#" aria-label="Twitter" title="Twitter"><i
+                class="fa-brands fa-square-twitter"></i></a>
           </div>
         </div>
-    
+
         <!-- About Quick Bite Section -->
         <div class="col-md-3">
           <h5>About Quick Bite</h5>
@@ -106,7 +113,7 @@
             <li><a href="#" title="Press">Press</a></li>
           </ul>
         </div>
-    
+
         <!-- Quick Links Section -->
         <div class="col-md-3">
           <h5>Quick Links</h5>
@@ -117,7 +124,7 @@
             <li><a href="#" title="Delivery Info">Delivery Info</a></li>
           </ul>
         </div>
-    
+
         <!-- Support Section -->
         <div class="col-md-3">
           <h5>Support</h5>
@@ -130,7 +137,7 @@
           </ul>
         </div>
       </div>
-    
+
       <!-- Footer Bottom Section -->
       <hr>
       <p class="text-center text-white mt-3">

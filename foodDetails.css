@@ -1,120 +1,153 @@
+.product-details {
+  margin-top: -20px;
+}
+.loading-container {
+  width: 100%;
+  margin: auto;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.loading-container img {
+  width: 50px;
+  height: 50px;
+}
+
+.loading-container p {
+  margin-top: 10px;
+  font-size: 1.2rem;
+}
+
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;  /* Stack the button and the message vertically */
+  align-items: flex-start; /* Align them to the left */
+}
+
+.add-to-cart-btn {
+  margin-bottom: 10px; /* Space between the button and the message */
+}
+
+
 /* General Container */
 #food-details {
-    width: 1000px;
-    height: auto;
-    margin: 20px auto;
-    padding: 50px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    position: relative;
+  width: 90%;
+  height: auto;
+  /* margin-top: -20px; */
+  margin: 20px auto;
+  padding: 50px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
 /* Close Button */
 .close-btn {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    cursor: pointer;
-    transition: color 0.3s ease;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  cursor: pointer;
+  transition: color 0.3s ease;
 }
 
 .close-btn:hover {
-    color: #f44336;
+  color: #f44336;
 }
 
 /* Food Detail */
 .food-detail {
-    display: flex;
-    gap: 20px;
+  display: flex;
+  gap: 20px;
 }
 
 /* Food Image */
 .food-image img {
-    width: 350px;
-    max-height: 350px;
-    margin-right: 50px;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  width: 420px;
+  max-height: 320px;
+  margin-right: 50px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Food Information */
 .food-info {
-    flex: 1;
+  flex: 1;
 }
 
 .food-info h4 {
-    font-size: 22px;
-    color: #333;
-    margin-bottom: 10px;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
 }
 
 .food-info h6 {
-    font-size: 16px;
-    color: #6b6969;
-    margin-bottom: 5px;
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 5px;
 }
 
 .food-info p {
-    font-size: 14px;
-    color: #555;
-    margin: 10px 0;
+  font-size: 16px;
+  color: #555;
+  margin: 10px 0;
 }
 
 /* Quantity Input */
 .food-info label {
-    display: block;
-    font-size: 14px;
-    color: #333;
-    margin-top: 15px;
+  display: block;
+  font-size: 14px;
+  color: #333;
+  margin-top: 15px;
 }
 
 .food-info input[type="number"] {
-    width: 60px;
-    padding: 5px;
-    font-size: 14px;
-    margin-top: 5px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+  width: 60px;
+  padding: 5px;
+  font-size: 14px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
 
 /* Action Buttons */
 .action-buttons {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
 }
 
 .action-buttons button {
-    padding: 10px 15px;
-    font-size: 14px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  padding: 10px 15px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 /* Add to Cart Button */
 .add-to-cart-btn {
-    background-color: #7fb74a;
-    color: white;
+  padding: 8px 15px;
+  background: #faebd7;
+  border: none;
+  border-radius: 5px;
+  color: #cd6c4f;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
 }
 
 .add-to-cart-btn:hover {
-    background-color: #598331;
-}
-
-/* Buy Now Button */
-.buy-now-btn {
-    background-color: #f44336;
-    color: white;
-}
-
-.buy-now-btn:hover {
-    background-color: #d32f2f;
+  background: #e5e2df;
 }
 
 
@@ -122,175 +155,340 @@
 
 /* Comment Section Styling */
 #comments-section {
-    margin: 30px 0;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  #comments-section h3 {
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
-  /* Comment Form */
-  #comment-form {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  #comment-form h4 {
-    font-size: 1.6rem;
-    margin-bottom: 15px;
-  }
-  
-  #comment-form textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 1rem;
-    min-height: 100px;
-    resize: vertical;
-  }
-  
-  #comment-form textarea:focus {
-    border-color: #007bff;
-    outline: none;
-  }
-  
-  #comment-form select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 1rem;
-    margin-top: 10px;
-  }
-  
-  #comment-form button {
-    width: 100%;
-    padding: 12px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    margin-top: 15px;
-    cursor: pointer;
-  }
-  
-  #comment-form button:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Login message when not logged in */
-  #comment-login-msg {
-    color: #ff0000;
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-top: 20px;
-  }
-  
-  /* Comment List Styling */
-  #comments-list {
-    margin-top: 20px;
-  }
-  
-  .comment {
-    background-color: #fff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 15px;
-  }
-  
-  .comment .username {
-    font-weight: bold;
-    color: #333;
-    font-size: 1.1rem;
-  }
-  
-  .comment .date {
-    font-size: 0.9rem;
-    color: #888;
-    margin-bottom: 10px;
-  }
-  
-  .comment .text {
-    font-size: 1rem;
-    color: #444;
-  }
-  
-  .comment .rating {
-    margin-top: 10px;
-    font-size: 1.2rem;
-    color: #ff9800;
-  }
-  
-  .comment .rating i {
-    margin-right: 5px;
-  }
-  
+  width: 90%;
+  height: auto;
+  margin: auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  /* border-radius: 10px; */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#comments-section h3 {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 3rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Comment Form */
+#comment-form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#comment-form h4 {
+  font-size: 1.6rem;
+  margin-bottom: 15px;
+}
+
+#comment-form textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  min-height: 100px;
+  resize: vertical;
+}
+
+#comment-form textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+#comment-form select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+#comment-form button {
+  width: 100%;
+  padding: 12px;
+  background: #faebd7;
+  border: none;
+  border-radius: 5px;
+  color: #cd6c4f;
+  border: none;
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+#comment-form button:hover {
+  background: #e5e2df;
+}
+
+/* Message when not logged in */
+#comment-login-msg {
+  color: #ff0000;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Disable the Post Comment button when not logged in */
+#comment-form button:disabled {
+  background-color: #e0e0e0;
+  cursor: not-allowed;
+}
+
+
+/* Comment List Styling */
+#comments-list {
+  margin-top: 20px;
+}
+
+.comment {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+}
+
+.comment .username {
+  font-weight: bold;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.comment .date {
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 10px;
+}
+
+.comment .text {
+  font-size: 1rem;
+  color: #444;
+}
+
+.comment .rating {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  color: #ff9800;
+}
+
+.comment .rating i {
+  margin-right: 5px;
+}
+
 /* Style for the comment buttons container */
 .comment div {
-    margin-top: 10px;
-    display: flex;
-    gap: 10px;
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
 }
 
 /* Common style for both buttons */
 .comment button {
-    padding: 8px 16px;
-    font-size: 14px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
+  padding: 8px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
 }
 
 /* Edit button style */
 .comment .edit-btn {
-    background-color: #4CAF50; /* Green */
-    color: white;
+  background-color: #4CAF50;
+  /* Green */
+  color: white;
 }
 
 .comment .edit-btn:hover {
-    background-color: #45a049;
-    transform: scale(1.05);
+  background-color: #45a049;
+  transform: scale(1.05);
 }
 
 .comment .edit-btn:active {
-    background-color: #388e3c;
+  background-color: #388e3c;
 }
 
 /* Delete button style */
 .comment .delete-btn {
-    background-color: #f44336; /* Red */
-    color: white;
+  background-color: #f44336;
+  /* Red */
+  color: white;
 }
 
 .comment .delete-btn:hover {
-    background-color: #e53935;
-    transform: scale(1.05);
+  background-color: #e53935;
+  transform: scale(1.05);
 }
 
 .comment .delete-btn:active {
-    background-color: #d32f2f;
+  background-color: #d32f2f;
 }
 
 /* Optional: add margin to the top of the comment */
 .comment {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 /* Optional: Style for the comment div */
 .comment p {
-    margin-top: 10px;
-    font-size: 16px;
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+
+/* Responsive Styles */
+
+/* For screens smaller than 768px */
+@media (max-width: 768px) {
+  /* Adjust the food details container */
+  #food-details {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .food-detail {
+    flex-direction: column; /* Stack the food image and info */
+    align-items: center;
+  }
+
+  .food-image img {
+    height: 240px;
+    width: 270px; /* Ensure the image is smaller on mobile */
+    margin-right: 0;
+  }
+
+  .food-info {
+    text-align: center;
+  }
+
+  .food-info h4 {
+    font-size: 1.8rem;
+  }
+
+  .food-info h6 {
+    font-size: 14px;
+  }
+
+  .food-info p {
+    width: 400px;
+    font-size: 14px;
+  }
+
+  .action-buttons {
+    flex-direction: column; /* Stack action buttons vertically */
+    align-items: center;
+  }
+
+  .add-to-cart-btn {
+    width: 100%;
+    padding: 10px;
+  }
+
+  /* Comment Section */
+  #comments-section {
+    width: 100%;
+    padding: 15px;
+  }
+
+  #comments-section h3 {
+    font-size: 2.5rem;
+  }
+
+  #comment-form textarea {
+    min-height: 80px;
+  }
+
+  #comment-form button {
+    font-size: 1.2rem;
+  }
+
+  .comment {
+    font-size: 14px;
+  }
+
+  /* Close button for food details */
+  .close-btn {
+    font-size: 20px;
+  }
+}
+
+/* For screens smaller than 425px */
+@media (max-width: 425px) {
+  /* Adjust the food details container */
+  #food-details {
+    padding: 15px;
+  }
+
+  .food-detail {
+    flex-direction: column; /* Stack the food image and info */
+    align-items: center;
+  }
+
+  .food-image img {
+    width: 100%;
+    max-width: 250px; /* Even smaller image */
+    margin-bottom: 20px;
+  }
+
+  .food-info {
+    text-align: center;
+  }
+
+  .food-info h4 {
+    font-size: 1.6rem;
+  }
+
+  .food-info h6 {
+    font-size: 12px;
+  }
+
+  .food-info p {
+    font-size: 12px;
+  }
+
+  .action-buttons {
+    flex-direction: column; /* Stack action buttons vertically */
+    align-items: center;
+  }
+
+  .add-to-cart-btn {
+    width: 100%;
+    padding: 10px;
+  }
+
+  /* Comment Section */
+  #comments-section {
+    width: 100%;
+    padding: 15px;
+  }
+
+  #comments-section h3 {
+    font-size: 2rem;
+  }
+
+  #comment-form textarea {
+    min-height: 70px;
+  }
+
+  #comment-form button {
+    font-size: 1.1rem;
+  }
+
+  .comment {
+    font-size: 13px;
+  }
+
+  /* Close button for food details */
+  .close-btn {
+    font-size: 18px;
+  }
 }
