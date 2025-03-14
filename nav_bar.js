@@ -52,9 +52,8 @@ fetch("nav_bar.html")
 
       if (isAdmin) {
         userContainer.innerHTML += `
-          <li class="nav-item"><a class="nav-link" href="avg_ratings.html">Ratings</a></li>
-          <li class="nav-item"><a class="nav-link" href="all_seller.html">All Sellers</a></li>
-          <li class="nav-item"><a class="nav-link" href="all_customer.html">All Customers</a></li>
+         <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+         
         `;
       }
     } else {

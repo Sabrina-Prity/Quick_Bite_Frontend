@@ -10,7 +10,7 @@ const displayFoodDetails = () => {
 
     // Create and append the loading message and spinner inside the food-detail div
     const loadingDiv = document.createElement("div");
-    loadingDiv.classList.add("loading-container");
+    loadingDiv.classList.add("food-loading-container");
     loadingDiv.innerHTML = `
         <img src="Images/loading.jpg" alt="Loading..." />
         <p>Loading food details...</p>
@@ -182,33 +182,6 @@ const displayComments = () => {
 
 displayComments();
 
-
-const handlelogOut = (event) => {
-    event.preventDefault();
-    const token = localStorage.getItem("token");
-
-    fetch("https://quick-bite-backend-pink.vercel.app/seller/logout", {
-        method: "GET",
-        headers: {
-            Authorization: `Token ${token}`,
-        },
-    })
-        .then((res) => {
-            // console.log("Logout successful");
-            localStorage.removeItem("cartId");
-            localStorage.removeItem("token");
-            localStorage.removeItem("user_id");
-            localStorage.removeItem("seller_id");
-            // localStorage.removeItem("username");
-            localStorage.removeItem("is_admin");
-            alert("Logout Successful");
-            window.location.href = "index.html";
-        })
-        .catch((error) => {
-            console.error("Error during logout:", error);
-            alert("Logout failed. Please try again.");
-        });
-};
 
 
 

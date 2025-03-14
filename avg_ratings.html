@@ -16,6 +16,7 @@
 
         <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" href="avg_ratings.css">
+        <link rel="stylesheet" href="seller_dashboard.css">
         <link rel="icon"
         href="Images/logo4.avif">
 
@@ -34,17 +35,95 @@
             <!-- Navbar Here -->
         </div>
 
-        <main>
+        <!-- Secondary Navbar -->
+        <nav class="top-navbar">
+          <button class="sidebar-toggle" onclick="toggleSidebar()">
+              <i class="fa fa-bars"></i>
+          </button>
 
-            <div id="avg-ratings">
-               
-            </div>
+          <div class="search-box">
+              <input type="text" placeholder="Search...">
+          </div>
 
-           
-            
-              
+          <button class="profile-btn"
+              onclick="window.location.href='#'">
+              <img src="Images/demo_profile.webp" alt="Profile">
+          </button>
+      </nav>
 
-        </main>
+      <!-- Sidebar -->
+      <div class="sidebar" id="sidebar">
+          <a href="dashboard.html"><i class="fa fa-chart-line"></i>
+              Dashboard</a>
+          <!-- <a href="product.html"><i class="fa fa-box"></i> All
+              Products</a> -->
+          <a href="avg_ratings.html"><i class="fa fa-star"></i>
+              Ratings</a>
+          <a href="all_seller.html"><i class="fa fa-store"></i>
+              Sellers</a>
+          <a href="all_customer.html"><i class="fa fa-users"></i>
+              Customers</a>
+      </div>
+
+      <!-- Main Content -->
+<div class="content">
+  <h1>Restaurant Ratings</h1>
+  <div id="ratings-container">
+      <table id="ratings-table">
+          <thead>
+              <tr>
+                  <th>Seller Name</th>
+                  <th>Average Rating</th>
+                  <th>Stars</th>
+                  <th>Message</th>
+              </tr>
+          </thead>
+          <tbody id="avg-ratings">
+              <!-- Ratings will be dynamically inserted here -->
+          </tbody>
+      </table>
+  </div>
+</div>
+
+      <script>
+      // Function to toggle the sidebar
+         
+      function toggleSidebar() {
+          var sidebar = document.getElementById("sidebar");
+          var isOpen = sidebar.classList.toggle("open");
+
+          // Adjust content margin only for large screens
+          if (window.innerWidth > 768) {
+              document.querySelector('.content').style.marginLeft = isOpen ? '270px' : '20px';
+          }
+
+          localStorage.setItem("sidebarOpen", isOpen ? "true" : "false");
+      }
+
+
+      // Function to check and restore sidebar state on page load
+      function restoreSidebarState() {
+          var sidebar = document.getElementById("sidebar");
+
+          if (!sidebar) return; // Ensure sidebar exists before applying state
+
+          var sidebarState = localStorage.getItem("sidebarOpen");
+
+          if (sidebarState === "true") {
+              sidebar.classList.add("open");
+          }
+      }
+
+      // Restore sidebar state when the page loads
+      document.addEventListener("DOMContentLoaded", restoreSidebarState);
+
+
+  </script>
+
+ 
+
+
+    
 
         <footer class="footer p-5">
             <div class="container row">

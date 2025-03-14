@@ -1,5 +1,10 @@
+.content {
+    background: #f8f9fa;
+    padding: 20px;
+    text-align: center;
+}
 
-#seller-container {
+#customer-container {
     width: 90%;
     margin: auto;
     overflow-x: auto;
@@ -26,7 +31,7 @@ tr:nth-child(even) {
     background: #f9f9f9;
 }
 
-.seller-img {
+.customer-img {
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -39,7 +44,7 @@ tr:nth-child(even) {
         font-size: 14px;
     }
 
-    .seller-img {
+    .customer-img {
         width: 40px;
         height: 40px;
     }

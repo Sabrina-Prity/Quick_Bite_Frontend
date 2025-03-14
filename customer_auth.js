@@ -129,16 +129,17 @@ const customerLogin = async (event) => {
 
             alert(userData.is_admin ? "Admin Login Successful" : "Customer Login Successful");
 
-            // Load cart if customer login
-            if (!userData.is_admin) {
+            // Redirect based on user type
+            if (userData.is_admin) {
+                window.location.href = "dashboard.html"; // Redirect admin to dashboard
+            } else {
                 try {
-                    await loadcartId();
+                    await loadcartId(); // Load cart for customers
                 } catch (error) {
                     console.error("Error loading cart:", error);
                 }
+                window.location.href = "product.html"; // Redirect customer to homepage
             }
-
-            window.location.href = "index.html";
 
         } catch (error) {
             console.error("Login error:", error.message);
@@ -148,6 +149,7 @@ const customerLogin = async (event) => {
         alert("Please enter both username and password.");
     }
 };
+
 
 // Function to load cart ID
 const loadcartId = () => {
