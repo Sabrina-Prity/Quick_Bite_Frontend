@@ -2,7 +2,7 @@
     width: 80%;
     margin: 50px auto; /* Centers the form with some space from top */
     padding: 20px;
-    background-color: #444;
+    background-color: #333;
     border: 1px solid #666;
     border-radius: 10px;
     color: rgba(255, 255, 255, 0.889); /* Text color */
@@ -10,8 +10,11 @@
 }
 
 #edit-profile-form h2 {
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: bold;
+  font-size: 3rem;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 #edit-profile-form label {
@@ -35,7 +38,7 @@
 #edit-profile-form button {
     width: 100%;
     padding: 12px;
-    background-color: #28a745; /* Success button */
+    background-color: #cd6c4f;
     color: white;
     border: none;
     border-radius: 5px;
@@ -43,7 +46,8 @@
 }
 
 #edit-profile-form button:hover {
-    background-color: #218838;
+  background-color: #d77f64;
+  color: #fff;
     cursor: pointer;
 }
 
@@ -57,7 +61,8 @@
 
   
   #seller-details {
-    background-color: #222;
+    
+    background-color: #333;
     color: white;
     padding: 20px;
     border-radius: 5px;
@@ -92,7 +97,7 @@
   }
   
   .seller-image {
-    width: 400px; 
+    max-width: 60%; 
     height: 350px;
     
     margin-right: 50px; 
@@ -103,14 +108,27 @@
   }
   
   .seller-details h2 {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 2.5rem;
+    font-weight: bold;
     margin-bottom: 15px;
   }
   
   .seller-details p {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.1rem;
     margin: 10px 0;
   }
   
   button#edit-profile-btn {
+    font-family: 'Times New Roman', Times, serif;
     margin-top: 20px;
+    background-color: #cd6c4f;
+    color: white;
   }
   
+  button#edit-profile-btn:hover {
+    background-color: #d77f64;
+    color: #fff;
+      cursor: pointer;
+  }

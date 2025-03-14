@@ -54,38 +54,35 @@ const loadReview = () => {
         });
 };
 
-
 const displayReview = (reviews) => {
     console.log("Reviews", reviews);
     const reviewsList = document.getElementById("reviews-list");
 
     reviewsList.innerHTML = "";
     if (reviews.detail) {
-        reviewsList.innerHTML = `<p style="color:white; text-align:center;">${reviews.detail}</p>`;
+        reviewsList.innerHTML = `<tr><td colspan="4" style="text-align:center;">${reviews.detail}</td></tr>`;
         return;
     }
 
     if (reviews.length === 0) {
-        reviewsList.innerHTML = "<p style='color:white; text-align:center;'>No reviews available yet!</p>";
+        reviewsList.innerHTML = "<tr><td colspan='4' style='text-align:center;'>No reviews available yet!</td></tr>";
         return;
     }
 
-    // Loop through each review and append it to the reviews list
+    // Loop through each review and append it to the reviews list as a table row
     reviews.forEach((review) => {
-        const reviewDiv = document.createElement("div");
-        reviewDiv.classList.add("review");
+        const row = document.createElement("tr");
 
-        reviewDiv.innerHTML = `
-            <div class="review-item">
-                <p><strong>User Name:</strong> ${review.user}</p>
-                <p><strong>Rating:</strong> ${review.rating}</p>
-                <p><strong>Posted on:</strong> ${new Date(review.created_on).toLocaleString()}</p>
+        row.innerHTML = `
+            <td>${review.user}</td>
+            <td>${review.rating}</td>
+            <td>${new Date(review.created_on).toLocaleString()}</td>
+            <td>
                 <button class="delete-btn" data-id="${review.id}" data-seller-id="${review.seller}">Delete</button>
-            </div>
-            <hr>
+            </td>
         `;
 
-        reviewsList.appendChild(reviewDiv);
+        reviewsList.appendChild(row);
     });
 
     // Attach click event listeners to all delete buttons
@@ -98,6 +95,7 @@ const displayReview = (reviews) => {
         });
     });
 };
+
 
 
 const deleteReview = (reviewId, sellerId) => {

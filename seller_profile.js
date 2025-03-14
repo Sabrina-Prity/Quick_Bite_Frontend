@@ -69,13 +69,13 @@ const fetchSellerDetail = async () => {
                     <div class="seller-info">
                         <img src="${imageUrl}" alt="Seller Image" class="seller-image">
                         <div class="seller-details">
-                            <h2>Seller Details</h2>
+                            <h2>Details</h2>
                             <p><strong>Company Name:</strong> ${seller.company_name}</p>
                             <p><strong>Business Number:</strong> ${seller.mobile_no}</p>
                             <p><strong>Postal Code:</strong> ${seller.postal_code}</p>
                             <p><strong>Street Name:</strong> ${seller.street_name}</p>
                             <p><strong>District:</strong> ${seller.district}</p>
-                            <button id="edit-profile-btn" class="btn btn-primary">Edit Profile</button>
+                            <button id="edit-profile-btn" class="btn">Edit Profile</button>
                         </div>
                     </div>
                 </div>

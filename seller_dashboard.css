@@ -1,0 +1,193 @@
+/* General Reset */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Ensure the main navbar stays fixed */
+#navbar-container {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1001;
+}
+
+/* Top Navbar (Secondary Navbar) */
+.top-navbar {
+    margin-top: 20px;
+    width: 100%;
+    background-color: #262830;
+    padding: 15px 20px;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1000;
+    height: 80px;
+    color: white;
+}
+
+/* Sidebar Default State */
+.sidebar {
+    position: fixed;
+    left: -250px;
+    top: 160px;
+    width: 250px;
+    height: 100%;
+    /* height: calc(100vh - 140px); */
+    background-color: #1e1f26;
+    transition: left 0.3s ease-in-out;
+    padding-top: 20px;
+    z-index: 1000;
+}
+
+/* Keep Sidebar Open if LocalStorage Saves it */
+.sidebar[data-state="open"],
+.sidebar.open {
+    left: 0;
+}
+
+/* Sidebar Links */
+.sidebar a {
+    display: block;
+    padding: 15px;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar a:hover,
+.sidebar a.active { 
+    background-color: white;
+    color: black;
+}
+
+/* Sidebar Toggle Button */
+.sidebar-toggle {
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+    background: none;
+    border: none;
+    margin-left: 15px;
+}
+
+/* Main Content */
+.content {
+    margin-left: 20px;
+    margin-top: 130px;
+    padding: 20px;
+    transition: margin-left 0.3s ease-in-out;
+    min-height: 90vh;
+}
+
+
+
+/* Search Box */
+.search-box input {
+    padding: 8px;
+    width: 400px;
+    border-radius: 5px;
+    border: none;
+}
+
+/* Profile Button */
+.profile-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.profile-btn img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+/* General Content Styles */
+.content {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+.title {
+    text-align: center;
+    color: #18634C;
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+
+/* Overview Section Styles */
+.over-view {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+    margin: auto;
+}
+
+/* Adjust Content when Sidebar is Open */
+@media (min-width: 769px) {
+
+    .sidebar.open ~ .content {
+        margin-left: 270px;
+    }
+}
+
+/* Responsive Sidebar Behavior */
+@media (max-width: 768px) {
+    .top-navbar {
+        margin-top: -11px;
+        
+    }
+    .search-box input {
+        width: 200px;
+    }
+    
+    /* Sidebar Default State */
+    .sidebar {
+        margin-top: -32px;
+    }
+    
+    .sidebar {
+        width: 250px;
+        left: -250px;
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    .content {
+        margin-left: 0 !important;
+    }
+
+
+}
+
+@media (max-width: 430px) {
+    
+    .sidebar {
+        width: 100%;
+        left: -100%;
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    /* Hide content when sidebar is open */
+    .sidebar.open ~ .content,
+    .sidebar.open ~ .top-navbar {
+        display: none;
+    }
+
+    
+}

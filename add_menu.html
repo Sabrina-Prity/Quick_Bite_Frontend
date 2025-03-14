@@ -16,6 +16,7 @@
 
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="add_menu.css">
+    <link rel="stylesheet" href="seller_dashboard.css">
     <link rel="icon"
       href="../project_app/templates/project_app/images/logo.jpeg">
 
@@ -36,34 +37,107 @@
 
 
     <main>
-      <div class="menu-container">
-        <div class="form-column">
-            <h1 style="text-align: center; margin-bottom: 20px; font-size: 40px; color: #ad5915ca;" class="title">Add Menu</h1>
-          <form action="#" enctype="multipart/form-data" method="post" id="upload-form">
-            <p id="error" class="form-error"></p>
 
-            <div class="form-row">
-                <input
-                id="name"
-                type="text"
-                class="input"
-                placeholder="Menu Name"
-                required
-              /></div>
-                
-              <button onclick="handleAddMenu(event)" class="reg-submit">Submit</button>
-          </form>
-        </div>
+      <!-- Secondary Navbar -->
+      <nav class="top-navbar">
+          <button class="sidebar-toggle" onclick="toggleSidebar()">
+              <i class="fa fa-bars"></i>
+          </button>
+
+          <div class="search-box">
+              <input type="text" placeholder="Search...">
+          </div>
+
+          <button class="profile-btn"
+              onclick="window.location.href='seller_profile.html'">
+              <img src="Images/demo_profile.webp" alt="Profile">
+          </button>
+      </nav>
+
+      <!-- Sidebar -->
+      <div class="sidebar" id="sidebar">
+          <a href="seller_dashboard.html"><i
+                  class="fa fa-tachometer-alt"></i> Dashboard</a>
+          <a href="all_products.html"><i class="fa fa-box-open"></i> All
+              Products</a>
+          <a href="all_reviews.html"><i class="fa fa-star"></i>
+              Reviews</a>
+          <a href="all_orders.html"><i class="fa fa-shopping-cart"></i>
+              Orders</a>
+          <a href="add_menu.html"><i class="fa fa-layer-group"></i> Add
+              Category</a>
+          <a href="add_item.html"><i class="fa fa-plus-square"></i> Add
+              Item</a>
       </div>
 
+      <!-- Main Content -->
+      <div class="content">
 
-      <div id="display-all-category" class="display-all-category">
-
+        <h1 class="titles">Add Category</h1>
+              <div class="menu-container">
+                <div class="form-column">
+                  <form action="#" enctype="multipart/form-data" method="post" id="upload-form">
+                    <p id="error" class="form-error"></p>
+        
+                    <div class="form-row">
+                        <input
+                        id="name"
+                        type="text"
+                        class="input"
+                        placeholder="Menu Name"
+                        required
+                      /></div>
+                        
+                      <button onclick="handleAddMenu(event)" class="reg-submit">Submit</button>
+                  </form>
+                </div>
+              </div>
+        
+        
+              <div id="display-all-category" class="display-all-category">
+        
+              </div>
+        
       </div>
 
+      <script>
+      // Function to toggle the sidebar
+         
+      function toggleSidebar() {
+          var sidebar = document.getElementById("sidebar");
+          var isOpen = sidebar.classList.toggle("open");
 
-      
-    </main>
+          // Adjust content margin only for large screens
+          if (window.innerWidth > 768) {
+              document.querySelector('.content').style.marginLeft = isOpen ? '270px' : '20px';
+          }
+
+          localStorage.setItem("sidebarOpen", isOpen ? "true" : "false");
+      }
+
+
+      // Function to check and restore sidebar state on page load
+      function restoreSidebarState() {
+          var sidebar = document.getElementById("sidebar");
+
+          if (!sidebar) return; // Ensure sidebar exists before applying state
+
+          var sidebarState = localStorage.getItem("sidebarOpen");
+
+          if (sidebarState === "true") {
+              sidebar.classList.add("open");
+          }
+      }
+
+      // Restore sidebar state when the page loads
+      document.addEventListener("DOMContentLoaded", restoreSidebarState);
+
+
+  </script>
+
+  </main>
+
+
     
     
 

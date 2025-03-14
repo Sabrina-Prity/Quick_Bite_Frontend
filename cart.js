@@ -224,3 +224,31 @@ function deleteCartItem(cartItemId) {
 
 
 loadCartProduct();
+
+
+const handlelogOut = (event) => {
+    event.preventDefault();
+    const token = localStorage.getItem("token");
+
+    fetch("https://quick-bite-backend-pink.vercel.app/seller/logout", {
+        method: "GET",
+        headers: {
+            Authorization: `Token ${token}`,
+        },
+    })
+        .then((res) => {
+            // console.log("Logout successful");
+            localStorage.removeItem("cartId");
+            localStorage.removeItem("token");
+            localStorage.removeItem("user_id");
+            localStorage.removeItem("seller_id");
+            // localStorage.removeItem("username");
+            localStorage.removeItem("is_admin");
+            alert("Logout Successful");
+            window.location.href = "index.html";
+        })
+        .catch((error) => {
+            console.error("Error during logout:", error);
+            alert("Logout failed. Please try again.");
+        });
+};

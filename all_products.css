@@ -1,0 +1,140 @@
+/* Title Styling */
+.titles {
+    text-align: center;
+    color: #000000;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+
+/* Display All Food Items */
+.menu-container {
+    margin-top: 50px;
+}
+
+.display-all-food {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);  /* 6 cards per row on normal screen */
+    gap: 15px;  /* Space between cards */
+    padding: 20px;
+    justify-items: center;  /* Align items in the center */
+}
+
+/* Styling for each food item */
+.food-item {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    padding: 10px;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.food-item:hover {
+    transform: scale(1.05);
+}
+
+.food-item img {
+    width: 100%;  /* Make image fully responsive */
+    height: 150px;
+    max-width: 220px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+
+.food-item p {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1rem;
+    color: #555;
+    margin-top: -15px;
+}
+
+/* Sticky Delete Button */
+.food-item .delete-btn {
+    position: sticky;
+    bottom: 10px;  /* Distance from the bottom of the food card */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.food-item .delete-btn:hover {
+    background-color: #d32f2f;
+}
+
+/* Loading container styles */
+.loading-containers {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100px;
+    margin-left: 500px;
+}
+
+.loading-containers img {
+    
+    margin-top: 100px;
+    width: 150px;
+    height: 150px;
+}
+
+.loading-containers p {
+    font-size: 16px;
+    color: #555;
+}
+
+/* Media Queries for Responsive Layout */
+
+/* For screen widths of 768px and above, show 6 cards per row */
+@media (width: 768px) {
+    .display-all-food {
+        grid-template-columns: repeat(4, 1fr); /* 6 cards per row on normal screen */
+    }
+
+    .food-item {
+        width: 100%;  /* Ensure food items take full width of each grid cell */
+    }
+    .loading-containers {
+        margin-left: 280px;
+    }
+}
+
+/* For screen widths between 425px and 767px, show 3 cards per row */
+@media (max-width: 767px) and (min-width: 425px) {
+    .display-all-food {
+        grid-template-columns: repeat(3, 1fr); /* 3 columns for tablets */
+    }
+
+    .food-item {
+        max-width: 90%;  /* Make the card slightly smaller */
+    }
+}
+
+/* For screens smaller than 425px, show 2 cards per row */
+@media (max-width: 430px) {
+    .display-all-food {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns for small screens */
+    }
+
+    .food-item {
+        max-width: 100%;  /* Make the card slightly smaller */
+    }
+    .loading-containers {
+        margin-left: 100px;
+    }
+}

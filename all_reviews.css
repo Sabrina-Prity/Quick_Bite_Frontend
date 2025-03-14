@@ -1,0 +1,177 @@
+/* Title Styling */
+.title {
+    text-align: center;
+    color: #000000;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+
+/* Average Rating Box */
+.avg-review {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-bottom: 20px;
+    max-width: 400px;
+    margin: auto;
+}
+
+.rating-box h3 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.rating-score {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #cd6c4f;
+}
+
+.rating-stars {
+    font-size: 1.5rem;
+    color: gold;
+}
+
+/* Review Section */
+.review-section {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    overflow-x: auto; /* Allows horizontal scrolling on small screens */
+}
+
+.review-table {
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+.review-table th,
+.review-table td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.review-table th {
+    background: #cd6c4f;
+    color: white;
+    font-weight: bold;
+}
+
+.review-table tr:hover {
+    background: #f1f1f1;
+}
+
+/* Delete Button */
+.delete-btn {
+    background: #f44336;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background: #d32f2f;
+}
+
+/* --------------------- Responsive Styles --------------------- */
+
+/* For tablets (max-width: 768px) */
+@media screen and (max-width: 768px) {
+    .title {
+        font-size: 2.5rem;
+    }
+
+    .avg-review {
+        width: 80%;
+        padding: 15px;
+    }
+
+    .rating-box h3 {
+        font-size: 1.3rem;
+    }
+
+    .rating-score {
+        font-size: 1.8rem;
+    }
+
+    .review-section {
+        padding: 15px;
+    }
+
+    .review-table th,
+    .review-table td {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .delete-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+}
+
+/* For mobile screens (max-width: 425px) */
+@media screen and (max-width: 425px) {
+    .title {
+        font-size: 2rem;
+        margin-top: 20px;
+    }
+
+    .avg-review {
+        width: 90%;
+        padding: 12px;
+    }
+
+    .rating-box h3 {
+        font-size: 1.2rem;
+    }
+
+    .rating-score {
+        font-size: 1.5rem;
+    }
+
+    .review-section {
+        padding: 10px;
+    }
+
+    .review-table {
+        font-size: 12px;
+    }
+
+    .review-table th,
+    .review-table td {
+        padding: 6px;
+        font-size: 12px;
+    }
+
+    .delete-btn {
+        padding: 5px 8px;
+        font-size: 10px;
+    }
+
+    /* Make table scrollable horizontally */
+    .review-section {
+        overflow-x: auto;
+    }
+
+    .review-table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}

@@ -186,7 +186,7 @@ const sellerLogin = async (event) => {
                 localStorage.setItem("seller_id", data.seller_id);
                 localStorage.setItem("is_admin", data.is_admin);
     
-                window.location.href = "seller_profile.html"; // Redirect after cartId is loaded
+                window.location.href = "seller_dashboard.html"; // Redirect after cartId is loaded
 
             }
         } catch (error) {
