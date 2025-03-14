@@ -1,22 +1,36 @@
-const fetchSellerOrders = () => { 
+const fetchSellerOrders = () => {
     const token = localStorage.getItem("token");
     const sellerId = localStorage.getItem("seller_id");
 
+    // Creating a controller to manage request timeout
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000); // 10 seconds timeout
+
+    // Fetch request for orders with abort signal
     fetch(`https://quick-bite-backend-pink.vercel.app/order/seller-orders/${sellerId}/`, {
         method: 'GET',
         headers: {
             "Authorization": `Token ${token}`,
             "Content-Type": "application/json"
-        }
+        },
+        signal: controller.signal
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Error fetching orders: " + response.statusText);
+        }
+        return response.json();
+    })
     .then(data => {
+        clearTimeout(timeout); // Clear timeout if the request succeeds
+
         console.log("Seller Orders:", data);
 
         const orderListElement = document.getElementById('display-all-orders');
         orderListElement.innerHTML = ""; // Clear previous orders
 
         if (data.orders && data.orders.length > 0) {
+            // Loop through orders and display them
             data.orders.forEach(order => {
                 let totalPrice = 0;
 
@@ -24,7 +38,7 @@ const fetchSellerOrders = () => {
                     const itemTotal = item.food_item.price * item.quantity;
                     totalPrice += itemTotal;
 
-                    // Fix the image URL
+                    // Fix the image URL for food item
                     let imageUrl = item.food_item?.image;
                     if (imageUrl.includes("image/upload/https://")) {
                         imageUrl = imageUrl.replace("image/upload/", "");
@@ -56,18 +70,42 @@ const fetchSellerOrders = () => {
                     `;
                 }).join("");
 
-                orderListElement.innerHTML += orderItemsHTML;
+                orderListElement.innerHTML += `
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Food Item</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                                <th>Buying Status</th>
+                                <th>Payment Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${orderItemsHTML}
+                        </tbody>
+                    </table>
+                `;
             });
         } else {
-            alert("No orders found.");
+            orderListElement.innerHTML = "<p>No orders found.</p>";
         }
     })
     .catch(error => {
-        console.error("Error fetching seller orders:", error);
-        alert("There was an issue fetching the orders.");
+        clearTimeout(timeout); // Clear timeout in case of error
+        if (error.name === 'AbortError') {
+            console.log('Request timed out');
+            alert("The request timed out. Please try again later.");
+        } else {
+            console.error("Error fetching seller orders:", error);
+            alert("There was an issue fetching the orders.");
+        }
     });
 };
-
 
 
 const updateStatus = (orderId, status) => {
